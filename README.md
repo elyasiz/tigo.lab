@@ -12,6 +12,12 @@ Website katalog Montessori TIGO LAB dengan animasi dan simulasi belanja. Dibuat 
 - Animasi pembuka, pergantian produk unggulan, interaksi kartu, dan efek tambah ke keranjang.
 - Tampilan HP dan desktop, navigasi keyboard, serta dukungan pengurangan animasi.
 
+## Identitas visual
+
+Palet mengikuti referensi brand TIGO LAB: biru `#0088ff`, oranye `#ff5a2b`, kuning `#f8cd1a`, hijau `#22c55e`, pink `#ff6fae`, ungu `#8b5cf6`, cyan `#4dd0e1`, dan krem `#fff3e0`. Token warna ada di awal `dist/styles.css`; turunan biru dan oranye yang lebih gelap digunakan pada teks kecil dan tombol agar terbaca jelas.
+
+Judul memakai Fredoka dan teks memakai Nunito, dipilih untuk mendekati gaya bulat pada referensi. Font disajikan lokal dari `dist/assets/fonts/` tanpa permintaan ke Google Fonts saat halaman dibuka. Lisensi SIL Open Font License masing-masing font disertakan di direktori yang sama. Logo dan foto produk tetap memakai aset katalog.
+
 ## Menjalankan secara lokal
 
 Jalankan server HTTP statis dengan `dist` sebagai direktori root. Contoh jika Python tersedia:

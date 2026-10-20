@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fffdf8">
+  <meta name="theme-color" content="#0088ff">
   <meta name="robots" content="noindex,nofollow">
   <meta name="description" content="Jelajahi 10 pilihan produk Montessori TIGO LAB. Prototipe interaktif dengan harga contoh dan simulasi pemesanan.">
   <meta property="og:title" content="TIGO LAB — Bermain, mencoba, menemukan.">
@@ -11,6 +11,8 @@
   <title>TIGO LAB — Bermain, mencoba, menemukan.</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/stacker.webp">
+  <link rel="preload" href="assets/fonts/fredoka-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script src="demos.js" defer></script>
   <script src="app.js" defer></script>
@@ -28,7 +30,7 @@
   </header>
   <main>
     <section class="hero container" id="beranda" aria-labelledby="heroTitle">
-      <div class="hero-copy"><div class="eyebrow hero-enter"><span class="mini-flower" aria-hidden="true">✳</span> DUNIA KECIL, BANYAK PENEMUAN</div><h1 id="heroTitle" class="hero-enter">Bermain.<br>Mencoba.<br><span>Menemukan.</span><svg class="title-swoosh" viewBox="0 0 340 23" aria-hidden="true"><path d="M4 16C80 0 235 0 334 11"/></svg></h1><p class="hero-description hero-enter">Mulai dari satu bentuk, satu warna, satu ide.<br>Jelajahi pilihan aktivitas Montessori untuk<br class="desktop-break"> ruang kelas dan rumah.</p><div class="hero-cta hero-enter"><a href="#katalog" class="button button-blue">Jelajahi koleksi <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#cara-pesan" class="text-link">Cara pesan <span aria-hidden="true">↗</span></a></div><div class="hero-footnote hero-enter"><span class="stacked-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>10 pilihan aktivitas.<br><strong>Banyak cara untuk bereksplorasi.</strong></span></div></div>
+      <div class="hero-copy"><div class="eyebrow hero-enter"><span class="mini-flower" aria-hidden="true">✳</span> DUNIA KECIL, BANYAK PENEMUAN</div><h1 id="heroTitle" class="hero-enter"><span class="hero-word-orange">Bermain.</span><br>Mencoba.<br><span>Menemukan.</span><svg class="title-swoosh" viewBox="0 0 340 23" aria-hidden="true"><path d="M4 16C80 0 235 0 334 11"/></svg></h1><p class="hero-description hero-enter">Mulai dari satu bentuk, satu warna, satu ide.<br>Jelajahi pilihan aktivitas Montessori untuk<br class="desktop-break"> ruang kelas dan rumah.</p><div class="hero-cta hero-enter"><a href="#katalog" class="button button-blue">Jelajahi koleksi <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#cara-pesan" class="text-link">Cara pesan <span aria-hidden="true">↗</span></a></div><div class="hero-footnote hero-enter"><span class="stacked-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>10 pilihan aktivitas.<br><strong>Banyak cara untuk bereksplorasi.</strong></span></div></div>
       <div class="hero-visual" id="heroVisual"><div class="hero-orbit" aria-hidden="true"></div><div class="decor decor-yellow" aria-hidden="true"></div><div class="decor decor-orange" aria-hidden="true"></div><div class="decor decor-green" aria-hidden="true"></div><div class="hero-tag"><span class="tag-dot"></span> MONTESSORI COLLECTION</div><div class="hero-image-wrap"><img id="heroImage" src="assets/stacker.webp" alt="Spinning Shapes Stacker dengan bentuk warna-warni dan tiga tiang berulir" width="1000" height="1000" fetchpriority="high"></div><div class="hero-product-caption"><div><span id="heroIndex">PILIHAN 09 / 10</span><h2 id="heroProductName">Spinning Shapes Stacker</h2></div><div class="hero-controls"><button class="icon-button" id="heroPrev" aria-label="Produk unggulan sebelumnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><button class="icon-button" id="heroNext" aria-label="Produk unggulan berikutnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button></div></div><button class="replay-button" id="replayMotion" aria-haspopup="dialog" aria-controls="animationDialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg> <span id="heroMotionLabel">Lihat cara bermain</span></button></div>
     </section>
     <div class="activity-strip" aria-hidden="true"><div class="container activity-row"><span>Rakit & susun</span><i class="shape-circle"></i><span>Warna & bentuk</span><i class="shape-star">✳</i><span>Ronce & rangkai</span><i class="shape-square"></i><span>Coba hal baru</span><i class="shape-star orange">✳</i></div></div>
