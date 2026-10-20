@@ -12,6 +12,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/stacker.webp">
   <link rel="stylesheet" href="styles.css">
+  <script src="demos.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -42,16 +43,15 @@
   <footer class="site-footer"><div class="container footer-top"><a href="#beranda" class="brand"><img src="assets/tigo-logo.webp" alt="TIGO LAB" width="148" height="66" loading="lazy"></a><p>Bermain, mencoba, menemukan.<br>Satu aktivitas pada satu waktu.</p><a href="#beranda" class="back-top">Kembali ke atas <span aria-hidden="true">↑</span></a></div><div class="container footer-bottom"><span>© 2026 TIGO LAB</span><span>Preview interaktif · Referensi gambar dari katalog TIGO LAB</span><span>Made for curious minds <span class="orange" aria-hidden="true">✳</span></span></div></footer>
   <dialog id="animationDialog" class="animation-dialog" aria-labelledby="animationTitle" aria-describedby="animationDescription">
     <button class="close-button icon-button" data-close="animationDialog" aria-label="Tutup animasi cara bermain">×</button>
-    <div class="eyebrow">SPINNING SHAPES STACKER</div>
-    <h2 id="animationTitle">Putar, turun, susun.</h2>
-    <p id="animationDescription">Lihat bagaimana setiap bentuk berputar mengikuti ulir dan tersusun di tiang.</p>
-    <video id="stackerVideo" class="stacker-video" controls playsinline muted preload="none" poster="assets/stacker-demo-poster.webp" aria-label="Animasi cara bermain Spinning Shapes Stacker" aria-describedby="animationDescription animationSteps">
-      <source src="assets/videos/stacker-demo.mp4" type="video/mp4">
-      Browser ini belum mendukung video. <a href="assets/videos/stacker-demo.mp4">Unduh animasi cara bermain</a>.
+    <div id="animationProductName" class="eyebrow">CARA BERMAIN</div>
+    <h2 id="animationTitle">Lihat cara bermain.</h2>
+    <p id="animationDescription"></p>
+    <video id="demoVideo" class="demo-video" controls playsinline muted preload="none" aria-label="Animasi cara bermain" aria-describedby="animationDescription animationSteps">
+      Browser ini belum mendukung video. <a id="videoFallback" href="assets/videos/stacker-demo.mp4">Unduh animasi cara bermain</a>.
     </video>
-    <ol id="animationSteps" class="animation-steps"><li>Posisikan bentuk di atas tiang.</li><li>Putar dan turunkan mengikuti ulir.</li><li>Susun bentuk satu per satu.</li></ol>
-    <p class="small-note animation-note">Ilustrasi cara bermain dengan model 3D sederhana.</p>
-    <p id="animationError" class="animation-error" role="status" hidden>Video belum bisa diputar. <a href="assets/videos/stacker-demo.mp4">Buka atau unduh videonya</a>.</p>
+    <ol id="animationSteps" class="animation-steps"></ol>
+    <p id="animationNote" class="small-note animation-note"></p>
+    <p id="animationError" class="animation-error" role="status" hidden>Video belum bisa diputar. <a id="animationDownload" href="assets/videos/stacker-demo.mp4">Buka atau unduh videonya</a>.</p>
   </dialog>
   <dialog id="productDialog" class="product-dialog" aria-labelledby="detailTitle"><button class="close-button icon-button" data-close="productDialog" aria-label="Tutup detail produk">×</button><div id="productDetail"></div></dialog>
   <dialog id="cartDialog" class="cart-dialog" aria-labelledby="cartTitle"><div class="drawer-head"><div><div class="eyebrow">PILIHANMU</div><h2 id="cartTitle">Keranjang bermain</h2></div><button class="icon-button" data-close="cartDialog" aria-label="Tutup keranjang">×</button></div><div id="cartContents" class="cart-contents"></div><div id="cartSummary" class="cart-summary"></div></dialog>

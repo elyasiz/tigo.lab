@@ -17,7 +17,7 @@ dialog{border:0;color:var(--ink);background:var(--paper);padding:0;box-shadow:0 
 .animation-dialog>.eyebrow{font-size:9px;color:var(--green);padding-right:35px}
 .animation-dialog h2{font-size:27px;line-height:1.25;margin:10px 40px 9px 0}
 .animation-dialog>p:not(.small-note){font-size:12px;color:var(--muted);line-height:1.7}
-.stacker-video{display:block;width:100%;max-height:58dvh;aspect-ratio:1;object-fit:contain;background:#fffefa;border-radius:12px;margin-top:18px}
+.demo-video{display:block;width:100%;max-height:58dvh;aspect-ratio:1;object-fit:contain;background:#fffefa;border-radius:12px;margin-top:18px}
 .animation-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:20px 0 12px;padding-left:18px;font-size:11px;line-height:1.7;color:#50604e}
 .animation-steps li{padding-left:2px}
 .animation-note{margin-top:10px}
@@ -25,4 +25,9 @@ dialog{border:0;color:var(--ink);background:var(--paper);padding:0;box-shadow:0 
 .animation-error a{text-decoration:underline;color:var(--blue)}
 .detail-demo-button{margin-top:17px;color:var(--blue);font-size:12px;text-align:left}
 .detail-demo-button>span{font-size:10px}
-@media(max-width:550px){.animation-dialog{padding:24px 18px 18px;max-width:calc(100vw - 24px);border-radius:16px}.animation-dialog h2{font-size:24px}.animation-dialog>p:not(.small-note){font-size:11px}.stacker-video{margin-top:13px;max-height:52dvh}.animation-steps{grid-template-columns:1fr;gap:5px;margin-top:15px}.animation-note{font-size:9px}}
+@media(max-width:550px){.animation-dialog{padding:24px 18px 18px;max-width:calc(100vw - 24px);border-radius:16px}.animation-dialog h2{font-size:24px}.animation-dialog>p:not(.small-note){font-size:11px}.demo-video{margin-top:13px;max-height:52dvh}.animation-steps{grid-template-columns:1fr;gap:5px;margin-top:15px}.animation-note{font-size:9px}}
+
+.card-demo-button{display:inline-flex;align-items:center;gap:7px;padding:6px 0;margin-top:7px;min-height:36px;border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:500;text-align:left}
+.card-demo-button>span{font-size:9px}
+.card-demo-button:hover{text-decoration:underline;text-underline-offset:4px}
+@media(max-width:550px){.card-demo-button{font-size:10px;min-height:38px;margin-top:3px}.card-demo-button>span{font-size:8px}}
