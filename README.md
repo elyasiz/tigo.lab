@@ -34,12 +34,17 @@ Gambar berasal dari katalog produk TIGO LAB yang disediakan untuk proyek ini.
 
 ## Animasi cara bermain
 
-Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Ilustrasi memperagakan aktivitas berdasarkan foto katalog; bukan rekaman produk fisik. Video Spinning Shapes Stacker memakai model 3D sederhana yang telah dibuat sebelumnya.
+Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Semua produk memiliki animasi dengan model 3D. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Model mengacu pada foto katalog dan memperagakan aktivitas; video bukan rekaman produk fisik dan model bukan pengukuran CAD. Spinning Shapes Stacker mempertahankan animasi 3D yang sudah ada.
 
-Sumber sembilan animasi tambahan ada di `tools/render_product_demos.py`. Untuk membuat ulang, gunakan Python dengan Pillow dan FFmpeg (atau paket `imageio-ffmpeg`):
+Sumber sembilan model lainnya ada di `tools/demos3d/models.py`, dengan geometri berlubang, komponen terpisah, tali, pencahayaan, dan animasi tiap bagian. `tools/demos3d/engine.py` berisi fungsi geometri dan rendering bersama. Nama produk dan langkah bermain disimpan di `tools/demos3d/products.json`.
+
+Untuk membuat ulang, gunakan Blender 4.5 LTS untuk rendering dan Python dengan Pillow serta FFmpeg (atau paket `imageio-ffmpeg`) untuk ekspor:
 
 ```sh
-python tools/render_product_demos.py --all
+blender --background --python tools/render_3d_demos.py -- --all
+python tools/compose_3d_demos.py --all
 ```
 
-Gunakan `--preview` untuk membuat lembar pemeriksaan visual, atau `--product M01` untuk membuat ulang satu produk. Path FFmpeg dapat diberikan melalui variabel `FFMPEG_BIN`, dan direktori font melalui `TIGO_FONT_DIR`.
+Rendering disimpan di `tmp/render3d/`, yang diabaikan Git. Untuk pemeriksaan visual sebelum ekspor, jalankan Blender dengan `-- --preview --frame 212`, lalu `python tools/compose_3d_demos.py --preview`. Gunakan `--product M01` pada kedua perintah untuk satu produk. Path FFmpeg dapat diberikan melalui `FFMPEG_BIN`, dan direktori font melalui `TIGO_FONT_DIR`. Vercel tetap menyajikan file statis tanpa menjalankan Blender.
+
+Berkas video 2D lama tetap tersedia untuk kompatibilitas halaman yang sudah terbuka. Metadata aktif menunjuk ke versi 3D.
