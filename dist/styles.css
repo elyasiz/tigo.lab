@@ -45,6 +45,24 @@ h1>.hero-word-orange{color:var(--orange)}
 .step:nth-child(3) .step-number{color:#6d38c7}
 ::selection{background:var(--yellow);color:var(--ink)}
 
+/* Brand benefits supplied by TIGO LAB. */
+.benefits-section{padding-top:72px}
+.benefits-heading{margin-bottom:28px}
+.benefits-heading .eyebrow{color:var(--blue-ink);margin-bottom:13px}
+.benefits-heading h2{font-size:clamp(30px,3.3vw,42px)}
+.benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.benefit-card{padding:28px;border-radius:22px;background:var(--soft-blue);min-width:0}
+.benefit-durable{background:var(--cream)}
+.benefit-clean{background:var(--soft-green)}
+.benefit-icon{width:62px;height:62px;border-radius:50%;background:var(--paper);color:var(--blue-ink);display:grid;place-items:center;margin-bottom:21px}
+.benefit-icon svg{width:32px;height:32px;stroke-width:1.8}
+.benefit-durable .benefit-icon{color:var(--orange-ink)}
+.benefit-clean .benefit-icon{color:#14783b}
+.benefit-copy h3{font-size:21px;line-height:1.3;min-height:2.6em;margin-bottom:12px}
+.benefit-copy p{font-size:13px;line-height:1.85;color:var(--muted)}
+@media(max-width:900px){.benefits-section{padding-top:58px}.benefits-grid{gap:15px}.benefit-card{padding:24px}.benefit-copy h3{font-size:19px}.benefit-copy p{font-size:12px}}
+@media(max-width:760px){.benefits-section{padding-top:50px}.benefits-heading{margin-bottom:23px}.benefits-heading .eyebrow{font-size:9px}.benefits-heading h2{font-size:31px}.benefits-grid{grid-template-columns:1fr;gap:14px}.benefit-card{display:grid;grid-template-columns:52px minmax(0,1fr);align-items:start;gap:18px;padding:23px;border-radius:18px}.benefit-icon{width:52px;height:52px;margin:0}.benefit-icon svg{width:28px;height:28px}.benefit-copy h3{min-height:0;font-size:19px;margin-bottom:8px}.benefit-copy p{font-size:12px;line-height:1.75}}
+
 /* Two additional films above the footer, loaded when the carousel is visible. */
 .stories-section{padding-top:24px;padding-bottom:80px}
 .stories-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:30px}
