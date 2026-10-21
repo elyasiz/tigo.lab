@@ -194,6 +194,11 @@ body:has(.resume-payment:not([hidden])) .toast{bottom:85px}
 .step-number{font-size:14px}
 .faq-list summary{display:grid;grid-template-columns:minmax(0,1fr) 24px;font-size:16px;line-height:1.6}
 .faq-list summary>span{width:24px;line-height:1.2;text-align:center}
+.faq-list details[open] summary>span{transform:none;font-size:0}
+.faq-list details[open] summary>span::before{content:'×';font-size:25px;line-height:1.2}
+.faq-heading .eyebrow{color:var(--blue-ink);margin-bottom:12px}
+.faq-heading h3{font-size:28px;line-height:1.25}
+@media(max-width:800px){.faq-heading h3{font-size:25px}}
 .footer-top>p,.back-top,.play-sticker{font-size:14px}
 .footer-bottom{font-size:12px;line-height:1.75}
 .detail-copy>.detail-description,.animation-dialog>p:not(.small-note),.dialog-intro,.success-dialog>p,.cart-empty p{font-size:16px;line-height:1.75}
