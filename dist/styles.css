@@ -45,6 +45,43 @@ h1>.hero-word-orange{color:var(--orange)}
 .step:nth-child(3) .step-number{color:#6d38c7}
 ::selection{background:var(--yellow);color:var(--ink)}
 
+/* Two additional films above the footer. Videos load only when requested. */
+.stories-section{padding-top:24px;padding-bottom:80px}
+.stories-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:30px}
+.stories-heading .eyebrow{color:var(--blue-ink);margin-bottom:13px}
+.stories-heading h2{font-size:clamp(28px,3.2vw,42px)}
+.stories-heading>p{font-size:12px;line-height:1.8;color:var(--muted)}
+.story-track{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;border-radius:26px}
+.story-track::-webkit-scrollbar{display:none}
+.story-track:focus-visible{outline:3px solid var(--blue-ink);outline-offset:5px}
+.story-slide{flex:0 0 100%;min-width:0;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);align-items:center;gap:36px;padding:40px;scroll-snap-align:start;scroll-snap-stop:always}
+.story-sensory{background:var(--cream)}
+.story-energy{background:var(--soft-blue)}
+.story-copy{min-width:0;padding:4px 0}
+.story-category{display:flex;align-items:center;gap:8px;font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--muted)}
+.story-category i{width:7px;height:7px;border-radius:50%;background:var(--orange)}
+.story-energy .story-category i{background:var(--blue)}
+.story-copy h3{font-size:clamp(28px,3.1vw,40px);margin:18px 0 15px;line-height:1.14}
+.story-copy>p{font-size:12px;color:var(--muted);line-height:1.8;max-width:270px}
+.story-duration{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.12em;font-weight:800;color:var(--muted);margin-top:28px}
+.story-duration>span{color:var(--orange)}
+.story-media{min-width:0}
+.story-video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:var(--ink);border-radius:16px;box-shadow:0 12px 36px #11172b14}
+.story-video:focus-visible{outline:3px solid var(--blue-ink);outline-offset:5px}
+.story-error{font-size:12px;color:var(--muted);margin-top:12px}
+.story-error a{text-decoration:underline;text-underline-offset:3px;color:var(--blue-ink)}
+.stories-controls{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:20px}
+.story-arrows{display:flex;align-items:center;gap:16px}
+.story-arrows .icon-button{width:44px;height:44px}
+.story-arrows .icon-button svg{width:18px;height:18px}
+.story-counter{font-size:10px;letter-spacing:.14em;font-weight:800;color:var(--muted);min-width:52px;text-align:center}
+.story-dots{display:flex;align-items:center;gap:1px}
+.story-dots button{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;padding:0;border-radius:50%}
+.story-dots span{display:block;width:7px;height:7px;background:#b7c9da;border-radius:20px;transition:width .2s var(--ease),background .2s}
+.story-dots button[aria-pressed=true] span{width:25px;background:var(--action-blue)}
+@media(max-width:900px){.story-slide{padding:28px;gap:25px;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}.story-copy h3{font-size:30px}.story-category{font-size:8px;letter-spacing:.07em}.story-copy>p{font-size:11px}.story-duration{margin-top:20px;font-size:8px}.stories-heading h2{font-size:32px}}
+@media(max-width:650px){.stories-section{padding-top:12px;padding-bottom:45px}.stories-heading{display:block;margin-bottom:22px}.stories-heading .eyebrow{font-size:9px;margin-bottom:12px}.stories-heading h2{font-size:30px}.stories-heading>p{font-size:11px;margin-top:15px}.story-track{border-radius:20px}.story-slide{grid-template-columns:minmax(0,1fr);padding:24px;gap:22px;align-content:start}.story-category{font-size:8px}.story-copy h3{font-size:29px;margin:14px 0 11px}.story-copy h3 br{display:none}.story-copy>p{max-width:none;font-size:12px}.story-duration{font-size:8px;margin-top:16px}.story-video{border-radius:12px}.stories-controls{padding-top:15px}.story-arrows{gap:10px}.story-counter{font-size:9px;min-width:47px}}
+
 /* QRIS sandbox checkout and private order recovery. */
 .payment-notice{font-size:12px;line-height:1.7;padding:12px 14px;background:var(--cream);border:1px solid #f1dfc0;border-radius:12px;margin:16px 0;color:var(--ink)}
 .payment-notice[data-ready=true]{background:var(--soft-blue);border-color:var(--line)}

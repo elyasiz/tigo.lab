@@ -63,3 +63,9 @@ python tools/compose_3d_demos.py --all
 Rendering Blender disimpan di `tmp/render3d/`, yang diabaikan Git. Sesudah rangkaian frame lengkap tersedia, jalankan `python tools/compose_3d_demos.py --preview` untuk memeriksa tampilan dan `python tools/compose_3d_demos.py --all` untuk memperbarui warna, font, dan poster. Perubahan tampilan video dapat memakai kembali frame yang sudah dirender. Gunakan `--product M01` untuk satu produk atau `--product M09` untuk Stacker. Pillow perlu mendukung font WOFF2 dan variable font; renderer Stacker juga memakai NumPy. Path FFmpeg dapat diberikan melalui `FFMPEG_BIN`, dan direktori berisi dua font WOFF2 melalui `TIGO_FONT_DIR`. Vercel tetap menyajikan file statis tanpa menjalankan Blender.
 
 Berkas video lama tetap tersedia untuk kompatibilitas halaman yang sudah terbuka. Metadata aktif menunjuk ke versi 3D dengan branding terbaru.
+
+## Video tambahan dekat footer
+
+Bagian `#cerita-bermain` menampilkan dua video yang diberikan pemilik proyek: eksplorasi sensori dengan corong dan eksplorasi energi dengan roda/lampu. Keduanya berada dalam slider di atas footer, terpisah dari katalog produk. Navigasi mendukung tombol, indikator, keyboard pada area slide, dan geser horizontal di ponsel.
+
+Aset di `dist/assets/stories/` memakai MP4 H.264 1280×720 dengan audio asli AAC dan fast start. Poster WebP diambil dari videonya. File MP4 memakai `preload="none"`, tanpa autoplay. Video berhenti saat berpindah slide, keluar dari layar, tab disembunyikan, atau video lain diputar. `dist/stories.js` menangani navigasi dan aksesibilitas; warna serta font mengikuti token website.

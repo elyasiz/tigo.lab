@@ -2,6 +2,7 @@
 import { products } from './products.js';
 import { productDemos } from './demos.js';
 import { initializeCheckout } from './checkout.js';
+import { initializeStories } from './stories.js';
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const rupiah = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
@@ -77,5 +78,5 @@ $('#demoVideo').addEventListener('error',()=>{$('#animationError').hidden=false;
 document.addEventListener('visibilitychange',()=>{if(document.hidden)$('#demoVideo').pause();});
 $('#heroPrev').addEventListener('click',()=>setHero(-1));$('#heroNext').addEventListener('click',()=>setHero(1));
 $('#replayMotion').addEventListener('click',()=>openProductDemo(featured[heroSlide]));
-renderProducts();updateBadge();
+renderProducts();updateBadge();initializeStories({reduced});
 if('IntersectionObserver' in window&&!reduced()){document.documentElement.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.remove('pending');entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.08});$$('.reveal').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight)el.classList.add('pending');observer.observe(el);});}
