@@ -48,20 +48,35 @@ h1>.hero-word-orange{color:var(--orange)}
 /* Brand benefits supplied by TIGO LAB. */
 .benefits-section{padding-top:72px}
 .benefits-heading{margin-bottom:28px}
-.benefits-heading .eyebrow{color:var(--blue-ink);margin-bottom:13px}
+.benefits-heading .eyebrow{color:var(--blue-ink);margin-bottom:13px;font-size:13px;letter-spacing:.12em}
 .benefits-heading h2{font-size:clamp(30px,3.3vw,42px)}
 .benefits-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .benefit-card{padding:28px;border-radius:22px;background:var(--soft-blue);min-width:0}
 .benefit-durable{background:var(--cream)}
 .benefit-clean{background:var(--soft-green)}
-.benefit-icon{width:62px;height:62px;border-radius:50%;background:var(--paper);color:var(--blue-ink);display:grid;place-items:center;margin-bottom:21px}
-.benefit-icon svg{width:32px;height:32px;stroke-width:1.8}
+.benefit-icon{width:70px;height:70px;border-radius:50%;background:var(--paper);color:var(--blue-ink);display:grid;place-items:center;margin-bottom:21px}
+.benefit-icon svg{width:38px;height:38px;stroke-width:1.8;overflow:visible}
 .benefit-durable .benefit-icon{color:var(--orange-ink)}
 .benefit-clean .benefit-icon{color:#14783b}
-.benefit-copy h3{font-size:21px;line-height:1.3;min-height:2.6em;margin-bottom:12px}
-.benefit-copy p{font-size:13px;line-height:1.85;color:var(--muted)}
-@media(max-width:900px){.benefits-section{padding-top:58px}.benefits-grid{gap:15px}.benefit-card{padding:24px}.benefit-copy h3{font-size:19px}.benefit-copy p{font-size:12px}}
-@media(max-width:760px){.benefits-section{padding-top:50px}.benefits-heading{margin-bottom:23px}.benefits-heading .eyebrow{font-size:9px}.benefits-heading h2{font-size:31px}.benefits-grid{grid-template-columns:1fr;gap:14px}.benefit-card{display:grid;grid-template-columns:52px minmax(0,1fr);align-items:start;gap:18px;padding:23px;border-radius:18px}.benefit-icon{width:52px;height:52px;margin:0}.benefit-icon svg{width:28px;height:28px}.benefit-copy h3{min-height:0;font-size:19px;margin-bottom:8px}.benefit-copy p{font-size:12px;line-height:1.75}}
+.benefit-copy h3{font-size:23px;line-height:1.35;min-height:2.7em;margin-bottom:12px}
+.benefit-copy p{font-size:16px;line-height:1.75;color:#40516a}
+.benefit-icon [class]{animation-play-state:paused;transform-box:fill-box;transform-origin:center}
+.benefits-section.icons-active .benefit-icon [class]{animation-play-state:running}
+.benefit-printer-head{animation:benefit-print-head 4.8s ease-in-out infinite}
+.benefit-printer-layers{animation:benefit-print-layers 4.8s ease-in-out infinite;stroke-dasharray:1;stroke-dashoffset:0}
+.benefit-shield{animation:benefit-shield-breathe 5.6s ease-in-out infinite}
+.benefit-check{animation:benefit-check-draw 5.6s ease-in-out infinite;stroke-dasharray:1;stroke-dashoffset:0}
+.benefit-wipe{animation:benefit-wipe 5.2s ease-in-out infinite}
+.benefit-sparkle{animation:benefit-sparkle 5.2s ease-in-out infinite}
+@keyframes benefit-print-head{0%,12%,78%,100%{transform:translateX(0)}25%,49%{transform:translateX(-3px)}37%,61%{transform:translateX(3px)}}
+@keyframes benefit-print-layers{0%,12%{stroke-dashoffset:1;opacity:.4}65%,88%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.4}}
+@keyframes benefit-shield-breathe{0%,45%,100%{transform:scale(1)}18%{transform:scale(1.07)}}
+@keyframes benefit-check-draw{0%,8%{stroke-dashoffset:1}32%,88%{stroke-dashoffset:0}100%{stroke-dashoffset:1}}
+@keyframes benefit-wipe{0%,12%,72%,100%{transform:translateX(0) rotate(0)}28%,52%{transform:translateX(-2px) rotate(-5deg)}40%,64%{transform:translateX(2px) rotate(4deg)}}
+@keyframes benefit-sparkle{0%,18%,80%,100%{opacity:.65;transform:scale(.9)}40%,64%{opacity:1;transform:scale(1.12)}}
+@media(max-width:900px){.benefits-section{padding-top:58px}.benefits-grid{gap:15px}.benefit-card{padding:24px}.benefit-copy h3{font-size:21px}}
+@media(min-width:761px) and (max-width:900px){.benefit-copy h3{min-height:4.05em}}
+@media(max-width:760px){.benefits-section{padding-top:50px}.benefits-heading{margin-bottom:23px}.benefits-heading .eyebrow{font-size:12px}.benefits-heading h2{font-size:31px}.benefits-grid{grid-template-columns:1fr;gap:14px}.benefit-card{display:grid;grid-template-columns:54px minmax(0,1fr);align-items:start;gap:16px;padding:23px;border-radius:18px}.benefit-icon{width:54px;height:54px;margin:0}.benefit-icon svg{width:32px;height:32px}.benefit-copy h3{min-height:0;font-size:21px;margin-bottom:9px}}
 
 /* Two additional films above the footer, loaded when the carousel is visible. */
 .stories-section{padding-top:24px;padding-bottom:80px}
@@ -150,4 +165,85 @@ body:has(.resume-payment:not([hidden])) .toast{bottom:85px}
   .payment-method{padding:12px;gap:9px}
   .payment-method div>span{font-size:10px}
   .resume-payment{bottom:16px;right:16px;font-size:11px;padding:12px 16px}
+}
+
+/* Readable supporting copy at every screen size, retaining the TIGO typefaces. */
+.desktop-nav{font-size:15px;gap:28px}
+.cart-button{font-size:14px}
+.preview-bar{font-size:12px}
+.eyebrow,.hero-copy>.eyebrow,.section-heading .eyebrow,.play-copy .eyebrow,.stories-heading .eyebrow{font-size:13px;letter-spacing:.11em}
+.hero-description,.section-heading>p,.play-copy>p,.step p,.faq-list details p,.stories-heading>p,.story-copy>p{font-size:16px;line-height:1.75}
+.button,.hero-cta .button,.play-copy .button{font-size:15px}
+.text-link,.hero-cta .text-link,.back-top,.replay-button,.detail-demo-button{font-size:14px}
+.hero-footnote,.hero-tag,.hero-product-caption span{font-size:12px}
+.hero-product-caption h2{font-size:20px;line-height:1.35}
+.filter-chip,.search-field input,.sort-label select{font-size:14px}
+.filter-chip span,.catalog-meta,.catalog-meta>span,.product-index,.product-category,.example-note,.story-category,.story-counter{font-size:12px}
+.catalog-meta{align-items:flex-start;gap:20px}
+.product-category{letter-spacing:.08em}
+.product-name{font-size:20px;line-height:1.35}
+.product-description{font-size:15px;line-height:1.7}
+.product-price{font-size:18px}
+.example-note{line-height:1.5;margin-top:3px}
+.card-demo-button{font-size:14px;min-height:42px}
+.product-card{display:flex;flex-direction:column;min-width:0}
+.product-info{display:flex;flex-direction:column;flex:1}
+.product-bottom{margin-top:auto;padding-top:12px}
+.card-demo-button{align-self:flex-start}
+.step h3{font-size:21px}
+.step-number{font-size:14px}
+.faq-list summary{font-size:16px;line-height:1.6}
+.footer-top>p,.back-top,.play-sticker{font-size:14px}
+.footer-bottom{font-size:12px;line-height:1.75}
+.detail-copy>.detail-description,.animation-dialog>p:not(.small-note),.dialog-intro,.success-dialog>p,.cart-empty p{font-size:16px;line-height:1.75}
+.detail-price>span,.detail-meta,.detail-package,.small-note,.detail-copy .eyebrow,.drawer-head .eyebrow,.animation-dialog>.eyebrow,.checkout-dialog .eyebrow,.success-dialog>.eyebrow,.payment-dialog>.eyebrow{font-size:13px;line-height:1.7}
+.detail-actions .button,.payment-actions .button{font-size:14px}
+.qty-control output,.cart-row-controls .qty-control output,.cart-row-price,.remove-item,.checkout-summary,.summary-item>span:first-child,.summary-item>span:last-child,.summary-line,.shipping-line,.demo-receipt,.demo-receipt strong{font-size:14px}
+.cart-row-name,.cart-subtotal{font-size:16px;line-height:1.5}
+form>label{font-size:14px}
+form>input,form>select{font-size:16px}
+.animation-steps{font-size:15px;line-height:1.75}
+.payment-notice,.payment-error,.payment-method div>span,.sandbox-confirm,.payment-qr-area p,.payment-message,#paymentCustomer,.payment-actions .text-link,.payment-dialog>.text-link{font-size:14px;line-height:1.7}
+.payment-status,.payment-order-id,.resume-payment,.story-error,.toast{font-size:13px}
+@media(max-width:1050px) and (min-width:801px){.desktop-nav{gap:18px}.nav-wrap{gap:18px}.header-actions{gap:7px}}
+@media(max-width:800px){
+  .hero-cta{gap:18px}
+  .hero-tag{font-size:11px;letter-spacing:.05em;padding:9px 12px}
+  .hero-product-caption h2{font-size:18px}
+  .hero-product-caption span{font-size:11px;letter-spacing:.09em}
+  .hero-footnote{font-size:12px}
+  .product-name{font-size:18px}
+  .product-description{font-size:14px}
+  .product-price{font-size:17px}
+  .footer-top>p{font-size:14px}
+}
+@media(max-width:550px){
+  .preview-bar{font-size:11px}
+  .eyebrow,.hero-copy>.eyebrow,.section-heading .eyebrow,.play-copy .eyebrow,.stories-heading .eyebrow{font-size:12px;letter-spacing:.09em}
+  .hero-cta{gap:18px}
+  .hero-cta .button,.play-copy .button{font-size:14px}
+  .hero-cta .text-link{font-size:14px}
+  .hero-product-caption{gap:12px;align-items:flex-start}
+  .hero-product-caption h2{font-size:18px}
+  .hero-controls{padding-top:8px}
+  .hero-footnote{font-size:12px}
+  .search-field input{font-size:14px}
+  .sort-label{max-width:148px}
+  .sort-label select{font-size:13px;width:148px}
+  .catalog-meta{font-size:12px;gap:14px}
+  .catalog-meta>span{font-size:12px;max-width:145px}
+  .product-name{font-size:17px;line-height:1.4;overflow-wrap:anywhere}
+  .product-category{font-size:11px;letter-spacing:.04em}
+  .product-description{font-size:14px;line-height:1.65;min-height:0}
+  .product-price{font-size:16px}
+  .product-bottom{gap:5px;align-items:flex-start}
+  .example-note{font-size:12px}
+  .card-demo-button{font-size:13px;line-height:1.5}
+  .detail-actions{flex-wrap:wrap;gap:12px}
+  .detail-actions .button{flex:1 1 100%;font-size:14px}
+  .animation-steps{font-size:15px;gap:9px}
+  .story-category,.story-counter{font-size:12px}
+  .footer-top>p{font-size:14px}
+  .footer-bottom{font-size:12px}
+  .resume-payment{font-size:13px}
 }

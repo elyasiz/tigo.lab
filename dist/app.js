@@ -79,4 +79,12 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)$('#demoVid
 $('#heroPrev').addEventListener('click',()=>setHero(-1));$('#heroNext').addEventListener('click',()=>setHero(1));
 $('#replayMotion').addEventListener('click',()=>openProductDemo(featured[heroSlide]));
 renderProducts();updateBadge();initializeStories({reduced});
+const benefitsSection=$('#kelebihan');
+if(benefitsSection&&'IntersectionObserver' in window){
+  let benefitsVisible=false;
+  const updateBenefitMotion=()=>benefitsSection.classList.toggle('icons-active',benefitsVisible&&!document.hidden);
+  const benefitsObserver=new IntersectionObserver(([entry])=>{benefitsVisible=entry.isIntersecting;updateBenefitMotion();},{threshold:.1});
+  benefitsObserver.observe(benefitsSection);
+  document.addEventListener('visibilitychange',updateBenefitMotion);
+}
 if('IntersectionObserver' in window&&!reduced()){document.documentElement.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.remove('pending');entry.target.classList.add('in-view');observer.unobserve(entry.target);}}),{threshold:.08});$$('.reveal').forEach(el=>{if(el.getBoundingClientRect().top>innerHeight)el.classList.add('pending');observer.observe(el);});}
