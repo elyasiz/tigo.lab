@@ -75,12 +75,16 @@ h1>.hero-word-orange{color:var(--orange)}
 .story-arrows .icon-button{width:44px;height:44px}
 .story-arrows .icon-button svg{width:18px;height:18px}
 .story-counter{font-size:10px;letter-spacing:.14em;font-weight:800;color:var(--muted);min-width:52px;text-align:center}
+.story-auto{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;border:1px solid var(--line);border-radius:30px;padding:9px 15px;background:var(--paper);color:var(--blue-ink);font-size:11px;font-weight:800;margin-left:auto}
+.story-auto:hover{background:var(--soft-blue)}
+.story-auto svg{width:15px;height:15px}
 .story-dots{display:flex;align-items:center;gap:1px}
 .story-dots button{display:grid;place-items:center;width:44px;height:44px;border:0;background:transparent;padding:0;border-radius:50%}
 .story-dots span{display:block;width:7px;height:7px;background:#b7c9da;border-radius:20px;transition:width .2s var(--ease),background .2s}
 .story-dots button[aria-pressed=true] span{width:25px;background:var(--action-blue)}
 @media(max-width:900px){.story-slide{padding:28px;gap:25px;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}.story-copy h3{font-size:30px}.story-category{font-size:8px;letter-spacing:.07em}.story-copy>p{font-size:11px}.story-duration{margin-top:20px;font-size:8px}.stories-heading h2{font-size:32px}}
 @media(max-width:650px){.stories-section{padding-top:12px;padding-bottom:45px}.stories-heading{display:block;margin-bottom:22px}.stories-heading .eyebrow{font-size:9px;margin-bottom:12px}.stories-heading h2{font-size:30px}.stories-heading>p{font-size:11px;margin-top:15px}.story-track{border-radius:20px}.story-slide{grid-template-columns:minmax(0,1fr);padding:24px;gap:22px;align-content:start}.story-category{font-size:8px}.story-copy h3{font-size:29px;margin:14px 0 11px}.story-copy h3 br{display:none}.story-copy>p{max-width:none;font-size:12px}.story-duration{font-size:8px;margin-top:16px}.story-video{border-radius:12px}.stories-controls{padding-top:15px}.story-arrows{gap:10px}.story-counter{font-size:9px;min-width:47px}}
+@media(max-width:650px){.stories-controls{display:grid;grid-template-columns:1fr auto;gap:8px}.story-dots{grid-column:2;grid-row:1}.story-auto{grid-column:1/-1;grid-row:2;justify-self:start;margin-left:0;font-size:10px;padding:8px 13px}}
 
 /* QRIS sandbox checkout and private order recovery. */
 .payment-notice{font-size:12px;line-height:1.7;padding:12px 14px;background:var(--cream);border:1px solid #f1dfc0;border-radius:12px;margin:16px 0;color:var(--ink)}
