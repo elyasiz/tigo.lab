@@ -1,6 +1,6 @@
 # TIGO LAB
 
-Website katalog Montessori TIGO LAB dengan animasi dan simulasi belanja. Dibuat dengan HTML, CSS, dan JavaScript tanpa proses build.
+Website katalog Montessori TIGO LAB dengan animasi 3D dan checkout QRIS Midtrans sandbox. Tampilan memakai HTML, CSS, dan JavaScript; dua Vercel Functions menangani pembayaran dan konfirmasi server.
 
 ## Fitur
 
@@ -8,7 +8,9 @@ Website katalog Montessori TIGO LAB dengan animasi dan simulasi belanja. Dibuat 
 - Animasi cara bermain khusus untuk setiap produk, tersedia dari kartu, detail, dan produk unggulan. Video dimuat ketika diminta pengguna; kontrol putar/jeda tersedia dan video berhenti saat jendela ditutup.
 - Pencarian, filter aktivitas, pengurutan harga, dan detail produk.
 - Keranjang dengan perubahan jumlah dan penyimpanan lokal.
-- Simulasi checkout dan unduhan ringkasan demo.
+- QRIS dinamis sandbox dengan nominal yang dihitung server dari data produk bersama.
+- Pesanan privat, pemulihan checkout setelah halaman ditutup, dan pemeriksaan status otomatis.
+- Bukti pembayaran PDF otomatis setelah lunas terverifikasi, dengan logo dan font TIGO.
 - Animasi pembuka, pergantian produk unggulan, interaksi kartu, dan efek tambah ke keranjang.
 - Tampilan HP dan desktop, navigasi keyboard, serta dukungan pengurangan animasi.
 
@@ -20,21 +22,26 @@ Judul memakai Fredoka dan teks memakai Nunito, dipilih untuk mendekati gaya bula
 
 ## Menjalankan secara lokal
 
-Jalankan server HTTP statis dengan `dist` sebagai direktori root. Contoh jika Python tersedia:
+Pasang dependensi dengan versi pnpm pada `package.json`, kemudian jalankan pratinjau:
 
 ```sh
-python -m http.server 4173 --directory dist
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Lalu buka `http://localhost:4173`.
+Lalu buka `http://127.0.0.1:4180`. Tanpa konfigurasi server, checkout menampilkan bahwa akun sandbox belum terhubung. Untuk menguji seluruh alur secara lokal tanpa akun Midtrans, jalankan `node tools/dev-server.mjs --fixtures`. Mode ini memakai penyedia uji lokal dengan label jelas, bukan transaksi Midtrans, dan tidak dapat dijalankan di Vercel.
 
 ## Deploy ke Vercel
 
-Import repositori ini di Vercel. Konfigurasi `vercel.json` menentukan framework Other, tanpa instalasi atau build, dengan `dist` sebagai direktori output. Production branch menggunakan `main`.
+Proyek Vercel menggunakan framework Other, Node.js 24, `dist` sebagai direktori output, dan `main` sebagai production branch. Dependensi dipasang melalui Corepack/pnpm; tampilan tidak memerlukan proses build. Vercel membundel `api/payments.js` dan `api/midtrans.js` beserta aset PDF di `server/assets/`.
 
-## Status demo
+Konfigurasi yang diperlukan: `MIDTRANS_SERVER_KEY` khusus sandbox dan koneksi ke Blob Store **privat** yang mengisi `BLOB_READ_WRITE_TOKEN`. Tanpa keduanya, QRIS dinonaktifkan dengan pesan yang jelas; tidak ada pembayaran palsu atau fallback penyedia lokal di deployment. Lihat [panduan pembayaran sandbox](docs/payments-sandbox.md).
 
-Semua harga merupakan contoh. Checkout hanya menyimpan ringkasan pada browser pengguna dan tidak mengirim pesanan atau menerima pembayaran. Akun pelanggan nyata, admin, ongkir aktual, serta pembayaran belum diaktifkan. Detail bahan dan isi paket final perlu dikonfirmasi sebelum penjualan.
+## Status sandbox
+
+Semua harga merupakan contoh dan ongkir sandbox ditetapkan Rp0. Pengujian memakai simulator resmi Midtrans; jangan menggunakan aplikasi bank/e-wallet atau uang sungguhan. Tidak ada pengiriman barang. Data pesanan uji dan PDF disimpan privat di server ketika akun dan penyimpanan telah dihubungkan. Aktivasi produksi, harga jual final, stok, admin operasional, ongkir aktual, dan pengiriman email/WhatsApp berada di luar fitur sandbox ini.
+
+Jalankan `pnpm test` untuk pengujian perhitungan nominal, idempotensi, pemalsuan notifikasi, pencocokan transaksi, pemulihan koneksi, dan akses PDF. `node tools/check-receipt.mjs` menghasilkan PDF pemeriksaan 10 produk; gunakan `--stress` untuk nama/email panjang dan pagination. Pengujian lokal memakai kontrak Midtrans yang digantikan oleh penyedia uji; keberhasilannya tidak berarti koneksi ke akun Midtrans sudah diuji.
 
 Gambar berasal dari katalog produk TIGO LAB yang disediakan untuk proyek ini.
 

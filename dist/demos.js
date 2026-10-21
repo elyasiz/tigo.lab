@@ -1,5 +1,4 @@
-'use strict';
-const productDemos = {
+export const productDemos = {
   "M01": {
     "title": "Rakit, putar, jalankan.",
     "description": "Pasang roda, putar pengencang dengan obeng mainan, lalu dorong keretanya.",

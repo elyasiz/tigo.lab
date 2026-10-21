@@ -44,3 +44,57 @@ h1>.hero-word-orange{color:var(--orange)}
 .step:nth-child(2) .step-number{color:var(--orange-ink)}
 .step:nth-child(3) .step-number{color:#6d38c7}
 ::selection{background:var(--yellow);color:var(--ink)}
+
+/* QRIS sandbox checkout and private order recovery. */
+.payment-notice{font-size:12px;line-height:1.7;padding:12px 14px;background:var(--cream);border:1px solid #f1dfc0;border-radius:12px;margin:16px 0;color:var(--ink)}
+.payment-notice[data-ready=true]{background:var(--soft-blue);border-color:var(--line)}
+.payment-method{display:flex;gap:12px;align-items:center;border:2px solid var(--blue);background:var(--soft-blue);border-radius:12px;padding:14px;margin-top:22px}
+.payment-method>span:first-child{font-size:28px;color:var(--blue-ink)}
+.payment-method div{flex:1;min-width:0}
+.payment-method strong{display:block;font-size:14px}
+.payment-method div>span{display:block;font-size:11px;color:var(--muted)}
+.payment-method-check{font-size:20px;color:var(--blue-ink)}
+.field-optional{font-weight:400;color:var(--muted)}
+.sandbox-confirm{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.6;margin:20px 0}
+.sandbox-confirm input{width:18px;height:18px;margin-top:1px;flex-shrink:0;accent-color:var(--action-blue)}
+.payment-error{font-size:12px;line-height:1.7;padding:12px;background:#fff0ec;border:1px solid #f3c4b8;border-radius:10px;margin:14px 0;color:#8b2d17}
+.payment-dialog{width:580px;padding:32px;overflow-y:auto}
+.payment-dialog>.eyebrow{font-size:10px;color:var(--blue-ink);padding-right:35px}
+.payment-dialog h2{font-size:30px;margin-top:14px;line-height:1.2;padding-right:20px}
+.payment-status{width:max-content;max-width:100%;font-size:11px;font-weight:800;border-radius:50px;padding:7px 12px;background:var(--soft-blue);color:var(--blue-ink);margin:20px auto 10px;text-align:center}
+.payment-status[data-state=paid]{background:var(--soft-green);color:#14783b}
+.payment-status[data-state=failed],.payment-status[data-state=expired],.payment-status[data-state=review]{background:var(--cream);color:var(--orange-ink)}
+.payment-total{font-family:var(--heading);font-size:36px;font-weight:600;line-height:1.2;text-align:center;margin:14px 0 7px;letter-spacing:-.02em}
+.payment-order-id{text-align:center;overflow-wrap:anywhere;font-size:10px;color:var(--muted);letter-spacing:.03em}
+.payment-qr-area{text-align:center;margin:22px auto 12px;background:#fff;padding:14px;border:1px solid var(--line);border-radius:16px;width:max-content;max-width:100%}
+.payment-qr-area img{display:block;width:min(280px,36dvh);height:min(280px,36dvh);max-width:100%;object-fit:contain;margin:auto}
+.payment-qr-area img:not([src]){background:var(--soft-blue)}
+.payment-qr-area p{font-size:12px;font-weight:700;margin-top:12px;color:var(--muted)}
+.payment-message{font-size:12px;line-height:1.8;text-align:center;color:var(--muted);margin:20px 0}
+.payment-actions{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px 0}
+.payment-actions .button{font-size:12px;min-height:46px;padding:12px 16px}
+.button-outline{background:var(--paper);border-color:var(--line);color:var(--blue-ink)}
+.button-outline:hover{background:var(--soft-blue)}
+.payment-actions .text-link{font-size:11px;color:var(--blue-ink);text-align:center}
+.payment-recap{background:var(--soft-blue);border-radius:12px;padding:15px;margin-top:20px}
+#paymentCustomer{font-size:12px;font-weight:800;margin-bottom:10px;overflow-wrap:anywhere}
+.payment-recap .summary-item{padding:6px 0}
+.payment-recap .summary-item>span:first-child{max-width:74%}
+.payment-success-icon{border-radius:50%;width:56px;height:56px;margin:22px auto 12px;display:grid;place-items:center;background:var(--soft-green);color:#14783b;font-size:30px}
+.payment-dialog>.text-link{font-size:11px;margin-top:12px;color:var(--blue-ink)}
+.payment-dialog>.small-note{margin-top:10px}
+.resume-payment{position:fixed;right:22px;bottom:22px;z-index:45;border:1px solid var(--line);background:var(--action-blue);color:#fff;border-radius:50px;padding:13px 19px;font-size:12px;font-weight:800;box-shadow:0 5px 22px #11172b26;max-width:calc(100vw - 40px)}
+body:has(dialog[open]) .resume-payment{display:none}
+body:has(.resume-payment:not([hidden])) .toast{bottom:85px}
+@media(max-width:550px){
+  .payment-dialog{padding:26px 18px 20px;max-width:calc(100vw - 24px);border-radius:18px}
+  .payment-dialog h2{font-size:26px}
+  .payment-dialog>.eyebrow{font-size:8px}
+  .payment-total{font-size:32px}
+  .payment-notice{font-size:11px;padding:11px 12px}
+  .payment-status{font-size:10px}
+  .payment-actions .button{font-size:11px}
+  .payment-method{padding:12px;gap:9px}
+  .payment-method div>span{font-size:10px}
+  .resume-payment{bottom:16px;right:16px;font-size:11px;padding:12px 16px}
+}

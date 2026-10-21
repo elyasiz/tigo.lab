@@ -132,7 +132,7 @@ def update_manifest(keys):
     for key in keys:
         video,poster=paths(key)
         data[key].update(video=video.relative_to(ROOT/'dist').as_posix(),poster=poster.relative_to(ROOT/'dist').as_posix())
-    file.write_text("'use strict';\nconst productDemos = "+json.dumps(data,ensure_ascii=False,indent=2)+';\n',encoding='utf-8')
+    file.write_text("export const productDemos = "+json.dumps(data,ensure_ascii=False,indent=2)+';\n',encoding='utf-8')
 
 
 if __name__=='__main__':

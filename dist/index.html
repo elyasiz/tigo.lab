@@ -14,12 +14,11 @@
   <link rel="preload" href="assets/fonts/fredoka-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/nunito-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <script src="demos.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js" type="module"></script>
 </head>
 <body>
   <a class="skip-link" href="#katalog">Langsung ke katalog</a>
-  <div class="preview-bar"><span class="status-dot"></span> Preview katalog <span class="preview-divider">/</span> Harga contoh · pemesanan hanya simulasi</div>
+  <div class="preview-bar"><span class="status-dot"></span> Preview katalog <span class="preview-divider">/</span> QRIS sandbox · tanpa uang nyata</div>
   <header class="site-header">
     <div class="container nav-wrap">
       <a href="#beranda" class="brand" aria-label="TIGO LAB beranda"><img src="assets/tigo-logo.webp" alt="TIGO LAB" width="148" height="66"></a>
@@ -40,7 +39,7 @@
       <div class="catalog-meta"><p id="resultCount" aria-live="polite">Menampilkan 10 produk</p><span>Semua nominal adalah harga contoh</span></div><div id="productGrid" class="product-grid"></div><div id="emptySearch" class="empty-state" hidden><div class="empty-shapes" aria-hidden="true">○ △ □</div><h3>Belum ketemu yang kamu cari?</h3><p>Coba nama lain atau lihat semua pilihan aktivitas.</p><button id="resetSearch" class="button button-blue">Lihat semua produk</button></div>
     </section>
     <section class="play-section" id="tentang"><div class="container play-grid"><div class="play-visual reveal"><div class="play-circle" aria-hidden="true"></div><img src="assets/funnel.webp" alt="Sensory Funnel Play berisi corong, wadah dan alat tuang warna-warni" width="1000" height="1000" loading="lazy"><span class="play-sticker">Sedikit mencoba.<br>Banyak cerita.</span></div><div class="play-copy reveal"><div class="eyebrow">TIGO LAB</div><h2>Ruang untuk<br>“coba lagi, yuk.”</h2><p>Dari memasukkan manik, menyusun bentuk, sampai merakit kereta. Setiap pilihan mengajak anak terlibat dalam aktivitas yang bisa dilihat dan disentuh.</p><p>Jelajahi katalog sebagai referensi kegiatan untuk rumah dan kelas, lalu pilih aktivitas yang ingin kamu kenalkan.</p><a class="button button-dark" href="#katalog">Temukan aktivitasnya <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
-    <section class="how-section container" id="cara-pesan"><div class="section-heading reveal"><div><div class="eyebrow">DARI PILIHAN JADI RENCANA</div><h2>Mulai dengan tiga<br>langkah sederhana<span class="orange">.</span></h2></div><p>Coba alur pemesanannya di sini.<br>Belum ada pembayaran atau pengiriman nyata.</p></div><div class="steps"><article class="step reveal"><span class="step-number">01</span><div><h3>Temukan pilihanmu</h3><p>Jelajahi koleksi dan buka detail aktivitas yang menarik perhatian.</p></div></article><article class="step reveal"><span class="step-number">02</span><div><h3>Susun keranjang</h3><p>Tambahkan produk, atur jumlahnya, lalu lihat subtotal harga contoh.</p></div></article><article class="step reveal"><span class="step-number">03</span><div><h3>Coba pemesanannya</h3><p>Jalankan simulasi checkout dan unduh ringkasannya untuk ditinjau.</p></div></article></div><div class="faq-wrap"><h3>Yang perlu kamu tahu</h3><div class="faq-list"><details><summary>Apakah harga di katalog ini sudah final?<span aria-hidden="true">+</span></summary><p>Belum. Semua harga di preview ini merupakan contoh untuk mencoba tampilan dan alur belanja. Harga jual final ditetapkan TIGO LAB sebelum penjualan dibuka.</p></details><details><summary>Apa saja yang termasuk di setiap paket?<span aria-hidden="true">+</span></summary><p>Halaman detail menampilkan gambaran aktivitas berdasarkan katalog. Jumlah komponen, bahan pendamping, dan kelengkapan paket final masih perlu dikonfirmasi oleh tim TIGO LAB.</p></details><details><summary>Apakah simulasi ini mengirim pesanan ke TIGO LAB?<span aria-hidden="true">+</span></summary><p>Tidak. Keranjang dan ringkasan simulasi hanya tersimpan di browser yang kamu gunakan. Tidak ada pembayaran, pemesanan nyata, atau pesan yang dikirim.</p></details></div></div></section>
+    <section class="how-section container" id="cara-pesan"><div class="section-heading reveal"><div><div class="eyebrow">DARI PILIHAN JADI RENCANA</div><h2>Mulai dengan tiga<br>langkah sederhana<span class="orange">.</span></h2></div><p>Coba alur pemesanannya di sini.<br>Belum ada pembayaran atau pengiriman nyata.</p></div><div class="steps"><article class="step reveal"><span class="step-number">01</span><div><h3>Temukan pilihanmu</h3><p>Jelajahi koleksi dan buka detail aktivitas yang menarik perhatian.</p></div></article><article class="step reveal"><span class="step-number">02</span><div><h3>Susun keranjang</h3><p>Tambahkan produk, atur jumlahnya, lalu lihat subtotal harga contoh.</p></div></article><article class="step reveal"><span class="step-number">03</span><div><h3>Coba pemesanannya</h3><p>Uji QRIS sandbox, lalu unduh bukti pembayaran setelah status lunas terverifikasi.</p></div></article></div><div class="faq-wrap"><h3>Yang perlu kamu tahu</h3><div class="faq-list"><details><summary>Apakah harga di katalog ini sudah final?<span aria-hidden="true">+</span></summary><p>Belum. Semua harga di preview ini merupakan contoh untuk mencoba tampilan dan alur belanja. Harga jual final ditetapkan TIGO LAB sebelum penjualan dibuka.</p></details><details><summary>Apa saja yang termasuk di setiap paket?<span aria-hidden="true">+</span></summary><p>Halaman detail menampilkan gambaran aktivitas berdasarkan katalog. Jumlah komponen, bahan pendamping, dan kelengkapan paket final masih perlu dikonfirmasi oleh tim TIGO LAB.</p></details><details><summary>Apakah pembayaran ini menggunakan uang nyata?<span aria-hidden="true">+</span></summary><p>Tidak. Checkout menggunakan Midtrans sandbox untuk pengujian. Gunakan data contoh dan simulator Midtrans. Pesanan uji disimpan di server; tidak ada pengiriman barang. QRIS tersedia setelah akun sandbox terhubung.</p></details></div></div></section>
   </main>
   <footer class="site-footer"><div class="container footer-top"><a href="#beranda" class="brand"><img src="assets/tigo-logo.webp" alt="TIGO LAB" width="148" height="66" loading="lazy"></a><p>Bermain, mencoba, menemukan.<br>Satu aktivitas pada satu waktu.</p><a href="#beranda" class="back-top">Kembali ke atas <span aria-hidden="true">↑</span></a></div><div class="container footer-bottom"><span>© 2026 TIGO LAB</span><span>Preview interaktif · Referensi gambar dari katalog TIGO LAB</span><span>Made for curious minds <span class="orange" aria-hidden="true">✳</span></span></div></footer>
   <dialog id="animationDialog" class="animation-dialog" aria-labelledby="animationTitle" aria-describedby="animationDescription">
@@ -57,8 +56,48 @@
   </dialog>
   <dialog id="productDialog" class="product-dialog" aria-labelledby="detailTitle"><button class="close-button icon-button" data-close="productDialog" aria-label="Tutup detail produk">×</button><div id="productDetail"></div></dialog>
   <dialog id="cartDialog" class="cart-dialog" aria-labelledby="cartTitle"><div class="drawer-head"><div><div class="eyebrow">PILIHANMU</div><h2 id="cartTitle">Keranjang bermain</h2></div><button class="icon-button" data-close="cartDialog" aria-label="Tutup keranjang">×</button></div><div id="cartContents" class="cart-contents"></div><div id="cartSummary" class="cart-summary"></div></dialog>
-  <dialog id="checkoutDialog" class="checkout-dialog" aria-labelledby="checkoutTitle"><button class="close-button icon-button" data-close="checkoutDialog" aria-label="Tutup simulasi checkout">×</button><div class="eyebrow">SIMULASI PEMESANAN</div><h2 id="checkoutTitle">Coba langkah terakhir.</h2><p class="dialog-intro">Gunakan data contoh. Ringkasan hanya disimpan di browser ini.</p><form id="checkoutForm"><label for="demoName">Nama untuk simulasi</label><input id="demoName" name="demoName" placeholder="Contoh: Sekolah Ceria" required minlength="2" maxlength="80" autocomplete="off"><label for="demoCity">Kota tujuan contoh</label><select id="demoCity" name="demoCity" required><option value="">Pilih kota</option><option>Jakarta</option><option>Bandung</option><option>Surabaya</option><option>Tangerang</option><option>Bekasi</option><option>Bogor</option><option>Yogyakarta</option><option>Makassar</option><option>Denpasar</option><option>Kota lainnya</option></select><div id="checkoutSummary" class="checkout-summary"></div><p class="small-note">Ongkir menunggu konfirmasi. Tidak ada pembayaran atau pesanan nyata pada simulasi ini.</p><button type="submit" class="button button-blue full-width">Buat ringkasan demo <span aria-hidden="true">→</span></button></form></dialog>
-  <dialog id="successDialog" class="success-dialog" aria-labelledby="successTitle"><button class="close-button icon-button" data-close="successDialog" aria-label="Tutup ringkasan demo">×</button><div class="success-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></div><div class="eyebrow">SIMULASI SELESAI</div><h2 id="successTitle">Pilihanmu sudah<br>jadi satu cerita.</h2><p>Ringkasan demo tersimpan di browser ini.<br>Belum dikirim ke TIGO LAB.</p><div id="demoReceipt" class="demo-receipt"></div><button id="downloadReceipt" class="button button-blue full-width">Unduh ringkasan demo <span aria-hidden="true">↓</span></button><button class="text-link success-continue" data-close="successDialog">Kembali ke koleksi →</button></dialog>
+  <dialog id="checkoutDialog" class="checkout-dialog" aria-labelledby="checkoutTitle">
+    <button class="close-button icon-button" data-close="checkoutDialog" aria-label="Tutup checkout">×</button>
+    <div class="eyebrow">QRIS · MIDTRANS SANDBOX</div><h2 id="checkoutTitle">Satu langkah lagi.</h2>
+    <p class="dialog-intro">Gunakan data contoh untuk menguji pembayaran. Harga contoh, tanpa uang nyata atau pengiriman barang.</p>
+    <div id="checkoutAvailability" class="payment-notice" role="status">Memeriksa ketersediaan QRIS sandbox…</div>
+    <form id="checkoutForm">
+      <label for="checkoutName">Nama penerima</label><input id="checkoutName" name="name" placeholder="Contoh: Sekolah Ceria" required minlength="2" maxlength="80" autocomplete="off">
+      <label for="checkoutEmail">Email</label><input id="checkoutEmail" name="email" type="email" placeholder="contoh@example.com" required maxlength="160" autocomplete="off">
+      <label for="checkoutPhone">Nomor telepon <span class="field-optional">(opsional)</span></label><input id="checkoutPhone" name="phone" type="tel" placeholder="Contoh: 081234567890" maxlength="24" autocomplete="off">
+      <label for="checkoutCity">Kota tujuan contoh</label><input id="checkoutCity" name="city" placeholder="Contoh: Jakarta" required minlength="2" maxlength="80" autocomplete="off">
+      <div class="payment-method"><span aria-hidden="true">▦</span><div><strong>QRIS</strong><span>Nominal otomatis sesuai total pesanan</span></div><span class="payment-method-check" aria-hidden="true">✓</span></div>
+      <div id="checkoutSummary" class="checkout-summary"></div>
+      <label class="sandbox-confirm"><input id="sandboxConfirm" type="checkbox" required><span>Saya memahami ini pengujian sandbox dan tidak membayar dengan uang nyata.</span></label>
+      <p id="checkoutError" class="payment-error" role="alert" hidden></p>
+      <button id="checkoutSubmit" type="submit" class="button button-blue full-width" disabled>Buat QRIS sandbox</button>
+    </form>
+  </dialog>
+  <dialog id="paymentDialog" class="payment-dialog" aria-labelledby="paymentHeading" aria-describedby="paymentNotice">
+    <button class="close-button icon-button" data-close="paymentDialog" aria-label="Tutup pembayaran">×</button>
+    <div class="eyebrow">TIGO LAB · MIDTRANS SANDBOX</div>
+    <h2 id="paymentHeading">Bayar dengan QRIS.</h2>
+    <p id="paymentNotice" class="payment-notice">Mode uji. Gunakan simulator Midtrans; jangan bayar dengan aplikasi bank atau e-wallet sungguhan.</p>
+    <div id="paymentStatus" class="payment-status" role="status">Menyiapkan pembayaran</div>
+    <div id="paymentSuccessIcon" class="payment-success-icon" aria-hidden="true" hidden>✓</div>
+    <div id="paymentAmount" class="payment-total"></div><div id="paymentOrder" class="payment-order-id"></div>
+    <div id="paymentQrArea" class="payment-qr-area" hidden><img id="paymentQrImage" alt="QRIS sandbox untuk pengujian" width="280" height="280"><p id="paymentCountdown"></p></div>
+    <p id="paymentMessage" class="payment-message"></p>
+    <p id="paymentError" class="payment-error" role="alert" hidden></p>
+    <div class="payment-actions">
+      <a id="paymentSimulator" class="button button-blue full-width" href="https://simulator.sandbox.midtrans.com/v2/qris/index" target="_blank" rel="noopener noreferrer" hidden>Buka simulator Midtrans ↗</a>
+      <button id="paymentCopyQrUrl" class="button button-outline full-width" hidden>Salin URL QRIS untuk simulator</button>
+      <button id="paymentCheck" class="button button-outline full-width">Cek status pembayaran</button>
+      <button id="paymentDownloadQr" class="text-link" hidden>Unduh QRIS sandbox ↓</button>
+      <button id="paymentDownloadReceipt" class="button button-blue full-width" hidden>Unduh bukti pembayaran PDF ↓</button>
+      <button id="paymentCancel" class="text-link" hidden>Batalkan QRIS &amp; ubah pesanan</button>
+      <button id="paymentRetry" class="button button-blue full-width" hidden>Buat QRIS baru</button>
+    </div>
+    <div class="payment-recap"><div id="paymentCustomer"></div><div id="paymentItems"></div></div>
+    <button id="paymentCopyLink" class="text-link">Salin tautan pesanan pribadi ↗</button>
+    <p class="small-note">Pesanan uji tersimpan di server. Tautan pribadi memberi akses ke pesanan dan bukti pembayaran; simpan untuk diri sendiri.</p>
+  </dialog>
+  <button id="resumePayment" class="resume-payment" hidden>Buka pembayaran terakhir ↗</button>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
