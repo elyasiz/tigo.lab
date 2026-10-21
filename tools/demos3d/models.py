@@ -98,32 +98,81 @@ def funnel():
     key(spoon,7.5,loc=(-1.75,-1.45,.4),rot=(0,0,-.5))
 
 def dino():
-    stage_scene((0,0,1.45),8.6,22,25)
+    stage_scene((.10,0,1.45),8.8,20,29)
     outline=[(220,562),(210,450),(225,366),(241,337),(231,310),(202,296),(185,303),(209,275),(244,266),(285,273),(317,298),(330,333),(333,386),(344,427),(360,444),(440,429),(510,436),(584,458),(642,502),(698,558),(746,582),(790,569),(811,555),(801,591),(765,613),(705,629),(643,622),(606,639),(582,629),(576,615),(512,619),(508,654),(480,665),(453,652),(451,622),(372,611),(369,646),(340,654),(318,637),(318,607),(273,591)]
     def coord(p):return ((p[0]-500)/125,(680-p[1])/125+.22)
-    body=profile([coord(p) for p in reversed(outline)],.17,GREEN,name='Dinosaur board',bevel=.045);body.rotation_euler.x=math.pi/2
-    box((0,.05,.13),(5.9,1.35,.23),'#303a34',.18)
-    lathe((2.35,-.10,.26),[(.50,.02),(.50,-.10),(.37,-.13),(.34,-.06),(.45,.01)],'#303a34',name='Tray recess')
-    colors=[YELLOW,ORANGE,PINK,GREEN,CYAN]
-    for i,color in enumerate(colors):
-        x,z=coord((344+i*61,542))
-        cutter=cyl((x,0,z),.205,.7,WHITE,rot=(math.pi/2,0,0),bevel=0,n=48)
-        cut(body,cutter)
-        disc=cyl((0,0,0),.19,.16,color,bevel=.025)
-        start=.5+i*1.3
-        key(disc,0,loc=(-2.05+i*.65,-1.37,.19),rot=(0,0,0))
-        key(disc,start,loc=(-2.05+i*.65,-1.37,.19),rot=(0,0,0))
-        key(disc,start+.65,loc=(x,-.62,z),rot=(math.pi/2,0,.15))
-        key(disc,start+1.12,loc=(x,-.025,z),rot=(math.pi/2,0,0))
-        cyl((-2.05+i*.65,-1.37,.09),.19,.10,color,bevel=.02)
+    body=profile([coord(p) for p in reversed(outline)],.28,GREEN,name='Dinosaur board',bevel=.045);body.rotation_euler.x=math.pi/2
+    box((.15,.10,.14),(6.4,1.60,.28),'#252a29',.18,name='Black dinosaur base')
+    # One continuous opening shows coins sliding from the neck toward the tail.
+    chute=[(-1.48,1.60),(-.60,1.43),(.35,1.27),(1.20,1.10),(2.30,.91)]
+    window=list(reversed([(x,z+.24) for x,z in chute]+[(x,z-.24) for x,z in reversed(chute)]))
+    cutter=profile(window,.90,WHITE,name='Continuous coin window',bevel=.055);cutter.rotation_euler.x=math.pi/2
+    cut(body,cutter)
+    backing=profile(window,.07,'#202624',name='Dark internal coin chute',bevel=.025);backing.rotation_euler.x=math.pi/2;backing.location.y=.23
+    curve([(x,.07,z-.22) for x,z in chute],.035,'#181c1b',name='Descending coin guide')
+    cyl((2.70,.05,.31),.72,.10,'#202424',bevel=.025,n=72,name='Black round collection tray floor')
+    lathe((2.70,.05,.36),[(.72,-.05),(.72,.13),(.62,.13),(.62,-.01)],'#252a29',n=72,name='Black round collection tray wall')
+    destinations=[(2.48,-.18,.40),(2.83,-.10,.40),(2.51,.17,.40),(2.82,.22,.40)]
+    for i,color in enumerate((YELLOW,ORANGE,PINK,CYAN)):
+        coin=empty(f'Rolling coin {i+1}')
+        cyl((0,0,0),.18,.11,color,coin,bevel=.022,n=64,name='Round play coin')
+        torus((0,0,.057),.135,.008,'#fff1ba',coin,name='Coin face rim')
+        curve([(-.055,-.065,.061),(.055,.065,.061)],.010,'#fff1ba',coin,name='Coin rolling marker')
+        source=(-2.05+i*.57,-1.42,.13);start=.70+i*2.20
+        key(coin,0,loc=source,rot=(0,0,0));key(coin,start,loc=source,rot=(0,0,0))
+        key(coin,start+.55,loc=(-2.66,-.24,3.13),rot=(math.pi/2,0,0))
+        key(coin,start+.85,loc=(-2.23,0,2.98),rot=(math.pi/2,.4,0))
+        key(coin,start+1.20,loc=(-1.95,0,2.43),rot=(math.pi/2,2.0,0))
+        for offset,(x,z) in zip((1.55,2.00,2.45,2.85,3.10),chute):
+            key(coin,start+offset,loc=(x,0,z),rot=(math.pi/2,2+(x+1.48)/.18,0))
+        key(coin,start+3.32,loc=(2.68,.02,.80),rot=(math.pi/2,24,0))
+        key(coin,start+3.57,loc=(destinations[i][0],destinations[i][1],.51),rot=(.65,.3,i*.8))
+        key(coin,start+3.85,loc=destinations[i],rot=(0,0,i*.8))
+        for fcurve in coin.animation_data.action.fcurves:
+            for point in fcurve.keyframe_points:point.interpolation='LINEAR'
     for i,color in enumerate(('#76533e','#76533e',PINK,GREEN,CYAN)):
         x,z=coord((360+i*49,427+max(0,i-2)*11))
         points=[(x-.17,z),(x-.19,z+.23),(x,z+.37),(x+.18,z+.23),(x+.16,z)]
         plate=profile(points,.14,color,bevel=.025,name='Dinosaur back shape');plate.rotation_euler.x=math.pi/2;plate.location.y=.015
     x,z=coord((286,312))
     sphere((x,-.11,z),(.17,.03,.17),INK);sphere((x,-.143,z),(.135,.015,.135),'#d9f1e2');sphere((x+.025,-.164,z-.005),(.065,.015,.077),INK)
-    mouth=profile([coord(p) for p in ((198,327),(251,350),(214,361))],.025,INK,bevel=.01);mouth.rotation_euler.x=math.pi/2;mouth.location.y=-.103
+    mouth=profile([coord(p) for p in ((198,327),(251,350),(214,361))],.025,INK,bevel=.01);mouth.rotation_euler.x=math.pi/2;mouth.location.y=.18
     x,z=coord((226,353));sphere((x,-.13,z),(.11,.016,.035),PINK)
+
+def stacker():
+    stage_scene((0,0,1.65),8.0,-28,30)
+    box((0,0,.15),(5.8,1.70,.30),'#84cdd1',.20,name='Rounded turquoise stacker base')
+    columns=[(-1.85,'square',['#84cdd1','#ed9345','#f0cc40']),
+             (0,'hex',['#f0cc40','#ed9345','#dda3b6','#84cdd1','#a58ac4']),
+             (1.85,'circle',['#ed9345','#a58ac4','#84cdd1','#f0cc40','#dda3b6'])]
+    pitch=.48;bottom=.29;top=3.38;n=72;m=292
+    for column,(x,kind,colors) in enumerate(columns):
+        verts=[];faces=[]
+        # Broad, smooth helical ridges match the rounded yellow reference posts.
+        for iz in range(m+1):
+            z=bottom+(top-bottom)*iz/m
+            for j in range(n):
+                theta=j*math.tau/n
+                ridge=((1+math.cos(theta-(z-bottom)*math.tau/pitch))/2)**2.4
+                radius=.195+.125*ridge
+                verts.append((x+radius*math.cos(theta),radius*math.sin(theta),z))
+        for iz in range(m):
+            for j in range(n):
+                k=(j+1)%n
+                faces.append((iz*n+j,iz*n+k,(iz+1)*n+k,(iz+1)*n+j))
+        faces.extend((tuple(range(n-1,-1,-1)),tuple(m*n+j for j in range(n))))
+        post=mesh('Chunky rounded yellow screw post',verts,faces,'#f1cb35')
+        post.data.polygons[-1].use_smooth=False;post.data.polygons[-2].use_smooth=False
+        for i,color in enumerate(colors):
+            block=ring((0,0,0),.55 if kind=='square' else .53 if kind=='hex' else .59,.34,.48,color,kind=kind,n=72)
+            block.name=f'{kind.title()} nut {i+1}'
+            start=.55+i*1.46+column*.12;end=start+3.60;target=.30+.24+i*.48
+            visible(block,start,12.2)
+            key(block,start,loc=(x,0,3.64),rot=(0,0,(3.64-target)*math.tau/pitch))
+            key(block,end,loc=(x,0,target),rot=(0,0,0))
+            for fcurve in block.animation_data.action.fcurves:
+                for point in fcurve.keyframe_points:point.interpolation='LINEAR'
+
 
 def wooden_face():
     head=cyl((0,0,.27),1.10,.13,CREAM,n=96,bevel=.025,name='Wooden face board');head.scale.y=1.10

@@ -70,6 +70,7 @@ def ring(loc,outer,inner,depth,color,parent=None,kind='circle',n=48):
     theta=[j*2*math.pi/n for j in range(n)]
     def radius(t):
         if kind=='square':return outer/(abs(math.cos(t))**12+abs(math.sin(t))**12)**(1/12)
+        if kind=='hex':return outer/math.cos((t+math.pi/6)%(math.pi/3)-math.pi/6)
         if kind=='triangle':return outer/math.cos((t+math.pi/3)%(2*math.pi/3)-math.pi/3)
         return outer
     rings=[[(radius(t)*math.cos(t),radius(t)*math.sin(t),z) for t in theta] for z in (-depth/2,depth/2)]

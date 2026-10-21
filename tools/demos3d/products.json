@@ -47,26 +47,27 @@
   "M04": {
     "slug": "dino",
     "name": "Feed the Dino",
-    "title": "Pilih, cocokkan, pasang.",
-    "description": "Cocokkan keping berwarna dengan urutan slot pada media dinosaurus.",
+    "title": "Masukkan, luncurkan, tampung.",
+    "description": "Koin bulat masuk lewat mulut dinosaurus, meluncur menuju ekor, lalu terkumpul di wadah hitam.",
     "steps": [
-      "Pilih keping warna.",
-      "Cocokkan dengan slot pada dinosaurus.",
-      "Lengkapi urutan warna satu per satu."
+      "Masukkan koin bulat ke mulut Dino.",
+      "Amati koin meluncur menuju ekor.",
+      "Koin keluar ke wadah hitam di bawah ekor."
     ],
     "breaks": [
-      1.6,
-      5.7
-    ]
+      1.7,
+      8.6
+    ],
+    "duration": 12
   },
   "M05": {
     "slug": "hair-cutting",
     "name": "Hair Cutting Practice",
     "title": "Rapikan, gunting, coba lagi.",
-    "description": "Latih gerakan menggunting pada benang rambut permainan dengan pendampingan.",
+    "description": "Pura-pura menjadi penata rambut: rapikan dan gunting rambut permainan dengan pendampingan.",
     "steps": [
-      "Rapikan benang rambut permainan.",
-      "Gunting beberapa helai benang.",
+      "Rapikan rambut permainan.",
+      "Gunting beberapa helai rambut.",
       "Coba potongan dengan panjang berbeda."
     ],
     "breaks": [
@@ -130,9 +131,9 @@
     ],
     "breaks": [
       1.35,
-      8.45
+      10.6
     ],
-    "duration": 11
+    "duration": 12
   },
   "M10": {
     "slug": "shoe",

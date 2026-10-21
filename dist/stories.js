@@ -7,7 +7,7 @@ export function initializeStories({reduced=()=>false}={}){
   const dots=[...section.querySelectorAll('[data-story]')];
   const previous=section.querySelector('#storyPrev'),next=section.querySelector('#storyNext');
   const announcement=section.querySelector('#storyAnnouncement');
-  const names=['Eksplorasi sensori','Eksplorasi energi'];
+  const names=['Eksplorasi sensori','Eksplorasi Energi Gerak Jadi Listrik'];
   const expectedPauses=new WeakSet();
   let active=0,scrollFrame,inView=false,automatic=!reduced(),soundBlocked=false;
   let audio={muted:false,volume:1};

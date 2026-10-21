@@ -1,9 +1,4 @@
-"""Compose all ten demos with the website's brand colors and fonts.
-
-Requires Pillow with WOFF2 support, NumPy for Stacker, and FFmpeg/imageio-ffmpeg.
-The nine Blender sequences come from render_3d_demos.py. Stacker retains its mesh
-animation, rendered without text so all ten products share the same video layout.
-"""
+"""Compose the ten Blender demos with TIGO colors and fonts, using Pillow and FFmpeg."""
 from pathlib import Path
 from functools import lru_cache
 import os,sys,json,argparse,subprocess,shutil,time,re,math
@@ -59,7 +54,6 @@ def template(product_id,step):
     d.ellipse((62,858,104,900),fill=ACCENTS[step])
     d.text((83,879),str(step+1),font=font(24,weight=900),fill=INK,anchor='mm')
     d.text((122,879),item['steps'][step],font=fit(item['steps'][step],28,765,weight=750),fill=INK,anchor='lm')
-    d.text((58,941),'Ilustrasi 3D berdasarkan foto katalog',font=font(17),fill=MUTED,anchor='lm')
     for i in range(3):
         d.rounded_rectangle((758+i*49,934,793+i*49,940),radius=3,
                             fill=ACCENTS[i] if i<=step else TOKENS['line'])
@@ -68,9 +62,6 @@ def template(product_id,step):
 
 
 def load_stage(product_id,path,t):
-    if product_id=='M09':
-        from demos3d.stacker_stage import stage_frame
-        return stage_frame(t,paper=PAPER,cream=TOKENS['cream'])
     with Image.open(path) as image:return image.convert('RGBA')
 
 
@@ -93,17 +84,16 @@ def get_ffmpeg():
 
 def paths(product_id):
     slug=DATA[product_id]['slug']
-    return ROOT/f'dist/assets/videos/{slug}-3d-brand.mp4',ROOT/f'dist/assets/{slug}-3d-brand-poster.webp'
+    return ROOT/f'dist/assets/videos/{slug}-3d-play.mp4',ROOT/f'dist/assets/{slug}-3d-play-poster.webp'
 
 
 def export(product_id,folder):
     item=DATA[product_id];dest,poster=paths(product_id)
     duration=item.get('duration',10);frame_count=round(duration*FPS)
     frames=[folder/f'frame-{i:04}.png' for i in range(1,frame_count+1)]
-    if product_id!='M09':
-        marker=json.loads((folder/'complete.json').read_text())
-        if marker.get('preview',True) or marker.get('rendering',False):raise RuntimeError(f'{product_id}: render is still in progress')
-        if not all(p.exists() for p in frames):raise RuntimeError(f'{product_id}: render is incomplete')
+    marker=json.loads((folder/'complete.json').read_text())
+    if marker.get('preview',True) or marker.get('rendering',False):raise RuntimeError(f'{product_id}: render is still in progress')
+    if not all(p.exists() for p in frames):raise RuntimeError(f'{product_id}: render is incomplete')
     ffmpeg=get_ffmpeg()
     temporary=QA/f'{product_id}-brand-export.mp4'
     cmd=[ffmpeg,'-hide_banner','-y','-f','rawvideo','-pix_fmt','rgb24','-s','960x960','-r',str(FPS),'-i','pipe:0','-an',
@@ -132,6 +122,9 @@ def update_manifest(keys):
     for key in keys:
         video,poster=paths(key)
         data[key].update(video=video.relative_to(ROOT/'dist').as_posix(),poster=poster.relative_to(ROOT/'dist').as_posix())
+        for field in ('title','description','steps'):
+            if field in DATA[key]:data[key][field]=DATA[key][field]
+        data[key].pop('note',None)
     file.write_text("export const productDemos = "+json.dumps(data,ensure_ascii=False,indent=2)+';\n',encoding='utf-8')
 
 
@@ -151,12 +144,13 @@ if __name__=='__main__':
         deadline=time.monotonic()+1800
         for key in keys:
             folder=Path(args.frames)/key
-            if args.watch and key!='M09':
+            if args.watch:
                 print(f'Waiting for {key} render...',flush=True)
                 while True:
                     try:
                         marker=json.loads((folder/'complete.json').read_text())
-                        ready=not marker.get('preview',True) and not marker.get('rendering',False) and (folder/'frame-0240.png').exists()
+                        final_frame=round(DATA[key].get('duration',10)*FPS)
+                        ready=not marker.get('preview',True) and not marker.get('rendering',False) and (folder/f'frame-{final_frame:04}.png').exists()
                     except (FileNotFoundError,json.JSONDecodeError):ready=False
                     if ready:break
                     if time.monotonic()>deadline:raise RuntimeError('Render did not complete within 30 minutes')

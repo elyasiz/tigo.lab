@@ -7,9 +7,8 @@ export const productDemos = {
       "Putar pengencang dengan obeng mainan.",
       "Dorong kereta yang sudah dirakit."
     ],
-    "video": "assets/videos/train-3d-brand.mp4",
-    "poster": "assets/train-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/train-3d-play.mp4",
+    "poster": "assets/train-3d-play-poster.webp"
   },
   "M02": {
     "title": "Masukkan, geser, rangkai.",
@@ -19,9 +18,8 @@ export const productDemos = {
       "Masukkan ujung tali ke lubang manik.",
       "Geser dan ulangi pola warna."
     ],
-    "video": "assets/videos/beads-3d-brand.mp4",
-    "poster": "assets/beads-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/beads-3d-play.mp4",
+    "poster": "assets/beads-3d-play-poster.webp"
   },
   "M03": {
     "title": "Sendok, tuang, amati.",
@@ -31,33 +29,30 @@ export const productDemos = {
       "Tuang perlahan ke corong.",
       "Amati bahan terkumpul di wadah."
     ],
-    "video": "assets/videos/funnel-3d-brand.mp4",
-    "poster": "assets/funnel-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/funnel-3d-play.mp4",
+    "poster": "assets/funnel-3d-play-poster.webp"
   },
   "M04": {
-    "title": "Pilih, cocokkan, pasang.",
-    "description": "Cocokkan keping berwarna dengan urutan slot pada media dinosaurus.",
+    "title": "Masukkan, luncurkan, tampung.",
+    "description": "Koin bulat masuk lewat mulut dinosaurus, meluncur menuju ekor, lalu terkumpul di wadah hitam.",
     "steps": [
-      "Pilih keping warna.",
-      "Cocokkan dengan slot pada dinosaurus.",
-      "Lengkapi urutan warna satu per satu."
+      "Masukkan koin bulat ke mulut Dino.",
+      "Amati koin meluncur menuju ekor.",
+      "Koin keluar ke wadah hitam di bawah ekor."
     ],
-    "video": "assets/videos/dino-3d-brand.mp4",
-    "poster": "assets/dino-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/dino-3d-play.mp4",
+    "poster": "assets/dino-3d-play-poster.webp"
   },
   "M05": {
     "title": "Rapikan, gunting, coba lagi.",
-    "description": "Latih gerakan menggunting pada benang rambut permainan dengan pendampingan.",
+    "description": "Pura-pura menjadi penata rambut: rapikan dan gunting rambut permainan dengan pendampingan.",
     "steps": [
-      "Rapikan benang rambut permainan.",
-      "Gunting beberapa helai benang.",
+      "Rapikan rambut permainan.",
+      "Gunting beberapa helai rambut.",
       "Coba potongan dengan panjang berbeda."
     ],
-    "video": "assets/videos/hair-cutting-3d-brand.mp4",
-    "poster": "assets/hair-cutting-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/hair-cutting-3d-play.mp4",
+    "poster": "assets/hair-cutting-3d-play-poster.webp"
   },
   "M06": {
     "title": "Pilih warna, hias donat.",
@@ -67,9 +62,8 @@ export const productDemos = {
       "Pasangkan hiasan pada donat.",
       "Coba kombinasi dekorasi yang berbeda."
     ],
-    "video": "assets/videos/donut-3d-brand.mp4",
-    "poster": "assets/donut-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/donut-3d-play.mp4",
+    "poster": "assets/donut-3d-play-poster.webp"
   },
   "M07": {
     "title": "Ronce rambut warna-warni.",
@@ -79,9 +73,8 @@ export const productDemos = {
       "Masukkan manik ke ujung tali rambut.",
       "Geser dan rangkai pola warnanya."
     ],
-    "video": "assets/videos/hair-beading-3d-brand.mp4",
-    "poster": "assets/hair-beading-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/hair-beading-3d-play.mp4",
+    "poster": "assets/hair-beading-3d-play-poster.webp"
   },
   "M08": {
     "title": "Belanja kecil, cerita besar.",
@@ -91,9 +84,8 @@ export const productDemos = {
       "Tekan angka pada kasir mainan.",
       "Bayar dan simpan koin mainan."
     ],
-    "video": "assets/videos/cash-register-3d-brand.mp4",
-    "poster": "assets/cash-register-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/cash-register-3d-play.mp4",
+    "poster": "assets/cash-register-3d-play-poster.webp"
   },
   "M10": {
     "title": "Masukkan, silangkan, rapikan.",
@@ -103,9 +95,8 @@ export const productDemos = {
       "Silangkan ke lubang berikutnya.",
       "Ulangi dan rapikan susunan tali."
     ],
-    "video": "assets/videos/shoe-3d-brand.mp4",
-    "poster": "assets/shoe-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D berdasarkan foto katalog."
+    "video": "assets/videos/shoe-3d-play.mp4",
+    "poster": "assets/shoe-3d-play-poster.webp"
   },
   "M09": {
     "title": "Putar, turun, susun.",
@@ -115,8 +106,7 @@ export const productDemos = {
       "Putar dan turunkan mengikuti ulir.",
       "Susun bentuk satu per satu."
     ],
-    "video": "assets/videos/stacker-3d-brand.mp4",
-    "poster": "assets/stacker-3d-brand-poster.webp",
-    "note": "Ilustrasi cara bermain dengan model 3D sederhana."
+    "video": "assets/videos/stacker-3d-play.mp4",
+    "poster": "assets/stacker-3d-play-poster.webp"
   }
 };

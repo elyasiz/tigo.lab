@@ -57,7 +57,6 @@ function openProductDemo(id){
   $('#animationProductName').textContent=product.name;
   $('#animationTitle').textContent=demo.title;
   $('#animationDescription').textContent=demo.description;
-  $('#animationNote').textContent=demo.note;
   $('#animationSteps').replaceChildren(...demo.steps.map(text=>{const item=document.createElement('li');item.textContent=text;return item;}));
   $('#animationError').hidden=true;
   $('#animationDownload').href=demo.video;
