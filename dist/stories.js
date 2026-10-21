@@ -6,35 +6,44 @@ export function initializeStories({reduced=()=>false}={}){
   const videos=slides.map(slide=>slide.querySelector('video'));
   const dots=[...section.querySelectorAll('[data-story]')];
   const previous=section.querySelector('#storyPrev'),next=section.querySelector('#storyNext');
-  const autoButton=section.querySelector('#storyAuto'),autoLabel=section.querySelector('#storyAutoLabel');
   const announcement=section.querySelector('#storyAnnouncement');
   const names=['Eksplorasi sensori','Eksplorasi energi'];
   const expectedPauses=new WeakSet();
-  let active=0,scrollFrame,inView=false,automatic=!reduced();
+  let active=0,scrollFrame,inView=false,automatic=!reduced(),soundBlocked=false;
+  let audio={muted:false,volume:1};
   function pauseVideo(video){
     if(!video.paused){expectedPauses.add(video);video.pause();}
   }
   function pauseStories(){videos.forEach(pauseVideo);}
-  function updatePlaybackControl(){
-    autoButton.setAttribute('aria-pressed',String(automatic));
-    autoButton.setAttribute('aria-label',automatic?'Jeda pemutaran otomatis':'Mulai pemutaran otomatis');
-    autoLabel.textContent=automatic?'Jeda otomatis':'Putar otomatis';
-    autoButton.querySelector('path').setAttribute('d',automatic?'M8 5v14M16 5v14':'m9 5 11 7-11 7z');
+  function updateAnnouncementMode(){
     // Repeating slides should not interrupt a screen reader every ten seconds.
     announcement.setAttribute('aria-live',automatic?'off':'polite');
+  }
+  function syncAudio(muted,volume=audio.volume){
+    audio={muted,volume};
+    videos.forEach(video=>{video.muted=muted;video.volume=volume;});
+  }
+  function playbackFailed(video,error){
+    // A hidden tab or slide change can abort an outstanding play request.
+    if(error.name==='AbortError'||video!==videos[active]||!canPlay())return;
+    if(error.name==='NotAllowedError'&&!video.muted){
+      // Respect browser policy: keep the carousel moving silently until a real
+      // visitor interaction permits sound. Never change browser permissions.
+      soundBlocked=true;syncAudio(true);
+      video.play().catch(failure=>{
+        if(failure.name!=='AbortError'&&video===videos[active]&&canPlay())setAutomatic(false);
+      });
+    }else setAutomatic(false);
   }
   function canPlay(){return automatic&&inView&&!document.hidden&&!document.querySelector('dialog[open]');}
   function playActive(){
     if(!canPlay())return;
     const video=videos[active];
     if(video.ended)video.currentTime=0;
-    video.play().catch(error=>{
-      // Switching slides or leaving the viewport can abort an outstanding play.
-      if(error.name!=='AbortError'&&video===videos[active]&&canPlay())setAutomatic(false);
-    });
+    video.play().catch(error=>playbackFailed(video,error));
   }
   function setAutomatic(enabled){
-    automatic=enabled;updatePlaybackControl();
+    automatic=enabled;updateAnnouncementMode();
     if(automatic)playActive();else pauseStories();
   }
   function update(index){
@@ -55,7 +64,6 @@ export function initializeStories({reduced=()=>false}={}){
     track.scrollTo({left:target*track.clientWidth,behavior:reduced()?'instant':'smooth'});
     if(target===active)playActive();
   }
-  autoButton.addEventListener('click',()=>setAutomatic(!automatic));
   previous.addEventListener('click',()=>goTo(active-1));
   next.addEventListener('click',()=>goTo(active+1));
   dots.forEach(dot=>dot.addEventListener('click',()=>goTo(Number(dot.dataset.story))));
@@ -82,7 +90,7 @@ export function initializeStories({reduced=()=>false}={}){
     });
     video.addEventListener('play',()=>{
       if(index!==active||!inView||document.hidden){pauseVideo(video);return;}
-      if(!automatic){automatic=true;updatePlaybackControl();}
+      if(!automatic){automatic=true;updateAnnouncementMode();}
     });
     video.addEventListener('error',()=>{
       video.closest('.story-media').querySelector('.story-error').hidden=false;
@@ -90,9 +98,20 @@ export function initializeStories({reduced=()=>false}={}){
     });
     // Keep a visitor's sound/volume choice consistent across both films.
     video.addEventListener('volumechange',()=>{
-      if(index===active)videos.forEach(other=>{if(other!==video){other.muted=video.muted;other.volume=video.volume;}});
+      if(index===active&&(video.muted!==audio.muted||video.volume!==audio.volume)){
+        soundBlocked=false;syncAudio(video.muted,video.volume);
+      }
     });
   });
+  function enableSoundAfterInteraction(event){
+    if(!event.isTrusted||!soundBlocked)return;
+    if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;
+    // Let native player controls honor the visitor's own mute/volume choice.
+    if(event.target instanceof Element&&event.target.closest('video'))return;
+    soundBlocked=false;syncAudio(false);playActive();
+  }
+  document.addEventListener('click',enableSoundAfterInteraction,true);
+  document.addEventListener('keydown',enableSoundAfterInteraction,true);
   // Only one video on the page may play at a time, including product demos.
   document.addEventListener('play',event=>{
     if(event.target instanceof HTMLVideoElement)document.querySelectorAll('video').forEach(video=>{if(video!==event.target)pauseVideo(video);});
@@ -108,6 +127,6 @@ export function initializeStories({reduced=()=>false}={}){
   const respectMotionPreference=()=>{if(reduced())setAutomatic(false);};
   document.querySelector('#motionToggle')?.addEventListener('click',respectMotionPreference);
   matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',respectMotionPreference);
-  updatePlaybackControl();
+  updateAnnouncementMode();
   update(0);
 }
