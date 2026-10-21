@@ -192,7 +192,8 @@ body:has(.resume-payment:not([hidden])) .toast{bottom:85px}
 .card-demo-button{align-self:flex-start}
 .step h3{font-size:21px}
 .step-number{font-size:14px}
-.faq-list summary{font-size:16px;line-height:1.6}
+.faq-list summary{display:grid;grid-template-columns:minmax(0,1fr) 24px;font-size:16px;line-height:1.6}
+.faq-list summary>span{width:24px;line-height:1.2;text-align:center}
 .footer-top>p,.back-top,.play-sticker{font-size:14px}
 .footer-bottom{font-size:12px;line-height:1.75}
 .detail-copy>.detail-description,.animation-dialog>p:not(.small-note),.dialog-intro,.success-dialog>p,.cart-empty p{font-size:16px;line-height:1.75}
