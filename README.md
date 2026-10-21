@@ -40,9 +40,11 @@ Gambar berasal dari katalog produk TIGO LAB yang disediakan untuk proyek ini.
 
 ## Animasi cara bermain
 
-Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Semua produk memiliki animasi dengan model 3D. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Model mengacu pada foto katalog dan memperagakan aktivitas; video bukan rekaman produk fisik dan model bukan pengukuran CAD. Spinning Shapes Stacker mempertahankan animasi 3D yang sudah ada.
+Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Semua produk memiliki animasi dengan model 3D. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Model mengacu pada foto katalog dan memperagakan aktivitas; video bukan rekaman produk fisik dan model bukan pengukuran CAD.
 
-Sumber sembilan model lainnya ada di `tools/demos3d/models.py`, dengan geometri berlubang, komponen terpisah, tali, pencahayaan, dan animasi tiap bagian. `tools/demos3d/engine.py` berisi fungsi geometri dan rendering bersama. Nama produk dan langkah bermain disimpan di `tools/demos3d/products.json`.
+Kesepuluh video dan poster aktif menggunakan logo TIGO LAB, judul Fredoka, petunjuk Nunito, panel krem, serta aksen biru, oranye, dan kuning. Kompositor membaca token warna langsung dari `dist/styles.css` dan font WOFF2 dari `dist/assets/fonts/`, sehingga identitas video mengikuti website. Aset aktif memakai akhiran `-3d-brand` agar browser yang pernah membuka video lama mengambil versi baru.
+
+Sumber sembilan model Blender ada di `tools/demos3d/models.py`, dengan geometri berlubang, komponen terpisah, tali, pencahayaan, dan animasi tiap bagian. `tools/demos3d/engine.py` berisi fungsi geometri dan rendering bersama. Spinning Shapes Stacker memakai gerakan mesh aslinya dalam `tools/demos3d/stacker_stage.py`, lalu diberi tampilan yang sama melalui kompositor. Nama produk dan langkah bermain disimpan di `tools/demos3d/products.json`.
 
 Untuk membuat ulang, gunakan Blender 4.5 LTS untuk rendering dan Python dengan Pillow serta FFmpeg (atau paket `imageio-ffmpeg`) untuk ekspor:
 
@@ -51,6 +53,6 @@ blender --background --python tools/render_3d_demos.py -- --all
 python tools/compose_3d_demos.py --all
 ```
 
-Rendering disimpan di `tmp/render3d/`, yang diabaikan Git. Untuk pemeriksaan visual sebelum ekspor, jalankan Blender dengan `-- --preview --frame 212`, lalu `python tools/compose_3d_demos.py --preview`. Gunakan `--product M01` pada kedua perintah untuk satu produk. Path FFmpeg dapat diberikan melalui `FFMPEG_BIN`, dan direktori font melalui `TIGO_FONT_DIR`. Vercel tetap menyajikan file statis tanpa menjalankan Blender.
+Rendering Blender disimpan di `tmp/render3d/`, yang diabaikan Git. Sesudah rangkaian frame lengkap tersedia, jalankan `python tools/compose_3d_demos.py --preview` untuk memeriksa tampilan dan `python tools/compose_3d_demos.py --all` untuk memperbarui warna, font, dan poster. Perubahan tampilan video dapat memakai kembali frame yang sudah dirender. Gunakan `--product M01` untuk satu produk atau `--product M09` untuk Stacker. Pillow perlu mendukung font WOFF2 dan variable font; renderer Stacker juga memakai NumPy. Path FFmpeg dapat diberikan melalui `FFMPEG_BIN`, dan direktori berisi dua font WOFF2 melalui `TIGO_FONT_DIR`. Vercel tetap menyajikan file statis tanpa menjalankan Blender.
 
-Berkas video 2D lama tetap tersedia untuk kompatibilitas halaman yang sudah terbuka. Metadata aktif menunjuk ke versi 3D.
+Berkas video lama tetap tersedia untuk kompatibilitas halaman yang sudah terbuka. Metadata aktif menunjuk ke versi 3D dengan branding terbaru.

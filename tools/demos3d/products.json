@@ -119,6 +119,21 @@
       5.6
     ]
   },
+  "M09": {
+    "slug": "stacker",
+    "name": "Spinning Shapes Stacker",
+    "title": "Putar, turun, susun.",
+    "steps": [
+      "Posisikan bentuk di atas tiang.",
+      "Putar dan turunkan mengikuti ulir.",
+      "Susun bentuk satu per satu."
+    ],
+    "breaks": [
+      1.35,
+      8.45
+    ],
+    "duration": 11
+  },
   "M10": {
     "slug": "shoe",
     "name": "Shoe Lacing Trainer",
