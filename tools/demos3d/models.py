@@ -98,46 +98,105 @@ def funnel():
     key(spoon,7.5,loc=(-1.75,-1.45,.4),rot=(0,0,-.5))
 
 def dino():
-    stage_scene((.10,0,1.45),8.8,20,29)
-    outline=[(220,562),(210,450),(225,366),(241,337),(231,310),(202,296),(185,303),(209,275),(244,266),(285,273),(317,298),(330,333),(333,386),(344,427),(360,444),(440,429),(510,436),(584,458),(642,502),(698,558),(746,582),(790,569),(811,555),(801,591),(765,613),(705,629),(643,622),(606,639),(582,629),(576,615),(512,619),(508,654),(480,665),(453,652),(451,622),(372,611),(369,646),(340,654),(318,637),(318,607),(273,591)]
-    def coord(p):return ((p[0]-500)/125,(680-p[1])/125+.22)
-    body=profile([coord(p) for p in reversed(outline)],.28,GREEN,name='Dinosaur board',bevel=.045);body.rotation_euler.x=math.pi/2
-    box((.15,.10,.14),(6.4,1.60,.28),'#252a29',.18,name='Black dinosaur base')
-    # One continuous opening shows coins sliding from the neck toward the tail.
-    chute=[(-1.48,1.60),(-.60,1.43),(.35,1.27),(1.20,1.10),(2.30,.91)]
-    window=list(reversed([(x,z+.24) for x,z in chute]+[(x,z-.24) for x,z in reversed(chute)]))
-    cutter=profile(window,.90,WHITE,name='Continuous coin window',bevel=.055);cutter.rotation_euler.x=math.pi/2
-    cut(body,cutter)
-    backing=profile(window,.07,'#202624',name='Dark internal coin chute',bevel=.025);backing.rotation_euler.x=math.pi/2;backing.location.y=.23
-    curve([(x,.07,z-.22) for x,z in chute],.035,'#181c1b',name='Descending coin guide')
-    cyl((2.70,.05,.31),.72,.10,'#202424',bevel=.025,n=72,name='Black round collection tray floor')
-    lathe((2.70,.05,.36),[(.72,-.05),(.72,.13),(.62,.13),(.62,-.01)],'#252a29',n=72,name='Black round collection tray wall')
-    destinations=[(2.48,-.18,.40),(2.83,-.10,.40),(2.51,.17,.40),(2.82,.22,.40)]
-    for i,color in enumerate((YELLOW,ORANGE,PINK,CYAN)):
-        coin=empty(f'Rolling coin {i+1}')
-        cyl((0,0,0),.18,.11,color,coin,bevel=.022,n=64,name='Round play coin')
-        torus((0,0,.057),.135,.008,'#fff1ba',coin,name='Coin face rim')
-        curve([(-.055,-.065,.061),(.055,.065,.061)],.010,'#fff1ba',coin,name='Coin rolling marker')
-        source=(-2.05+i*.57,-1.42,.13);start=.70+i*2.20
+    stage_scene((.25,0,2.05),8.9,14,23)
+    bpy.data.objects['Sage display stage'].scale=(1.13,1.13,1)
+    black='#171b19';green='#62cc73'
+    # Trace the supplied product silhouette in its image coordinates, then
+    # extrude it into a board. Curves retain the broad head, belly and feet.
+    def coord(p):return ((p[0]-400)/120,(510-p[1])/120+.26)
+    def path(start,segments):
+        points=[start]
+        for a,b,end in segments:
+            p=[(*points[-1],0),(*a,0),(*b,0),(*end,0)]
+            points.extend(bezier(p,j/14)[:2] for j in range(1,15))
+        return points
+    def board(points,depth,color,name,y=0,bevel=.018):
+        points=[coord(p) for p in points]
+        area=sum(a[0]*b[1]-b[0]*a[1] for a,b in zip(points,points[1:]+points[:1]))
+        if area<0:points.reverse()
+        obj=profile(points,depth,color,name=name,bevel=bevel)
+        obj.rotation_euler.x=math.pi/2;obj.location.y=y
+        return obj
+    def line(points,r=.014,y=-.225,name='Black product outline',cyclic=False):
+        return curve([(coord(p)[0],y,coord(p)[1]) for p in points],r,black,name=name,cyclic=cyclic)
+    outline=path((81,25),[
+        ((116,-16),(218,2),(246,62)),((266,100),(246,156),(252,182)),
+        ((254,202),(270,205),(303,204)),((389,201),(468,217),(508,269)),
+        ((535,302),(543,344),(578,371)),((610,396),(654,395),(686,384)),
+        ((710,376),(710,386),(693,403)),((653,444),(605,457),(553,453)),
+        ((520,454),(484,449),(458,442)),((457,457),(458,476),(455,487)),
+        ((450,503),(420,501),(408,492)),((407,478),(410,454),(411,440)),
+        ((399,439),(388,437),(378,436)),((379,450),(383,467),(378,476)),
+        ((366,482),(345,479),(335,471)),((335,458),(339,442),(339,435)),
+        ((330,434),(317,432),(310,431)),((309,444),(310,463),(304,472)),
+        ((296,484),(252,479),(241,470)),((236,464),(236,455),(237,449)),
+        ((224,456),(207,455),(197,450)),((192,437),(196,414),(192,399)),
+        ((164,359),(152,306),(138,243)),((135,225),(133,211),(125,205)),
+        ((89,193),(62,159),(54,124)),((50,113),(53,108),(61,114)),
+        ((79,111),(99,104),(103,92)),((111,77),(91,39),(81,25))])
+    body=board(outline,.42,green,'Reference dinosaur silhouette',bevel=.025)
+    line(outline,.017,cyclic=True)
+    box((.77,.10,.15),(5.65,1.65,.30),'#252a29',.24,name='Rounded black dinosaur base')
+    # Rounded viewing slot is enclosed by the green body, as on the product.
+    a=Vector(coord((222,323)));b=Vector(coord((488,350)))
+    angle=math.atan2(b.y-a.y,b.x-a.x);radius=.235
+    slot=[]
+    for center,first in ((b,angle-math.pi/2),(a,angle+math.pi/2)):
+        slot.extend((center.x+radius*math.cos(first+j*math.pi/36),center.y+radius*math.sin(first+j*math.pi/36)) for j in range(37))
+    cutter=profile(slot,1.0,WHITE,name='Rounded enclosed coin window',bevel=0);cutter.rotation_euler.x=math.pi/2;cut(body,cutter)
+    backing=profile(slot,.06,black,name='Dark internal coin channel',bevel=.01);backing.rotation_euler.x=math.pi/2;backing.location.y=.27
+    curve([(x,-.224,z) for x,z in slot],.016,black,cyclic=True,name='Coin window black rim')
+    curve([(a.x,.12,a.y-radius),(b.x,.12,b.y-radius)],.022,black,name='Hidden sloping coin guide')
+    # Five pentagonal back plates, with the reference's dark rims and colors.
+    plates=[([(274,160),(305,138),(336,157),(323,204),(284,202)],'#865236'),
+            ([(340,164),(374,142),(408,163),(392,209),(350,205)],'#865236'),
+            ([(413,174),(458,169),(478,201),(455,230),(410,216)],'#e4a0c0'),
+            ([(475,222),(491,205),(531,212),(541,250),(514,270)],green),
+            ([(523,283),(551,259),(588,276),(589,313),(552,328)],'#85cce7')]
+    for points,color in plates:
+        board(points,.22,black,'Pentagonal plate dark edge',y=.02,bevel=.025)
+        cx=sum(p[0] for p in points)/5;cy=sum(p[1] for p in points)/5
+        board([(cx+(x-cx)*.88,cy+(y-cy)*.88) for x,y in points],.235,color,'Colored pentagonal back plate',y=.01,bevel=.018)
+    # A broad black mouth, pink tongue, blue-rimmed eye, and engraved leg lines.
+    mouth=path((83,29),[((116,39),(139,86),(173,116)),((165,139),(113,162),(57,114)),((77,111),(99,104),(103,92)),((111,77),(92,43),(83,29))])
+    board(mouth,.025,black,'Wide open smiling mouth',y=-.225,bevel=.008)
+    x,z=coord((126,135));sphere((x,-.249,z),(.245,.018,.105),'#eea7c8',name='Pink tongue')
+    line(path((57,114),[((81,141),(137,163),(173,116))]),.017,y=-.269,name='Smiling lower jaw')
+    line(path((173,111),[((176,117),(176,126),(176,132))]),.014,y=-.24)
+    x,z=coord((201,81))
+    for r,y,color in ((.205,-.228,black),(.169,-.248,'#a9e2ec'),(.105,-.267,black)):
+        cyl((x-(.022 if color==black and r<.15 else 0),y,z),r,.018,color,rot=(math.pi/2,0,0),bevel=.004,n=64,name='Round dinosaur eye')
+    for start,segments in [((126,205),[((135,209),(141,211),(151,211))]),
+                           ((209,386),[((216,399),(229,406),(239,407))]),
+                           ((237,385),[((241,412),(241,443),(238,463))]),
+                           ((310,411),[((311,432),(307,456),(307,469))]),
+                           ((310,432),[((329,436),(356,438),(378,437))]),
+                           ((375,420),[((380,439),(380,462),(380,473))]),
+                           ((457,419),[((456,442),(456,470),(455,486))])]:
+        line(path(start,segments),.014,name='Dinosaur face and leg detail')
+    tray=(2.40,-.03,.34)
+    cyl(tray,1.07,.10,'#202424',bevel=.025,n=96,name='Large black circular collection tray')
+    lathe((tray[0],tray[1],.39),[(1.07,-.05),(1.07,.17),(.96,.17),(.96,-.01)],'#252a29',n=96,name='Raised black tray rim')
+    destinations=[(2.04,-.36,.43),(2.46,-.43,.43),(2.83,-.20,.43),(2.13,.14,.43),(2.57,.19,.43)]
+    def at(p,y=0):
+        x,z=coord(p);return(x,y,z)
+    for i,color in enumerate((YELLOW,ORANGE,PINK,GREEN,CYAN)):
+        coin=empty(f'Feed and collect coin {i+1}')
+        cyl((0,0,0),.205,.11,color,coin,bevel=.022,n=64,name='Colored round play coin')
+        torus((0,0,.057),.16,.006,color,coin,name='Subtle play coin face')
+        source=(-1.85+i*.53,-1.35,.13);start=.60+i*1.70
         key(coin,0,loc=source,rot=(0,0,0));key(coin,start,loc=source,rot=(0,0,0))
-        key(coin,start+.55,loc=(-2.66,-.24,3.13),rot=(math.pi/2,0,0))
-        key(coin,start+.85,loc=(-2.23,0,2.98),rot=(math.pi/2,.4,0))
-        key(coin,start+1.20,loc=(-1.95,0,2.43),rot=(math.pi/2,2.0,0))
-        for offset,(x,z) in zip((1.55,2.00,2.45,2.85,3.10),chute):
-            key(coin,start+offset,loc=(x,0,z),rot=(math.pi/2,2+(x+1.48)/.18,0))
-        key(coin,start+3.32,loc=(2.68,.02,.80),rot=(math.pi/2,24,0))
-        key(coin,start+3.57,loc=(destinations[i][0],destinations[i][1],.51),rot=(.65,.3,i*.8))
-        key(coin,start+3.85,loc=destinations[i],rot=(0,0,i*.8))
+        key(coin,start+.48,loc=at((65,72),-.38),rot=(math.pi/2,0,0))
+        key(coin,start+.78,loc=at((109,105)),rot=(math.pi/2,.4,0))
+        key(coin,start+1.12,loc=at((153,190)),rot=(math.pi/2,1.8,0))
+        for offset,u in ((1.50,0),(1.87,.25),(2.24,.50),(2.61,.75),(2.98,1)):
+            p=a.lerp(b,u);key(coin,start+offset,loc=(p.x,-.14,p.y),rot=(math.pi/2,2+u*(b-a).length/.205,0))
+        key(coin,start+3.19,loc=at((555,405)),rot=(math.pi/2,16,0))
+        key(coin,start+3.40,loc=at((589,458)),rot=(math.pi/2,18,0))
+        key(coin,start+3.62,loc=(destinations[i][0],destinations[i][1],.59),rot=(.55,.25,i*.8))
+        key(coin,start+3.82,loc=destinations[i],rot=(0,0,i*.8))
         for fcurve in coin.animation_data.action.fcurves:
             for point in fcurve.keyframe_points:point.interpolation='LINEAR'
-    for i,color in enumerate(('#76533e','#76533e',PINK,GREEN,CYAN)):
-        x,z=coord((360+i*49,427+max(0,i-2)*11))
-        points=[(x-.17,z),(x-.19,z+.23),(x,z+.37),(x+.18,z+.23),(x+.16,z)]
-        plate=profile(points,.14,color,bevel=.025,name='Dinosaur back shape');plate.rotation_euler.x=math.pi/2;plate.location.y=.015
-    x,z=coord((286,312))
-    sphere((x,-.11,z),(.17,.03,.17),INK);sphere((x,-.143,z),(.135,.015,.135),'#d9f1e2');sphere((x+.025,-.164,z-.005),(.065,.015,.077),INK)
-    mouth=profile([coord(p) for p in ((198,327),(251,350),(214,361))],.025,INK,bevel=.01);mouth.rotation_euler.x=math.pi/2;mouth.location.y=.18
-    x,z=coord((226,353));sphere((x,-.13,z),(.11,.016,.035),PINK)
 
 def stacker():
     stage_scene((0,0,1.65),8.0,-28,30)

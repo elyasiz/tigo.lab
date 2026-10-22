@@ -40,8 +40,8 @@ export const productDemos = {
       "Amati koin meluncur menuju ekor.",
       "Koin keluar ke wadah hitam di bawah ekor."
     ],
-    "video": "assets/videos/dino-3d-play.mp4",
-    "poster": "assets/dino-3d-play-poster.webp"
+    "video": "assets/videos/dino-3d-reference.mp4",
+    "poster": "assets/dino-3d-reference-poster.webp"
   },
   "M05": {
     "title": "Rapikan, gunting, coba lagi.",

@@ -46,6 +46,7 @@
   },
   "M04": {
     "slug": "dino",
+    "video_stem": "dino-3d-reference",
     "name": "Feed the Dino",
     "title": "Masukkan, luncurkan, tampung.",
     "description": "Koin bulat masuk lewat mulut dinosaurus, meluncur menuju ekor, lalu terkumpul di wadah hitam.",

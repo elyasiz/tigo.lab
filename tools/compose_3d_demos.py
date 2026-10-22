@@ -84,7 +84,8 @@ def get_ffmpeg():
 
 def paths(product_id):
     slug=DATA[product_id]['slug']
-    return ROOT/f'dist/assets/videos/{slug}-3d-play.mp4',ROOT/f'dist/assets/{slug}-3d-play-poster.webp'
+    stem=DATA[product_id].get('video_stem',f'{slug}-3d-play')
+    return ROOT/f'dist/assets/videos/{stem}.mp4',ROOT/f'dist/assets/{stem}-poster.webp'
 
 
 def export(product_id,folder):

@@ -18,7 +18,7 @@ if __name__=='__main__':
     opts=parser.parse_args(args)
     keys=[opts.product] if opts.product else list(MODELS)
     for product_id in keys:
-        start=time.time();folder=Path(opts.out)/product_id;folder.mkdir(parents=True,exist_ok=True)
+        start=time.time();folder=Path(opts.out).resolve()/product_id;folder.mkdir(parents=True,exist_ok=True)
         (folder/'complete.json').write_text(json.dumps({'product':product_id,'preview':True,'rendering':True}))
         print(f'START {product_id}',flush=True)
         getattr(models,MODELS[product_id])()
