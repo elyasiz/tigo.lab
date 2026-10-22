@@ -64,7 +64,7 @@ export async function createReceipt(order){
   let y=tableHeader(Math.min(leftY,rightY)-22);
   for(const item of order.items){
     if(y<240)y=nextPage('Rincian pesanan uji (lanjutan)');
-    text(item.name,53,y,10,bold);text(item.id,53,y-12,8,body,MUTED);
+    text(item.name,53,y,10,bold);text(item.code??item.id,53,y-12,8,body,MUTED);
     text(String(item.qty),335,y,10,body);
     alignRight(currency(item.price),445,y,10);alignRight(currency(item.price*item.qty),right-8,y,10,bold);
     line(y-18);y-=30;

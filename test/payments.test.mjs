@@ -18,8 +18,8 @@ function fixture(store=new MemoryStore(),options={}){
 const expectStatus=status=>error=>error.status===status;
 
 test('server recomputes prices, merges duplicate product IDs, and fixes sandbox shipping at zero',()=>{
-  const value=validateCheckout(checkout({items:[{id:'M09',qty:1,price:1},{id:'M09',qty:1},{id:'M10',qty:1}]}));
-  assert.equal(value.total,445000);assert.equal(value.shipping,0);assert.equal(value.items[0].price,175000);assert.equal(value.items[0].qty,2);
+  const value=validateCheckout(checkout({items:[{id:'M09-T01',qty:1,price:1},{id:'M09-T01',qty:1},{id:'M10',qty:1}]}));
+  assert.equal(value.total,525110);assert.equal(value.shipping,0);assert.equal(value.items[0].price,250446);assert.equal(value.items[0].qty,2);
 });
 test('rejects unknown products, invalid quantities, stale totals and QRIS limit violations',()=>{
   for(const items of [[{id:'M99',qty:1}],[{id:'M01',qty:0}],[{id:'M01',qty:1.5}],[{id:'M01',qty:100}],[{id:'M01',qty:60}]])assert.throws(()=>validateCheckout(checkout({items})));
@@ -31,7 +31,7 @@ test('Midtrans client rejects production keys and only calls the sandbox host',a
   assert.throws(()=>new Midtrans('Mid-server-PRODUCTION','https://tigo-lab.vercel.app'));
   let observed;
   const gateway=new Midtrans(TEST_KEY,'https://tigo-lab.vercel.app',async(url,options)=>{observed={url,options};return Response.json({status_code:'201'});});
-  await gateway.charge({id:'order',total:175000,items:[{id:'M09',name:'Stacker',price:175000,qty:1}],customer:{name:'Test',email:'test@example.com'}});
+  await gateway.charge({id:'order',total:250446,items:[{id:'M09-T01',name:'Stacker - Type 01',price:250446,qty:1}],customer:{name:'Test',email:'test@example.com'}});
   assert.equal(observed.url,'https://api.sandbox.midtrans.com/v2/charge');
   assert.equal(observed.options.headers['X-Override-Notification'],'https://tigo-lab.vercel.app/api/midtrans');
   const payload=JSON.parse(observed.options.body);assert.equal(payload.payment_type,'qris');assert.equal(payload.custom_expiry.expiry_duration,15);
@@ -62,7 +62,7 @@ test('forged webhook cannot mark an order paid or produce a receipt',async()=>{
   assert.equal((await service.read(order.id,order.accessToken)).status,'pending');
 });
 test('a valid signature with a mismatched amount, merchant, currency or payment type is rejected',async()=>{
-  for(const patch of [{gross_amount:'1.00'},{gross_amount:'445000.01'},{merchant_id:'OTHER'},{currency:'USD'},{payment_type:'credit_card'}]){
+  for(const patch of [{gross_amount:'1.00'},{gross_amount:'525110.01'},{merchant_id:'OTHER'},{currency:'USD'},{payment_type:'credit_card'}]){
     const {service,gateway,store}=fixture(),order=await service.create(checkout());
     const body=gateway.sign({...await gateway.setStatus(order.id,'settlement'),...patch});
     await assert.rejects(service.notification(body),expectStatus(422));assert.equal(store.pdfs.size,0);

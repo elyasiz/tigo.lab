@@ -253,3 +253,13 @@ form>input,form>select{font-size:16px}
   .footer-bottom{font-size:12px}
   .resume-payment{font-size:13px}
 }
+
+/* Product types and published prices. */
+.price-from{font-size:12px;font-weight:600;color:var(--muted)}
+.variant-selector{margin-top:22px}
+.variant-selector label{display:block;font-size:15px;font-weight:800;margin-bottom:8px}
+.variant-selector select{width:100%;min-height:48px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink);font:inherit;font-size:15px;padding:11px 12px}
+.variant-selector p{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6}
+.detail-price output{font:inherit}
+.cart-variant-button{border:0;padding:4px 0;background:transparent;color:var(--blue-ink);font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.cart-type-notice{font-size:14px;line-height:1.6;margin-bottom:12px;color:var(--orange-ink)}

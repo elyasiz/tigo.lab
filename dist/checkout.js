@@ -10,7 +10,8 @@ export function initializeCheckout({getCart,products,openDialog,closeDialog,noti
   let config=null,active=read(keys.active),order=null,pollTimer,countdownTimer,busy=false,qrUrl=null,qrLoading=null;
   if(!validAccess(active))active=null;
   const dialog=$('#paymentDialog'),form=$('#checkoutForm');
-  const cartTotal=()=>getCart().reduce((sum,i)=>sum+products.find(p=>p.id===i.id).price*i.qty,0);
+  const cartTotal=()=>getCart().reduce((sum,i)=>sum+(products.find(p=>p.id===i.id)?.price??0)*i.qty,0);
+  const hasUnselectedTypes=()=>getCart().some(i=>!products.some(p=>p.id===i.id));
   function error(target,message){$(target).textContent=message??'';$(target).hidden=!message;}
   async function api(action,{method='GET',data,auth=false,binary=false}={}){
     const query=new URLSearchParams({action,...(auth?{orderId:active.id}:{})});
@@ -95,7 +96,7 @@ export function initializeCheckout({getCart,products,openDialog,closeDialog,noti
   async function availability(){
     const area=$('#checkoutAvailability');
     try{config=await api('config');area.textContent=config.ready?(config.localTest?'Pengujian lokal: bukan transaksi Midtrans.':'QRIS sandbox tersedia. Selesaikan pembayaran uji melalui simulator Midtrans.'):'QRIS sandbox belum terhubung. Pemilik website sedang menyiapkan akun uji Midtrans.';
-      area.dataset.ready=String(config.ready);$('#checkoutSubmit').disabled=!config.ready||cartTotal()>10000000;
+      area.dataset.ready=String(config.ready);$('#checkoutSubmit').disabled=!config.ready||hasUnselectedTypes()||cartTotal()>10000000;
     }catch{config=null;area.textContent='Pembayaran sandbox sedang disiapkan. Coba lagi setelah beberapa saat.';$('#checkoutSubmit').disabled=true;}
   }
   function renderCheckout(){
@@ -105,6 +106,7 @@ export function initializeCheckout({getCart,products,openDialog,closeDialog,noti
   }
   async function beginCheckout(){
     if(!getCart().length)return;
+    if(hasUnselectedTypes()){notify('Pilih tipe produk di keranjang sebelum melanjutkan.');return;}
     closeDialog('cartDialog');
     if(active){
       try{remember(await api('status',{auth:true}));const unseenPaid=order.status==='paid'&&read(keys.owned,[]).includes(order.id)&&!read(keys.cleared,[]).includes(order.id);if(['pending','creating','review'].includes(order.status)||unseenPaid){await showPayment();return;}}
@@ -115,7 +117,7 @@ export function initializeCheckout({getCart,products,openDialog,closeDialog,noti
   }
   $('#cartSummary').addEventListener('click',event=>{if(event.target.closest('#checkoutOpen'))beginCheckout();});
   form.addEventListener('submit',async event=>{
-    event.preventDefault();if(busy||!config?.ready||!form.reportValidity()||!getCart().length)return;
+    event.preventDefault();if(busy||!config?.ready||!form.reportValidity()||hasUnselectedTypes()||!getCart().length)return;
     busy=true;$('#checkoutSubmit').disabled=true;$('#checkoutSubmit').textContent='Menyiapkan QRIS…';error('#checkoutError',null);
     let attempt=read(keys.pending);if(typeof attempt!=='string'||!/^[\w-]{20,80}$/.test(attempt)){attempt=crypto.randomUUID();save(keys.pending,attempt);}
     try{
@@ -124,7 +126,7 @@ export function initializeCheckout({getCart,products,openDialog,closeDialog,noti
       if(!result)result=await api('create',{method:'POST',data:{idempotencyKey:attempt,expectedTotal:cartTotal(),items:getCart().map(i=>({id:i.id,qty:i.qty})),customer:{name:$('#checkoutName').value.trim(),email:$('#checkoutEmail').value.trim(),phone:$('#checkoutPhone').value.trim(),city:$('#checkoutCity').value.trim()}}});
       remember(result);trackOwned(result.id);save(keys.pending,null);closeDialog('checkoutDialog');busy=false;await showPayment(result);
     }catch(failure){error('#checkoutError',failure.message);}
-    finally{busy=false;$('#checkoutSubmit').disabled=!config?.ready||cartTotal()>10000000;$('#checkoutSubmit').textContent='Buat QRIS '+rupiah(cartTotal());}
+    finally{busy=false;$('#checkoutSubmit').disabled=!config?.ready||hasUnselectedTypes()||cartTotal()>10000000;$('#checkoutSubmit').textContent='Buat QRIS '+rupiah(cartTotal());}
   });
   $('#paymentCheck').addEventListener('click',()=>refresh(true));
   $('#resumePayment').addEventListener('click',async()=>{

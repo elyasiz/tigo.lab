@@ -39,4 +39,4 @@ export class LocalGateway extends Midtrans {
   }
   sign(value){const body=structuredClone(value);body.signature_key=createHash('sha512').update(body.order_id+body.status_code+body.gross_amount+TEST_KEY).digest('hex');return body;}
 }
-export function checkout(overrides={}){return {idempotencyKey:randomUUID(),expectedTotal:445000,items:[{id:'M09',qty:2},{id:'M10',qty:1}],customer:{name:'Sekolah Ceria',email:'uji@example.com',phone:'081234567890',city:'Jakarta'},...overrides};}
+export function checkout(overrides={}){return {idempotencyKey:randomUUID(),expectedTotal:525110,items:[{id:'M09-T01',qty:2},{id:'M10',qty:1}],customer:{name:'Sekolah Ceria',email:'uji@example.com',phone:'081234567890',city:'Jakarta'},...overrides};}

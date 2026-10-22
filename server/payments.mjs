@@ -1,5 +1,5 @@
 import { createHash,createHmac,timingSafeEqual } from 'node:crypto';
-import { products } from '../dist/products.js';
+import { offers } from '../dist/products.js';
 import { mutate,Conflict } from './storage.mjs';
 import { GatewayError } from './midtrans.mjs';
 
@@ -25,14 +25,14 @@ export function providerTime(value){
 
 export function validateCheckout(input){
   if(!input || !/^[a-zA-Z0-9_-]{20,80}$/.test(input.idempotencyKey??''))throw new PaymentError(400,'Permintaan checkout tidak valid. Buka kembali keranjang.');
-  if(!Array.isArray(input.items)||!input.items.length||input.items.length>10)throw new PaymentError(400,'Pilih 1 sampai 10 jenis produk.');
+  if(!Array.isArray(input.items)||!input.items.length||input.items.length>15)throw new PaymentError(400,'Pilih 1 sampai 15 pilihan produk dan tipe.');
   const quantities=new Map();
   for(const item of input.items){
-    if(!products.some(p=>p.id===item?.id)||!Number.isInteger(item.qty)||item.qty<1||item.qty>99)throw new PaymentError(400,'Produk atau jumlah tidak valid.');
+    if(!offers.some(p=>p.id===item?.id)||!Number.isInteger(item.qty)||item.qty<1||item.qty>99)throw new PaymentError(400,'Produk, tipe, atau jumlah tidak valid. Pilih tipe produk dari katalog.');
     quantities.set(item.id,(quantities.get(item.id)??0)+item.qty);
-    if(quantities.get(item.id)>99)throw new PaymentError(400,'Maksimal 99 paket per produk.');
+    if(quantities.get(item.id)>99)throw new PaymentError(400,'Maksimal 99 set per pilihan produk.');
   }
-  const items=[...quantities].sort().map(([id,qty])=>{const p=products.find(p=>p.id===id);return {id,name:p.name,qty,price:p.price};});
+  const items=[...quantities].sort().map(([id,qty])=>{const p=offers.find(p=>p.id===id);return {id,code:p.code,name:p.name,qty,price:p.price};});
   const total=items.reduce((sum,item)=>sum+item.price*item.qty,0);
   if(total>10_000_000)throw new PaymentError(400,'Maksimal Rp10.000.000 untuk satu pembayaran QRIS. Kurangi jumlah barang.');
   if(!Number.isSafeInteger(input.expectedTotal)||input.expectedTotal!==total)throw new PaymentError(409,'Harga berubah. Muat ulang katalog dan periksa total sebelum membayar.');
