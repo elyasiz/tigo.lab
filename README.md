@@ -39,9 +39,9 @@ Konfigurasi yang diperlukan: `MIDTRANS_SERVER_KEY` khusus sandbox dan koneksi ke
 
 ## Status sandbox
 
-Harga jual per set mengikuti daftar harga 22 Oktober 2026 dan sudah termasuk kemasan. Empat produk memiliki pilihan tipe; tiap tipe memakai SKU dan harga tersendiri. Ongkir sandbox ditetapkan Rp0. Pengujian memakai simulator resmi Midtrans; jangan menggunakan aplikasi bank/e-wallet atau uang sungguhan. Tidak ada pengiriman barang. Data pesanan uji dan PDF disimpan privat di server ketika akun dan penyimpanan telah dihubungkan. Aktivasi produksi, stok, admin operasional, ongkir aktual, dan pengiriman email/WhatsApp berada di luar fitur sandbox ini.
+Harga jual per set mengikuti daftar harga 22 Oktober 2026 dan sudah termasuk kemasan. Seluruh tipe dalam satu produk digabung menjadi satu set lengkap, dengan kemasan dihitung sekali. Pilihan tipe lama di keranjang perlu ditinjau ulang sebelum checkout. Ongkir sandbox ditetapkan Rp0. Pengujian memakai simulator resmi Midtrans; jangan menggunakan aplikasi bank/e-wallet atau uang sungguhan. Tidak ada pengiriman barang. Data pesanan uji dan PDF disimpan privat di server ketika akun dan penyimpanan telah dihubungkan. Aktivasi produksi, stok, admin operasional, ongkir aktual, dan pengiriman email/WhatsApp berada di luar fitur sandbox ini.
 
-Jalankan `pnpm test` untuk pengujian perhitungan nominal, idempotensi, pemalsuan notifikasi, pencocokan transaksi, pemulihan koneksi, dan akses PDF. `node tools/check-receipt.mjs` menghasilkan PDF pemeriksaan 15 pilihan produk dan tipe; gunakan `--stress` untuk nama/email panjang dan pagination. Pengujian lokal memakai kontrak Midtrans yang digantikan oleh penyedia uji; keberhasilannya tidak berarti koneksi ke akun Midtrans sudah diuji.
+Jalankan `pnpm test` untuk pengujian perhitungan nominal, idempotensi, pemalsuan notifikasi, pencocokan transaksi, pemulihan koneksi, dan akses PDF. `node tools/check-receipt.mjs` menghasilkan PDF pemeriksaan 10 produk set lengkap; gunakan `--stress` untuk nama/email panjang dan pagination. Pengujian lokal memakai kontrak Midtrans yang digantikan oleh penyedia uji; keberhasilannya tidak berarti koneksi ke akun Midtrans sudah diuji.
 
 Gambar berasal dari katalog produk TIGO LAB yang disediakan untuk proyek ini.
 

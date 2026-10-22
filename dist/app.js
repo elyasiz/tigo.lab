@@ -1,5 +1,5 @@
 'use strict';
-import { products, offers } from './products.js';
+import { products, offers, legacyProductId, restoreCart } from './products.js';
 import { productDemos } from './demos.js';
 import { initializeCheckout } from './checkout.js';
 import { initializeStories } from './stories.js';
@@ -9,10 +9,11 @@ const rupiah = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'ID
 const safeText = v => String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const byId = id => products.find(p=>p.id===id);
 const offerById = id => offers.find(p=>p.id===id);
+const legacyProduct = id => byId(legacyProductId(id));
 const store = {get(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback;}catch{return fallback;}},set(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true;}catch{return false;}}};
 let cart = store.get('tigo-demo-cart-v1',[]);
-cart = Array.isArray(cart)?cart.filter(i=>i&&(offerById(i.id)||byId(i.id))&&Number.isInteger(i.qty)&&i.qty>0&&i.qty<=99).map(i=>({id:i.id,qty:i.qty})):[];
-let filter='all',query='',sort='featured',detailQty=1,detailId=null,detailOfferId=null,detailCartId=null;
+cart = restoreCart(cart);
+let filter='all',query='',sort='featured',detailQty=1,detailId=null,detailCartId=null;
 let toastTimer;
 const dialogReturnFocus=new WeakMap();
 const reducedSystem = matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,7 +40,7 @@ function renderProducts(){
   if(sort==='name')visible.sort((a,b)=>a.name.localeCompare(b.name));
   if(sort==='price-asc')visible.sort((a,b)=>a.price-b.price);
   if(sort==='price-desc')visible.sort((a,b)=>b.price-a.price);
-  $('#productGrid').innerHTML=visible.map(p=>`<article class="product-card" data-id="${p.id}"><div class="product-photo" style="--card-bg:${p.bg}"><span class="product-index">${p.id.slice(1)}</span><span class="view-icon">${eye}</span><button class="product-image-button" data-detail="${p.id}" aria-label="Lihat detail ${p.name}"><img src="assets/${p.image}.webp" alt="${p.name}, referensi produk Montessori TIGO LAB" width="1000" height="1000" loading="lazy"></button></div><div class="product-info"><div class="product-category">${p.label}</div><h3><button class="product-name" data-detail="${p.id}">${p.name}</button></h3><p class="product-description">${p.short}</p><button class="card-demo-button" data-play-demo="${p.id}" aria-label="Lihat cara bermain ${p.name}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Cara bermain</button><div class="product-bottom"><div class="product-price">${p.variants?'<span class="price-from">Mulai</span> ':''}${rupiah(p.price)}<span class="example-note">${p.variants?p.variants.length+' pilihan tipe · ':''}per set</span></div><button class="add-button" data-add="${p.id}" aria-label="${p.variants?'Pilih tipe '+p.name:'Tambah '+p.name+' ke keranjang'}">${p.variants?'↗':'+'}</button></div></div></article>`).join('');
+  $('#productGrid').innerHTML=visible.map(p=>`<article class="product-card" data-id="${p.id}"><div class="product-photo" style="--card-bg:${p.bg}"><span class="product-index">${p.id.slice(1)}</span><span class="view-icon">${eye}</span><button class="product-image-button" data-detail="${p.id}" aria-label="Lihat detail ${p.name}"><img src="assets/${p.image}.webp" alt="${p.name}, referensi produk Montessori TIGO LAB" width="1000" height="1000" loading="lazy"></button></div><div class="product-info"><div class="product-category">${p.label}</div><h3><button class="product-name" data-detail="${p.id}">${p.name}</button></h3><p class="product-description">${p.short}</p><button class="card-demo-button" data-play-demo="${p.id}" aria-label="Lihat cara bermain ${p.name}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Cara bermain</button><div class="product-bottom"><div class="product-price">${rupiah(p.price)}<span class="example-note">per set lengkap</span></div><button class="add-button" data-add="${p.id}" aria-label="Tambah ${p.name} ke keranjang">+</button></div></div></article>`).join('');
   $('#resultCount').textContent=`Menampilkan ${visible.length} produk`;
   $('#emptySearch').hidden=visible.length>0;
 }
@@ -47,42 +48,27 @@ $$('[data-filter]').forEach(button=>button.addEventListener('click',()=>{filter=
 $('#productSearch').addEventListener('input',e=>{query=e.target.value.trim().replace(/\s+/g,' ').toLocaleLowerCase('id');renderProducts();});
 $('#productSort').addEventListener('change',e=>{sort=e.target.value;renderProducts();});
 $('#resetSearch').addEventListener('click',()=>{query='';filter='all';sort='featured';$('#productSearch').value='';$('#productSort').value='featured';$$('[data-filter]').forEach(b=>{const active=b.dataset.filter==='all';b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});renderProducts();$('#productSearch').focus();});
-$('#productGrid').addEventListener('click',e=>{const detail=e.target.closest('[data-detail]'),add=e.target.closest('[data-add]');if(detail)showProduct(detail.dataset.detail);if(add){const p=byId(add.dataset.add);if(p.variants)showProduct(p.id);else addToCart(p.id,1,add);}});
+$('#productGrid').addEventListener('click',e=>{const detail=e.target.closest('[data-detail]'),add=e.target.closest('[data-add]');if(detail)showProduct(detail.dataset.detail);if(add)addToCart(add.dataset.add,1,add);});
 function showProduct(id,cartId=null){
-  const p=byId(id),previous=cart.find(i=>i.id===cartId),selected=offerById(cartId);
-  const selectedVariant=p.variants?.find(v=>v.id===selected?.id);
+  const p=byId(id),previous=cart.find(i=>i.id===cartId);
   detailId=id;detailQty=previous?.qty??1;detailCartId=cartId;
-  detailOfferId=selected?.id??(p.variants?null:p.id);
-  const selector=p.variants?`<div class="variant-selector"><label for="detailVariant">Pilih tipe</label><select id="detailVariant"><option value="" disabled ${!selected?'selected':''}>Pilih tipe produk</option>${p.variants.map(v=>`<option value="${v.id}" ${selected?.id===v.id?'selected':''}>${v.label} — ${rupiah(v.price)} / set</option>`).join('')}</select><p id="detailVariantNote" ${!selectedVariant?.description?'hidden':''}>${selectedVariant?.description??''}</p></div>`:'';
-  $('#productDetail').innerHTML=`<div class="detail-layout"><div class="detail-image" style="--detail-bg:${p.bg}"><img src="assets/${p.image}.webp" alt="${p.name}, gambar referensi dari katalog TIGO LAB" width="1000" height="1000"></div><div class="detail-copy"><div class="eyebrow">MONTESSORI / ${p.label}</div><h2 id="detailTitle">${p.name}</h2><p class="detail-description">${p.description}</p><button class="text-link detail-demo-button" data-play-demo="${p.id}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Lihat animasi cara bermain</button>${selector}<div class="detail-price"><output id="detailPriceValue" aria-live="polite">${!detailOfferId?'Mulai ':''}${rupiah(selected?.price??p.price)}</output><span>Harga per set · termasuk kemasan</span></div><div class="detail-meta"><div><span>Kode produk</span><strong id="detailCode">${selected?.code??p.code}</strong></div><div><span>Bahan & kelengkapan</span><strong>Menunggu konfirmasi</strong></div><div><span>Pemesanan</span><strong>QRIS sandbox</strong></div></div><div class="detail-actions"><div class="qty-control" aria-label="Jumlah produk"><button type="button" data-detail-qty="-1" aria-label="Kurangi jumlah">−</button><output id="detailQty" aria-live="polite">${detailQty}</output><button type="button" data-detail-qty="1" aria-label="Tambah jumlah">+</button></div><button class="button button-blue" id="detailAdd" ${!detailOfferId?'disabled':''}>${!detailOfferId?'Pilih tipe terlebih dahulu':cartId?'Simpan pilihan tipe':'Tambah ke keranjang'} <span aria-hidden="true">+</span></button></div></div></div>`;
+  const contents=p.setContents?`<p class="complete-set-note">${p.setContents}</p>`:'';
+  const review=cartId?'<p class="cart-set-notice">Tipe produk kini digabung menjadi satu set lengkap. Periksa jumlah set sebelum menyimpan.</p>':'';
+  $('#productDetail').innerHTML=`<div class="detail-layout"><div class="detail-image" style="--detail-bg:${p.bg}"><img src="assets/${p.image}.webp" alt="${p.name}, gambar referensi dari katalog TIGO LAB" width="1000" height="1000"></div><div class="detail-copy"><div class="eyebrow">MONTESSORI / ${p.label}</div><h2 id="detailTitle">${p.name}</h2><p class="detail-description">${p.description}</p><button class="text-link detail-demo-button" data-play-demo="${p.id}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Lihat animasi cara bermain</button><div class="detail-price"><output id="detailPriceValue">${rupiah(p.price)}</output><span>Harga per set lengkap · termasuk kemasan</span></div>${contents}${review}<div class="detail-meta"><div><span>Kode produk</span><strong id="detailCode">${p.code}</strong></div><div><span>Bahan & kelengkapan</span><strong>Menunggu konfirmasi</strong></div><div><span>Pemesanan</span><strong>QRIS sandbox</strong></div></div><div class="detail-actions"><div class="qty-control" aria-label="Jumlah set"><button type="button" data-detail-qty="-1" aria-label="Kurangi jumlah">−</button><output id="detailQty" aria-live="polite">${detailQty}</output><button type="button" data-detail-qty="1" aria-label="Tambah jumlah">+</button></div><button class="button button-blue" id="detailAdd">${cartId?'Ganti dengan set lengkap':'Tambah ke keranjang'} <span aria-hidden="true">+</span></button></div></div></div>`;
   openDialog('productDialog');
 }
-$('#productDetail').addEventListener('change',event=>{
-  if(event.target.id!=='detailVariant')return;
-  const selected=offerById(event.target.value);
-  if(!selected||selected.productId!==detailId)return;
-  detailOfferId=selected.id;
-  $('#detailPriceValue').textContent=rupiah(selected.price);
-  $('#detailCode').textContent=selected.code;
-  // Only type-specific copy belongs here, rather than the product description.
-  const variant=byId(detailId).variants.find(v=>v.id===selected.id);
-  $('#detailVariantNote').textContent=variant.description??'';
-  $('#detailVariantNote').hidden=!variant.description;
-  $('#detailAdd').disabled=false;
-  $('#detailAdd').innerHTML=(detailCartId?'Simpan pilihan tipe':'Tambah ke keranjang')+' <span aria-hidden="true">+</span>';
-});
 $('#productDetail').addEventListener('click',event=>{
   const qty=event.target.closest('[data-detail-qty]');
   if(qty){detailQty=Math.max(1,Math.min(99,detailQty+Number(qty.dataset.detailQty)));$('#detailQty').textContent=detailQty;}
   const button=event.target.closest('#detailAdd');
-  if(!button||!detailOfferId)return;
+  if(!button||!detailId)return;
   if(detailCartId){
-    const other=cart.find(i=>i.id===detailOfferId&&i.id!==detailCartId);
-    if((other?.qty??0)+detailQty>99){notify('Maksimal 99 set per tipe. Kurangi jumlah terlebih dahulu.');return;}
+    const other=cart.find(i=>i.id===detailId);
+    if((other?.qty??0)+detailQty>99){notify('Maksimal 99 set per produk. Kurangi jumlah terlebih dahulu.');return;}
     cart=cart.filter(i=>i.id!==detailCartId);
-    addToCart(detailOfferId,detailQty,button);renderCart();closeDialog('productDialog');return;
+    addToCart(detailId,detailQty,button);renderCart();closeDialog('productDialog');return;
   }
-  addToCart(detailOfferId,detailQty,button);button.textContent='Ditambahkan ✓';
+  addToCart(detailId,detailQty,button);button.textContent='Ditambahkan ✓';
   setTimeout(()=>{if(button.isConnected)button.innerHTML='Tambah ke keranjang <span aria-hidden="true">+</span>';},1200);
 });
 function flyToCart(p,from){if(reduced()||document.querySelector('dialog[open]')||!from)return;const source=from.closest('.product-card')?.querySelector('img')||from;const a=source.getBoundingClientRect(),b=$('#cartOpen').getBoundingClientRect();if(b.bottom<0||a.top>innerHeight)return;const image=document.createElement('img');image.className='fly-image';image.src=`assets/${p.image}.webp`;image.alt='';image.style.left=`${a.left+a.width/2-29}px`;image.style.top=`${Math.min(a.top+a.height/2,innerHeight-70)}px`;document.body.append(image);const dx=b.left+b.width/2-(a.left+a.width/2),dy=b.top+b.height/2-Math.min(a.top+a.height/2,innerHeight-70)-29;const animation=image.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx}px,${dy}px) scale(.25)`,opacity:.2}],{duration:430,easing:'cubic-bezier(.3,.7,.3,1)'});animation.finished.finally(()=>image.remove());}
@@ -92,13 +78,14 @@ function renderCart(){
   const unselected=cart.some(i=>!offerById(i.id));
   $('#cartSummary').hidden=false;
   $('#cartContents').innerHTML=cart.map(i=>{
-    const offer=offerById(i.id),p=offer??byId(i.id);
-    return `<div class="cart-row"><img src="assets/${p.image}.webp" alt="${p.name}" width="74" height="79"><div><div class="cart-row-name">${p.name}</div><div class="cart-row-price">${offer?rupiah(offer.price)+' / set':'Pilih tipe untuk melihat harga'}</div>${p.variants?`<button class="cart-variant-button" data-cart-variant="${i.id}">${offer?'Ubah tipe':'Pilih tipe'}</button>`:''}<div class="cart-row-controls"><div class="qty-control"><button data-cart-qty="${i.id}" data-delta="-1" aria-label="Kurangi jumlah ${p.name}">−</button><output aria-label="Jumlah ${p.name}">${i.qty}</output><button data-cart-qty="${i.id}" data-delta="1" aria-label="Tambah jumlah ${p.name}">+</button></div><button class="remove-item" data-remove="${i.id}" aria-label="Hapus ${p.name}">Hapus</button></div></div></div>`;
+    const offer=offerById(i.id),p=offer??legacyProduct(i.id);
+    const name=offer?p.name:`${p.name} — Type ${i.id.split('-T')[1]} sebelumnya`;
+    return `<div class="cart-row"><img src="assets/${p.image}.webp" alt="${name}" width="74" height="79"><div><div class="cart-row-name">${name}</div><div class="cart-row-price">${offer?rupiah(offer.price)+' / set lengkap':'Tinjau harga set lengkap: '+rupiah(p.price)}</div>${!offer?`<button class="cart-set-button" data-cart-set="${i.id}">Pilih set lengkap</button>`:''}<div class="cart-row-controls"><div class="qty-control"><button data-cart-qty="${i.id}" data-delta="-1" aria-label="Kurangi jumlah ${name}">−</button><output aria-label="Jumlah ${p.name}">${i.qty}</output><button data-cart-qty="${i.id}" data-delta="1" aria-label="Tambah jumlah ${name}">+</button></div><button class="remove-item" data-remove="${i.id}" aria-label="Hapus ${name}">Hapus</button></div></div></div>`;
   }).join('');
-  $('#cartSummary').innerHTML=`<div class="cart-subtotal"><span>${unselected?'Subtotal (tipe terpilih)':'Subtotal produk'}</span><strong>${rupiah(subtotal())}</strong></div>${unselected?'<p class="cart-type-notice">Pilih tipe untuk produk dari keranjang sebelumnya sebelum melanjutkan.</p>':''}<p class="small-note">QRIS sandbox untuk pengujian. Tidak ada uang nyata atau pengiriman barang.</p><button class="button button-blue full-width" id="checkoutOpen" ${unselected?'disabled':''}>${unselected?'Lengkapi pilihan tipe':'Checkout QRIS sandbox'} <span aria-hidden="true">→</span></button>`;
+  $('#cartSummary').innerHTML=`<div class="cart-subtotal"><span>${unselected?'Subtotal (set terpilih)':'Subtotal produk'}</span><strong>${rupiah(subtotal())}</strong></div>${unselected?'<p class="cart-set-notice">Pilihan tipe lama telah digabung menjadi set lengkap. Tinjau pilihan dari keranjang sebelumnya untuk melanjutkan.</p>':''}<p class="small-note">QRIS sandbox untuk pengujian. Tidak ada uang nyata atau pengiriman barang.</p><button class="button button-blue full-width" id="checkoutOpen" ${unselected?'disabled':''}>${unselected?'Tinjau pilihan set':'Checkout QRIS sandbox'} <span aria-hidden="true">→</span></button>`;
 }
 $('#cartOpen').addEventListener('click',()=>{renderCart();openDialog('cartDialog');});
-$('#cartContents').addEventListener('click',e=>{const choice=e.target.closest('[data-cart-variant]');if(choice){const p=offerById(choice.dataset.cartVariant);showProduct(p?.productId??choice.dataset.cartVariant,choice.dataset.cartVariant);return;}const qty=e.target.closest('[data-cart-qty]'),remove=e.target.closest('[data-remove]');if(qty){const item=cart.find(i=>i.id===qty.dataset.cartQty);if(!item)return;item.qty=Math.max(1,Math.min(99,item.qty+Number(qty.dataset.delta)));persistCart();renderCart();const replacement=$(`#cartContents button[data-cart-qty="${item.id}"][data-delta="${qty.dataset.delta}"]`);replacement?.focus({preventScroll:true});}if(remove){cart=cart.filter(i=>i.id!==remove.dataset.remove);persistCart();renderCart();notify('Produk dihapus dari keranjang.');}});
+$('#cartContents').addEventListener('click',e=>{const choice=e.target.closest('[data-cart-set]');if(choice){showProduct(legacyProductId(choice.dataset.cartSet),choice.dataset.cartSet);return;}const qty=e.target.closest('[data-cart-qty]'),remove=e.target.closest('[data-remove]');if(qty){const item=cart.find(i=>i.id===qty.dataset.cartQty);if(!item)return;item.qty=Math.max(1,Math.min(99,item.qty+Number(qty.dataset.delta)));persistCart();renderCart();const replacement=$(`#cartContents button[data-cart-qty="${item.id}"][data-delta="${qty.dataset.delta}"]`);replacement?.focus({preventScroll:true});}if(remove){cart=cart.filter(i=>i.id!==remove.dataset.remove);persistCart();renderCart();notify('Produk dihapus dari keranjang.');}});
 initializeCheckout({ getCart:()=>cart, products:offers, openDialog, closeDialog, notify, onPaid(order){ const same=JSON.stringify(cart.map(i=>[i.id,i.qty]).sort())===JSON.stringify(order.items.map(i=>[i.id,i.qty]).sort()); if(same){cart=[];persistCart();} } });
 const featured=['M09',...products.filter(p=>p.id!=='M09').map(p=>p.id)];let heroSlide=0;
 function setHero(delta){heroSlide=(heroSlide+delta+featured.length)%featured.length;const p=byId(featured[heroSlide]);const img=$('#heroImage');img.classList.remove('switching');img.src=`assets/${p.image}.webp`;img.alt=`${p.name}, gambar referensi produk Montessori TIGO LAB`;$('#heroProductName').textContent=p.name;$('#heroIndex').textContent=`PILIHAN ${p.id.slice(1)} / 10`;void img.offsetWidth;img.classList.add('switching');}

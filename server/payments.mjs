@@ -25,10 +25,10 @@ export function providerTime(value){
 
 export function validateCheckout(input){
   if(!input || !/^[a-zA-Z0-9_-]{20,80}$/.test(input.idempotencyKey??''))throw new PaymentError(400,'Permintaan checkout tidak valid. Buka kembali keranjang.');
-  if(!Array.isArray(input.items)||!input.items.length||input.items.length>15)throw new PaymentError(400,'Pilih 1 sampai 15 pilihan produk dan tipe.');
+  if(!Array.isArray(input.items)||!input.items.length||input.items.length>10)throw new PaymentError(400,'Pilih 1 sampai 10 produk set lengkap.');
   const quantities=new Map();
   for(const item of input.items){
-    if(!offers.some(p=>p.id===item?.id)||!Number.isInteger(item.qty)||item.qty<1||item.qty>99)throw new PaymentError(400,'Produk, tipe, atau jumlah tidak valid. Pilih tipe produk dari katalog.');
+    if(!offers.some(p=>p.id===item?.id)||!Number.isInteger(item.qty)||item.qty<1||item.qty>99)throw new PaymentError(400,'Produk atau jumlah tidak valid. Pilih set lengkap dari katalog.');
     quantities.set(item.id,(quantities.get(item.id)??0)+item.qty);
     if(quantities.get(item.id)>99)throw new PaymentError(400,'Maksimal 99 set per pilihan produk.');
   }
