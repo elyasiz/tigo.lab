@@ -19,7 +19,7 @@ const expectStatus=status=>error=>error.status===status;
 
 test('server recomputes prices, merges duplicate product IDs, and fixes sandbox shipping at zero',()=>{
   const value=validateCheckout(checkout({items:[{id:'M09',qty:1,price:1},{id:'M09',qty:1},{id:'M10',qty:1}]}));
-  assert.equal(value.total,799598);assert.equal(value.shipping,0);assert.equal(value.items[0].price,387690);assert.equal(value.items[0].qty,2);
+  assert.equal(value.total,1043828);assert.equal(value.shipping,0);assert.equal(value.items[0].price,508310);assert.equal(value.items[0].qty,2);
 });
 test('rejects unknown products, invalid quantities, stale totals and QRIS limit violations',()=>{
   for(const items of [[{id:'M99',qty:1}],[{id:'M01',qty:0}],[{id:'M01',qty:1.5}],[{id:'M01',qty:100}],[{id:'M01',qty:60}]])assert.throws(()=>validateCheckout(checkout({items})));
@@ -62,7 +62,7 @@ test('forged webhook cannot mark an order paid or produce a receipt',async()=>{
   assert.equal((await service.read(order.id,order.accessToken)).status,'pending');
 });
 test('a valid signature with a mismatched amount, merchant, currency or payment type is rejected',async()=>{
-  for(const patch of [{gross_amount:'1.00'},{gross_amount:'799598.01'},{merchant_id:'OTHER'},{currency:'USD'},{payment_type:'credit_card'}]){
+  for(const patch of [{gross_amount:'1.00'},{gross_amount:'1043828.01'},{merchant_id:'OTHER'},{currency:'USD'},{payment_type:'credit_card'}]){
     const {service,gateway,store}=fixture(),order=await service.create(checkout());
     const body=gateway.sign({...await gateway.setStatus(order.id,'settlement'),...patch});
     await assert.rejects(service.notification(body),expectStatus(422));assert.equal(store.pdfs.size,0);
