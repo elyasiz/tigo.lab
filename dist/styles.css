@@ -259,3 +259,6 @@ form>input,form>select{font-size:16px}
 .complete-set-note{font-size:14px;line-height:1.7;color:var(--muted);margin-top:10px}
 .cart-set-button{border:0;padding:4px 0;background:transparent;color:var(--blue-ink);font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .cart-set-notice{font-size:14px;line-height:1.6;margin:10px 0 12px;color:var(--orange-ink)}
+
+/* Keep the expanded catalogue navigation comfortable on tablet widths. */
+@media(min-width:801px) and (max-width:1050px){.desktop-nav{display:none}.mobile-menu-button{display:inline-flex}}

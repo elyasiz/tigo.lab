@@ -16,6 +16,10 @@ Website katalog Montessori TIGO LAB dengan animasi 3D dan checkout QRIS Midtrans
 
 ## Identitas visual
 
+Menu **English Course** membuka `dist/english-course.html` (URL Vercel `/english-course`). Halaman memakai stylesheet brand bersama dan file `english-course.css`/`english-course.js` untuk tata letak, menu HP, preferensi gerak, detail Emotion Slider, serta ide aktivitas. Emotion Slider merupakan produk awal pada katalog ini. Harga, usia rekomendasi, bahan, dimensi, dan isi paket belum diberikan; halaman tidak mengarang spesifikasi atau menambahkan produk ke checkout. Katalog serta harga Montessori tetap memakai `products.js`.
+
+Gambar `emotion-slider-catalog.webp` merupakan visual katalog yang dirapikan dengan imagegen berdasarkan foto Emotion Slider yang disediakan pengguna: satu alas oranye dengan jalur krem serta lima wajah kuning, biru, merah, ungu, dan hijau. Referensi gaya adalah foto katalog TIGO LAB yang sudah ada. Foto sumber tidak dipublikasikan. File PNG utama disimpan terpisah dalam output proyek.
+
 Palet mengikuti referensi brand TIGO LAB: biru `#0088ff`, oranye `#ff5a2b`, kuning `#f8cd1a`, hijau `#22c55e`, pink `#ff6fae`, ungu `#8b5cf6`, cyan `#4dd0e1`, dan krem `#fff3e0`. Token warna ada di awal `dist/styles.css`; turunan biru dan oranye yang lebih gelap digunakan pada teks kecil dan tombol agar terbaca jelas.
 
 Judul memakai Fredoka dan teks memakai Nunito, dipilih untuk mendekati gaya bulat pada referensi. Font disajikan lokal dari `dist/assets/fonts/` tanpa permintaan ke Google Fonts saat halaman dibuka. Lisensi SIL Open Font License masing-masing font disertakan di direktori yang sama. Logo dan foto produk tetap memakai aset katalog.
