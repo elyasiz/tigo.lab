@@ -80,6 +80,11 @@
 .emotion-dialog-copy>.emotion-teacher-note{font-size:14px;margin-bottom:23px}
 .emotion-dialog-copy .button{font-size:14px}
 .english-page .mobile-menu a[aria-current=page]{color:var(--blue-ink);font-weight:800}
+.emotion-demo-button{color:var(--blue-ink);margin-top:17px;min-height:42px;font-size:14px;text-align:left;gap:9px}
+.emotion-demo-button>span{font-size:11px}
+.emotion-feature-copy>.emotion-demo-button{display:flex;width:max-content;max-width:100%}
+.emotion-animation-dialog .eyebrow{font-size:12px}
+.emotion-animation-dialog .animation-error{font-size:14px;line-height:1.65}
 @media(min-width:1051px) and (max-width:1200px){.english-page .desktop-nav{gap:16px;font-size:14px}.english-page .english-header-cta{font-size:13px;padding-inline:13px}}
 @media(max-width:1050px){.english-intro-grid{gap:30px;grid-template-columns:1.5fr 1fr}.emotion-feature-copy{padding:42px 28px}.emotion-feature-actions{gap:9px}.emotion-photo-tag{font-size:10px;top:18px;left:18px}.emotion-feature-copy h2{font-size:38px}}
 @media(max-width:800px){.english-intro{padding-bottom:35px}.english-intro-grid{grid-template-columns:1fr;gap:24px}.english-intro h1{font-size:48px}.english-intro-copy p{max-width:620px}.english-intro-copy .text-link{margin-top:9px}.emotion-feature{grid-template-columns:1fr}.emotion-photo-wrap{padding:20px 20px 0}.emotion-image-button{max-width:550px;margin-inline:auto}.emotion-feature-copy{padding:32px}.english-product-section{padding-bottom:48px}.english-activity-heading{display:block}.english-activity-heading>p{margin-top:20px;max-width:none}.english-activity-steps li{padding-right:18px}.english-activity-steps li+li{padding-left:18px}.english-activity-steps h3{font-size:20px}.emotion-dialog-grid{grid-template-columns:1fr}.emotion-dialog-photo img{max-height:350px;object-fit:contain}.emotion-dialog-copy{padding:28px}}

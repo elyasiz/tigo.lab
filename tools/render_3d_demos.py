@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(Path(__file__).resolve().parent/'demos3d'))
 import models
 
-MODELS={'M01':'train','M02':'beads','M03':'funnel','M04':'dino','M05':'hair_cutting','M06':'donut','M07':'hair_beading','M08':'cash_register','M09':'stacker','M10':'shoe'}
+MODELS={'M01':'train','M02':'beads','M03':'funnel','M04':'dino','M05':'hair_cutting','M06':'donut','M07':'hair_beading','M08':'cash_register','M09':'stacker','M10':'shoe','E01':'emotion_slider'}
 
 if __name__=='__main__':
     args=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
@@ -25,6 +25,9 @@ if __name__=='__main__':
         scene=bpy.context.scene;scene.render.image_settings.compression=15
         config=json.loads((ROOT/'tools/demos3d/products.json').read_text(encoding='utf-8'))[product_id]
         scene.frame_end=round(config.get('duration',10)*scene.render.fps)
+        if product_id=='E01':
+            from emotion_slider import export_cues
+            export_cues(folder,scene)
         if opts.preview:
             scene.frame_set(opts.frame);scene.render.filepath=str(folder/'preview.png');bpy.ops.render.render(write_still=True)
         else:

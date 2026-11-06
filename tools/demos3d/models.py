@@ -2,6 +2,7 @@
 import bpy,math,random
 from mathutils import Vector
 from engine import *
+from emotion_slider import emotion_slider
 
 def train():
     stage_scene((0,0,1),8.2,28,30);root=empty('Train assembly')

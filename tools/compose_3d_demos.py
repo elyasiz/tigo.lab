@@ -1,4 +1,4 @@
-"""Compose the ten Blender demos with TIGO colors and fonts, using Pillow and FFmpeg."""
+"""Compose catalogue Blender demos with TIGO colors and fonts, using Pillow and FFmpeg."""
 from pathlib import Path
 from functools import lru_cache
 import os,sys,json,argparse,subprocess,shutil,time,re,math
@@ -65,11 +65,34 @@ def load_stage(product_id,path,t):
     with Image.open(path) as image:return image.convert('RGBA')
 
 
+@lru_cache(maxsize=8)
+def motion_cues(folder):
+    return json.loads((Path(folder)/'motion.json').read_text(encoding='utf-8'))['frames']
+
+
+def emotion_overlay(image,frame_path,t):
+    d=ImageDraw.Draw(image)
+    speaking=t>=7.2
+    message='I feel happy.' if speaking else 'How do you feel today?'
+    d.rounded_rectangle((260,231,700,282),radius=25,fill=TOKENS['blue-ink'] if speaking else TOKENS['soft-blue'])
+    d.text((480,256),message,font=font(25,weight=800),anchor='mm',fill=PAPER if speaking else TOKENS['blue-ink'])
+    if .65<=t<2.9 or speaking:
+        record=motion_cues(str(frame_path.parent))[min(287,round(t*FPS))]
+        points=[(x,y+200) for x,y in record['outline']]
+        d.line(points,fill=TOKENS['blue'],width=3,joint='curve')
+        x,y=record['selected'];y+=200
+        tag_y=min(788,y+94)
+        d.line([(x,y+55),(x,tag_y-19)],fill=TOKENS['blue'],width=2)
+        d.rounded_rectangle((x-49,tag_y-18,x+49,tag_y+18),radius=18,fill=TOKENS['blue-ink'])
+        d.text((x,tag_y),'happy',font=font(21,weight=800),anchor='mm',fill=PAPER)
+
+
 def compose(product_id,frame_path,t):
     stage=load_stage(product_id,frame_path,t)
     image=template(product_id,step_at(DATA[product_id],t)).copy()
     image.alpha_composite(stage,(0,200))
     ImageDraw.Draw(image).rounded_rectangle((59,209,137,215),radius=3,fill=TOKENS['yellow'])
+    if product_id=='E01':emotion_overlay(image,frame_path,t)
     return image.convert('RGB')
 
 
@@ -112,7 +135,7 @@ def export(product_id,folder):
     result=subprocess.run([ffmpeg,'-hide_banner','-i',str(temporary),'-f','null','-'],capture_output=True,text=True)
     if result.returncode:raise RuntimeError(result.stderr)
     temporary.replace(dest)
-    poster_index=min(frame_count-1,round((duration-1.2)*FPS))
+    poster_index=min(frame_count-1,round(item.get('poster_time',duration-1.2)*FPS))
     compose(product_id,frames[poster_index],poster_index/FPS).save(poster,'WEBP',quality=90)
     print(f'{product_id} branded 3D export: {dest.stat().st_size:,} bytes; {frame_count} frames; decode OK',flush=True)
 

@@ -1,4 +1,19 @@
 {
+  "E01": {
+    "slug": "emotion-slider",
+    "video_stem": "emotion-slider-3d-brand",
+    "name": "Emotion Slider",
+    "title": "Geser ekspresi, ceritakan perasaan.",
+    "description": "Pilih wajah pada slider, geser mengikuti jalurnya, lalu berlatih menyebutkan perasaan dalam bahasa Inggris.",
+    "steps": [
+      "Pilih ekspresi pada slider.",
+      "Geser wajah mengikuti jalurnya.",
+      "Sebutkan: “I feel happy.”"
+    ],
+    "breaks": [1.8, 7.2],
+    "poster_time": 8.2,
+    "duration": 12
+  },
   "M01": {
     "slug": "train",
     "name": "Build-a-Train Play",

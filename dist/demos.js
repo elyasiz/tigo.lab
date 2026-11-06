@@ -98,6 +98,17 @@ export const productDemos = {
     "video": "assets/videos/shoe-3d-play.mp4",
     "poster": "assets/shoe-3d-play-poster.webp"
   },
+  "E01": {
+    "title": "Geser ekspresi, ceritakan perasaan.",
+    "description": "Pilih wajah pada slider, geser mengikuti jalurnya, lalu berlatih menyebutkan perasaan dalam bahasa Inggris.",
+    "steps": [
+      "Pilih ekspresi pada slider.",
+      "Geser wajah mengikuti jalurnya.",
+      "Sebutkan: “I feel happy.”"
+    ],
+    "video": "assets/videos/emotion-slider-3d-brand.mp4",
+    "poster": "assets/emotion-slider-3d-brand-poster.webp"
+  },
   "M09": {
     "title": "Putar, turun, susun.",
     "description": "Lihat bagaimana setiap bentuk berputar mengikuti ulir dan tersusun di tiang.",
