@@ -8,7 +8,7 @@ import { MemoryStore,LocalGateway,TEST_KEY } from './support.mjs';
 // Tigo3D calculator: per-set sale prices with packaging included.
 const approved=[
   ['M10','P01',27208],['M07','P02',96996],['M02','P03',95442],
-  ['M09','P04',508310],['M01','P05',793084],['M04','P06',216782],
+  ['M09','P04',508310],['M01','P05',428710],['M04','P06',216782],
   ['M03','P07',399186],['M06','P08',469456],['M05','P09',96996],['M08','P10',655022],
 ];
 const input=(items,total)=>({idempotencyKey:randomUUID(),items,expectedTotal:total,customer:{name:'Uji Harga',email:'harga@example.com',city:'Jakarta'}});
@@ -20,14 +20,14 @@ test('all 10 complete sets match the revised sale prices and product codes exact
 });
 
 test('one of each complete set totals the revised listed prices with packaging included once',()=>{
-  const order=validateCheckout(input(approved.map(([id])=>({id,qty:1})),3358482));
-  assert.equal(order.total,3358482);assert.equal(order.subtotal,3358482);assert.equal(order.shipping,0);
+  const order=validateCheckout(input(approved.map(([id])=>({id,qty:1})),2994108));
+  assert.equal(order.total,2994108);assert.equal(order.subtotal,2994108);assert.equal(order.shipping,0);
   assert.equal(order.items.length,10);
 });
 
 test('server ignores client prices and merges duplicate quantities for the same complete set',()=>{
-  const order=validateCheckout(input([{id:'M01',qty:1,price:1},{id:'M01',qty:1},{id:'M10',qty:1}],1613376));
-  assert.deepEqual(order.items.map(i=>[i.id,i.qty,i.price]),[['M01',2,793084],['M10',1,27208]]);
+  const order=validateCheckout(input([{id:'M01',qty:1,price:1},{id:'M01',qty:1},{id:'M10',qty:1}],884628));
+  assert.deepEqual(order.items.map(i=>[i.id,i.qty,i.price]),[['M01',2,428710],['M10',1,27208]]);
 });
 
 test('obsolete separate-type IDs and superseded totals cannot be charged',()=>{
@@ -35,6 +35,7 @@ test('obsolete separate-type IDs and superseded totals cannot be charged',()=>{
     assert.throws(()=>validateCheckout(input([{id,qty:1}],1)),error=>error.status===400);
   }
   assert.throws(()=>validateCheckout(input([{id:'M09',qty:1}],387690)),error=>error.status===409);
+  assert.throws(()=>validateCheckout(input([{id:'M01',qty:1}],793084)),error=>error.status===409);
 });
 
 test('old cart types are preserved for review without converting their quantities to full sets',()=>{
