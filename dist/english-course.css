@@ -114,3 +114,17 @@
 .teaching-product-dialog .emotion-dialog-copy>.teaching-example{font-size:1rem;line-height:1.8;margin-top:10px}
 @media(max-width:900px){.teaching-product-copy{padding:24px}.teaching-product-bottom{flex-direction:column;align-items:flex-start;gap:12px}.teaching-product-image{padding:20px}}
 @media(max-width:650px){.english-more-products{grid-template-columns:1fr;gap:24px;margin-top:24px}.teaching-product-card{border-radius:20px}.teaching-product-image{aspect-ratio:1.35;padding:22px}.teaching-product-image img{max-height:290px}.teaching-product-copy{padding:24px}.teaching-product-copy h3{font-size:1.875rem}.teaching-product-category{font-size:.875rem;letter-spacing:.04em}.teaching-product-bottom{flex-direction:row;flex-wrap:wrap;align-items:center}.teaching-product-description{margin-bottom:22px}.teaching-product-dialog .emotion-dialog-photo img{max-height:280px}.teaching-product-dialog .emotion-dialog-copy .eyebrow{font-size:.875rem}.teaching-product-dialog .emotion-dialog-copy dl>div{font-size:.875rem}}
+
+/* Preserve the supplied film's complete portrait frame. */
+.english-film-section{padding-bottom:56px;scroll-margin-top:120px}
+.english-film-panel{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:56px;padding:48px;background:var(--soft-blue);border-radius:28px}
+.english-film-copy .eyebrow{font-size:.875rem;color:var(--blue-ink);line-height:1.6;letter-spacing:.08em}
+.english-film-copy h2{font-size:clamp(34px,3.8vw,48px);line-height:1.18;margin-top:17px}
+.english-film-copy>p{font-size:1rem;line-height:1.85;color:var(--muted);margin-top:24px;max-width:410px}
+.english-film-media{min-width:0}
+.english-film-video{display:block;width:100%;height:auto;aspect-ratio:9/16;max-width:360px;margin-inline:auto;object-fit:contain;background:var(--ink);border-radius:18px;box-shadow:0 14px 38px #11172b18}
+.english-film-video:focus-visible{outline:3px solid var(--blue-ink);outline-offset:5px}
+.english-film-error{font-size:.875rem;line-height:1.7;margin:15px auto 0;max-width:360px;color:var(--muted)}
+.english-film-error a{color:var(--blue-ink);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:900px){.english-film-panel{gap:32px;padding:32px}.english-film-copy h2{font-size:38px}}
+@media(max-width:650px){.english-film-section{padding-bottom:36px}.english-film-panel{grid-template-columns:1fr;padding:28px 24px;gap:28px;border-radius:20px}.english-film-copy h2{font-size:36px}.english-film-copy>p{margin-top:18px;max-width:none}.english-film-video{border-radius:14px}.english-film-copy .eyebrow{letter-spacing:.06em}}

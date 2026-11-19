@@ -163,3 +163,33 @@ teachingDialog.addEventListener('click', event => {
   const box = teachingDialog.getBoundingClientRect();
   if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) teachingDialog.close();
 });
+
+
+// The supplied film starts with native controls and retains its original sound.
+const englishFilm = $('#englishShowcaseVideo');
+if (englishFilm) {
+  const filmError = $('#englishFilmError');
+  englishFilm.addEventListener('error', () => { filmError.hidden = false; });
+  const filmSource = englishFilm.querySelector('source');
+  filmSource?.addEventListener('error', () => { filmError.hidden = false; });
+  englishFilm.addEventListener('playing', () => { filmError.hidden = true; });
+  document.addEventListener('play', event => {
+    if (!(event.target instanceof HTMLVideoElement)) return;
+    document.querySelectorAll('video').forEach(video => {
+      if (video !== event.target) video.pause();
+    });
+  }, true);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) englishFilm.pause();
+  });
+  window.addEventListener('pagehide', () => englishFilm.pause());
+  const filmDialogObserver = new MutationObserver(() => {
+    if (document.querySelector('dialog[open]')) englishFilm.pause();
+  });
+  document.querySelectorAll('dialog').forEach(dialog => filmDialogObserver.observe(dialog, {attributes: true, attributeFilter: ['open']}));
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) englishFilm.pause();
+    }).observe(englishFilm);
+  }
+}
