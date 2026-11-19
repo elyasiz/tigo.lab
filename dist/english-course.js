@@ -108,3 +108,58 @@ animationDialog.addEventListener('click', event => {
 demoVideo.addEventListener('error', () => { $('#emotionAnimationError').hidden = false; });
 document.addEventListener('visibilitychange', () => { if (document.hidden) demoVideo.pause(); });
 window.addEventListener('pagehide', () => demoVideo.pause());
+
+
+const teachingProducts = {
+  'cvc-word': {
+    name: 'CVC Word',
+    image: 'assets/english-cvc-word.png',
+    width: 572, height: 436,
+    category: 'ENGLISH COURSE / PHONICS',
+    description: 'Media huruf untuk mendampingi pengenalan pola consonant–vowel–consonant (CVC) dan latihan membaca kata sederhana bersama pengajar.',
+    focus: 'Fonik & membaca awal',
+    example: 'Coba kata “cat”, “sun”, atau “dog”. Ajak anak mengenali bunyi awal, tengah, dan akhir, lalu menggabungkannya menjadi kata. Pengajar dapat menyesuaikan contoh dengan level belajar anak.',
+    background: 'var(--soft-blue)'
+  },
+  'confident-wheel': {
+    name: 'Confident Wheel',
+    image: 'assets/english-confident-wheel.png',
+    width: 500, height: 500,
+    category: 'ENGLISH COURSE / SPEAKING',
+    description: 'Roda visual untuk membuka percakapan dan kegiatan berbicara dalam bahasa Inggris. Gunakan petunjuk yang terlihat pada roda sebagai awal kegiatan bersama pengajar.',
+    focus: 'Latihan berbicara & percakapan',
+    example: 'Pilih salah satu petunjuk pada roda. Ajak anak mencoba berbicara dalam bahasa Inggris, lalu beri kesempatan mengulang dengan pendampingan pengajar.',
+    background: 'var(--cream)'
+  }
+};
+const teachingDialog = $('#teachingProductDialog');
+let teachingReturnFocus;
+document.querySelectorAll('[data-open-teaching]').forEach(button => button.addEventListener('click', () => {
+  const product = teachingProducts[button.dataset.openTeaching];
+  if (!product || teachingDialog.open) return;
+  teachingReturnFocus = button;
+  $('#teachingProductTitle').textContent = product.name;
+  $('#teachingProductCategory').textContent = product.category;
+  $('#teachingProductDescription').textContent = product.description;
+  $('#teachingProductFocus').textContent = product.focus;
+  $('#teachingProductExample').textContent = product.example;
+  const image = $('#teachingProductImage');
+  image.src = product.image;
+  image.alt = product.name + ', gambar produk TIGO LAB';
+  image.width = product.width;
+  image.height = product.height;
+  $('#teachingProductPhoto').style.background = product.background;
+  $('#teachingProductClose').setAttribute('aria-label', 'Tutup detail ' + product.name);
+  teachingDialog.showModal();
+  document.body.style.overflow = 'hidden';
+}));
+$('#teachingProductClose').addEventListener('click', () => teachingDialog.close());
+teachingDialog.addEventListener('close', () => {
+  document.body.style.overflow = document.querySelector('dialog[open]') ? 'hidden' : '';
+  teachingReturnFocus?.focus({preventScroll: true});
+});
+teachingDialog.addEventListener('click', event => {
+  if (event.target !== teachingDialog) return;
+  const box = teachingDialog.getBoundingClientRect();
+  if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) teachingDialog.close();
+});
