@@ -8,11 +8,15 @@ export const products = [
   {id:'M07',name:'Hair Beading Activity',image:'hair-beading',category:'ronce',label:'Ronce & Rangkai',price:96996,code:'P02',bg:'#f3efff',short:'Rangkai manik menjadi gaya yang berbeda.',description:'Pasangkan manik berwarna pada tali rambut permainan. Jelajahi pola sederhana dan susunan warna melalui aktivitas meronce.',visual:'Media wajah, tali rambut, manik warna, dan wadah pada gambar referensi.'},
   {id:'M08',name:'Pretend Grocery Cash Register',image:'cash-register',category:'peran',label:'Bermain Peran',price:655022,code:'P10',setContents:'Set lengkap mencakup Type 01 dan 02, termasuk basket dan cash register.',bg:'#edf6ff',short:'Toko kecil untuk cerita belanja yang seru.',description:'Jadikan sudut bermain sebagai toko kecil dengan media kasir dan uang mainan. Pilihan untuk aktivitas bermain peran bersama teman atau keluarga.',visual:'Media kasir, uang mainan, kartu, dan elemen belanja pada gambar referensi.'},
   {id:'M09',name:'Spinning Shapes Stacker',image:'stacker',category:'rakit',label:'Rakit & Susun',price:508310,code:'P04',setContents:'Set lengkap mencakup Type 01 dan 02.',bg:'#fff7d6',short:'Putar, susun, lalu coba kombinasi baru.',description:'Susun bentuk berwarna pada tiang berulir. Putar setiap elemen dan jelajahi cara menyusun bentuk menjadi rangkaian sesuai pilihan sendiri.',visual:'Alas, tiang berulir, dan bentuk susun warna-warni pada gambar referensi.'},
-  {id:'M10',name:'Shoe Lacing Trainer',image:'shoe',category:'ronce',label:'Ronce & Rangkai',price:27208,code:'P01',bg:'#f3efff',short:'Satu tali, langkah kecil menuju kebiasaan baru.',description:'Coba memasang dan mengikat tali pada media berbentuk sepatu. Pilihan aktivitas yang memperkenalkan urutan memasukkan tali melalui lubang.',visual:'Media sepatu berlubang dan tali pada gambar referensi.'}
+  {id:'M10',name:'Shoe Lacing Trainer',image:'shoe',category:'ronce',label:'Ronce & Rangkai',price:27208,code:'P01',bg:'#f3efff',short:'Satu tali, langkah kecil menuju kebiasaan baru.',description:'Coba memasang dan mengikat tali pada media berbentuk sepatu. Pilihan aktivitas yang memperkenalkan urutan memasukkan tali melalui lubang.',visual:'Media sepatu berlubang dan tali pada gambar referensi.'},
+  {id:'M11',name:'Fraction',image:'fraction',width:1254,height:1254,category:'rakit',label:'Rakit & Susun',price:null,code:null,bg:'#fff3e0',short:'Kenali pecahan, susun menjadi satu lingkaran utuh.',description:'Kenalkan konsep utuh dan bagian melalui kepingan pecahan dari 1/1 hingga 1/8. Ajak anak mengamati angkanya, membandingkan ukuran kepingan, lalu menyusun setiap kelompok menjadi satu lingkaran utuh.',playSteps:['Pilih satu kelompok pecahan dan perhatikan angka pada kepingannya.','Angkat kepingan, lalu bandingkan ukuran bagian yang berbeda.','Susun kembali kepingan dengan penyebut yang sama hingga membentuk satu lingkaran utuh.']}
 ];
 
+export const isOrderable = product => Number.isSafeInteger(product?.price) && product.price > 0;
+
 // One product is one complete set, with packaging included once.
-export const offers = products.map(product => ({...product,productId:product.id}));
+// Catalogue items without an approved price cannot enter checkout.
+export const offers = products.filter(isOrderable).map(product => ({...product,productId:product.id}));
 
 // Keep former type selections visible for explicit review. Never silently
 // convert separately selected types into multiple, more expensive full sets.
@@ -20,5 +24,5 @@ export function legacyProductId(id){
   return typeof id==='string'&&/^(M01-T0[123]|M0[689]-T0[12])$/.test(id)?id.slice(0,3):null;
 }
 export function restoreCart(value){
-  return Array.isArray(value)?value.filter(item=>item&&(products.some(p=>p.id===item.id)||legacyProductId(item.id))&&Number.isInteger(item.qty)&&item.qty>0&&item.qty<=99).map(({id,qty})=>({id,qty})):[];
+  return Array.isArray(value)?value.filter(item=>item&&(offers.some(p=>p.id===item.id)||legacyProductId(item.id))&&Number.isInteger(item.qty)&&item.qty>0&&item.qty<=99).map(({id,qty})=>({id,qty})):[];
 }

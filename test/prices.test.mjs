@@ -14,9 +14,17 @@ const approved=[
 const input=(items,total)=>({idempotencyKey:randomUUID(),items,expectedTotal:total,customer:{name:'Uji Harga',email:'harga@example.com',city:'Jakarta'}});
 
 test('all 10 complete sets match the revised sale prices and product codes exactly',()=>{
-  assert.equal(products.length,10);assert.equal(offers.length,10);
+  assert.equal(products.length,11);assert.equal(offers.length,10);
   assert.deepEqual(offers.map(p=>[p.id,p.code,p.price]).sort(),[...approved].sort());
   assert.ok(products.every(p=>!p.variants));
+});
+
+test('Fraction is catalogue-only until its price is confirmed',()=>{
+  const fraction=products.find(p=>p.id==='M11');
+  assert.equal(fraction.name,'Fraction');assert.equal(fraction.price,null);
+  assert.ok(!offers.some(p=>p.id==='M11'));
+  assert.deepEqual(restoreCart([{id:'M11',qty:1},{id:'M10',qty:2}]),[{id:'M10',qty:2}]);
+  assert.throws(()=>validateCheckout(input([{id:'M11',qty:1,price:1}],1)),error=>error.status===400);
 });
 
 test('one of each complete set totals the revised listed prices with packaging included once',()=>{

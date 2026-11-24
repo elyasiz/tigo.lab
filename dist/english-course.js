@@ -113,8 +113,8 @@ window.addEventListener('pagehide', () => demoVideo.pause());
 const teachingProducts = {
   'cvc-word': {
     name: 'CVC Word',
-    image: 'assets/english-cvc-word.png',
-    width: 572, height: 436,
+    image: 'assets/english-cvc-word-cat.webp',
+    width: 1254, height: 1254,
     category: 'ENGLISH COURSE / PHONICS',
     description: 'Media huruf untuk mendampingi pengenalan pola consonant–vowel–consonant (CVC) dan latihan membaca kata sederhana bersama pengajar.',
     focus: 'Fonik & membaca awal',

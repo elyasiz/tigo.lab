@@ -4,8 +4,8 @@ Website katalog Montessori TIGO LAB dengan animasi 3D dan checkout QRIS Midtrans
 
 ## Fitur
 
-- Sepuluh produk Montessori dengan gambar katalog TIGO LAB.
-- Animasi cara bermain khusus untuk setiap produk, tersedia dari kartu, detail, dan produk unggulan. Video dimuat ketika diminta pengguna; kontrol putar/jeda tersedia dan video berhenti saat jendela ditutup.
+- Sebelas produk Montessori dengan gambar katalog TIGO LAB; sepuluh set memiliki harga terkonfirmasi.
+- Sepuluh produk memiliki animasi cara bermain, tersedia dari kartu, detail, dan produk unggulan. Fraction menampilkan petunjuk bermain tertulis. Video dimuat ketika diminta pengguna; kontrol putar/jeda tersedia dan video berhenti saat jendela ditutup.
 - Pencarian, filter aktivitas, pengurutan harga, dan detail produk.
 - Keranjang dengan perubahan jumlah dan penyimpanan lokal.
 - QRIS dinamis sandbox dengan nominal yang dihitung server dari data produk bersama.
@@ -16,7 +16,9 @@ Website katalog Montessori TIGO LAB dengan animasi 3D dan checkout QRIS Midtrans
 
 ## Identitas visual
 
-Menu **English Course** membuka `dist/english-course.html` (URL Vercel `/english-course`). Halaman memakai stylesheet brand bersama dan file `english-course.css`/`english-course.js` untuk tata letak, menu HP, preferensi gerak, detail Emotion Slider, serta ide aktivitas. Katalog menampilkan Emotion Slider, CVC Word, dan Confident Wheel, dengan tombol pembesaran/detail serta ide aktivitas. Nama Confident Wheel mengikuti penamaan pengguna. CVC Word memakai PNG transparan yang disediakan pengguna. Confident Wheel memakai `assets/english-confident-wheel-front.webp`, visual katalog transparan 1254×1254 yang disunting dengan imagegen berdasarkan PNG pengguna agar menghadap depan dengan judul tegak. Warna oranye, tepi biru, poros kuning, dua jendela, dan identitas Smart Reader menjadi referensi produk; gambar merupakan visual hasil penyuntingan, bukan foto dokumentasi baru. Kartu dan dialog detail memakai aset yang sama; PNG sumber tetap tersedia tanpa perubahan. Harga, usia rekomendasi, bahan, dimensi, dan isi paket belum diberikan; halaman tidak mengarang spesifikasi atau menambahkan produk ke checkout. Katalog serta harga Montessori tetap memakai `products.js`.
+Fraction (`M11`) ditambahkan ke koleksi Montessori dalam kategori Rakit & Susun menggunakan gambar pengguna `11 - Fraction 1.png`, dikompresi menjadi `assets/fraction.webp` tanpa retus desain. Detail menampilkan pengenalan pecahan 1/1 hingga 1/8 dan tiga petunjuk bermain tertulis. Harga, kode penjualan, bahan, dimensi, dan spesifikasi paket belum dikonfirmasi; harga ditampilkan sebagai “Harga akan diinformasikan.” tanpa tombol keranjang atau tautan animasi yang belum tersedia. `offers` hanya memuat produk dengan harga sah, sehingga Fraction juga ditolak oleh pemulihan keranjang dan checkout server sampai harganya ditetapkan. Sepuluh harga sebelumnya tidak berubah.
+
+Menu **English Course** membuka `dist/english-course.html` (URL Vercel `/english-course`). Halaman memakai stylesheet brand bersama dan file `english-course.css`/`english-course.js` untuk tata letak, menu HP, preferensi gerak, detail Emotion Slider, serta ide aktivitas. Katalog menampilkan Emotion Slider, CVC Word, dan Confident Wheel, dengan tombol pembesaran/detail serta ide aktivitas. Nama Confident Wheel mengikuti penamaan pengguna. CVC Word memakai `assets/english-cvc-word-cat.webp`, visual katalog transparan 1254×1254 yang disunting dengan imagegen berdasarkan PNG pengguna: kartu kucing bertuliskan cat dan tiga huruf c biru, a merah, t biru. PNG sumber tetap tersedia tanpa perubahan. Confident Wheel memakai `assets/english-confident-wheel-front.webp`, visual katalog transparan 1254×1254 yang disunting dengan imagegen berdasarkan PNG pengguna agar menghadap depan dengan judul tegak. Warna oranye, tepi biru, poros kuning, dua jendela, dan identitas Smart Reader menjadi referensi produk; gambar merupakan visual hasil penyuntingan, bukan foto dokumentasi baru. Kartu dan dialog detail memakai aset yang sama; PNG sumber tetap tersedia tanpa perubahan. Harga, usia rekomendasi, bahan, dimensi, dan isi paket belum diberikan; halaman tidak mengarang spesifikasi atau menambahkan produk ke checkout. Katalog serta harga Montessori tetap memakai `products.js`.
 
 Video pengguna **TIGOLAB SMARTREADER.mov** ditampilkan pada bagian `#video-english-course` dekat footer English Course. Versi web `assets/stories/english-course-tigo-smartreader.mp4` memakai H.264 720×1280, 30 fps, yuv420p, dan fast start. Audio AAC asli disalin tanpa enkode ulang; isi video tidak dipotong. Sampul WebP berasal dari detik ke-10. Pemutaran dimulai melalui kontrol native dengan audio aktif; video tidak diputar otomatis dan dimuat dengan `preload="none"`. Video berhenti saat keluar dari layar, tab disembunyikan, atau dialog produk dibuka; hanya satu video pada halaman yang dapat diputar pada satu waktu. MOV sumber tidak dipublikasikan.
 
@@ -57,7 +59,7 @@ Gambar berasal dari katalog produk TIGO LAB yang disediakan untuk proyek ini.
 
 ## Animasi cara bermain
 
-Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Semua produk memiliki animasi dengan model 3D. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Model mengacu pada foto katalog dan memperagakan aktivitas; video bukan rekaman produk fisik dan model bukan pengukuran CAD.
+Metadata video, poster, dan tiga langkah setiap produk ada di `dist/demos.js`. Sepuluh produk memiliki animasi dengan model 3D; Fraction belum memiliki video animasi. Video MP4 H.264 tanpa audio ada di `dist/assets/videos/`. Model mengacu pada foto katalog dan memperagakan aktivitas; video bukan rekaman produk fisik dan model bukan pengukuran CAD.
 
 Kesepuluh video dan poster aktif menggunakan logo TIGO LAB, judul Fredoka, petunjuk Nunito, panel krem, serta aksen biru, oranye, dan kuning. Kompositor membaca token warna langsung dari `dist/styles.css` dan font WOFF2 dari `dist/assets/fonts/`, sehingga identitas video mengikuti website. Aset aktif memakai akhiran `-3d-brand` agar browser yang pernah membuka video lama mengambil versi baru.
 

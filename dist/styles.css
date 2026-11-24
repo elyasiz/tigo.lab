@@ -257,6 +257,11 @@ form>input,form>select{font-size:16px}
 /* Complete-set prices and review of older cart selections. */
 .detail-price output{font:inherit}
 .complete-set-note{font-size:14px;line-height:1.7;color:var(--muted);margin-top:10px}
+.price-pending{font-size:15px;line-height:1.6;letter-spacing:0;color:var(--muted);font-weight:600}
+.detail-play-steps{margin-top:20px}
+.detail-play-steps h3{font-size:18px;line-height:1.4}
+.detail-play-steps ol{padding-left:20px;margin-top:10px;font-size:14px;line-height:1.8;color:var(--muted)}
+.detail-play-steps li+li{margin-top:6px}
 .cart-set-button{border:0;padding:4px 0;background:transparent;color:var(--blue-ink);font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .cart-set-notice{font-size:14px;line-height:1.6;margin:10px 0 12px;color:var(--orange-ink)}
 

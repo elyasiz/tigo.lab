@@ -1,5 +1,5 @@
 'use strict';
-import { products, offers, legacyProductId, restoreCart } from './products.js';
+import { products, offers, isOrderable, legacyProductId, restoreCart } from './products.js';
 import { productDemos } from './demos.js';
 import { initializeCheckout } from './checkout.js';
 import { initializeStories } from './stories.js';
@@ -38,9 +38,17 @@ const eye='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 1
 function renderProducts(){
   let visible=products.filter(p=>(filter==='all'||p.category===filter)&&(!query||`${p.name} ${p.short} ${p.label}`.toLocaleLowerCase('id').includes(query)));
   if(sort==='name')visible.sort((a,b)=>a.name.localeCompare(b.name));
-  if(sort==='price-asc')visible.sort((a,b)=>a.price-b.price);
-  if(sort==='price-desc')visible.sort((a,b)=>b.price-a.price);
-  $('#productGrid').innerHTML=visible.map(p=>`<article class="product-card" data-id="${p.id}"><div class="product-photo" style="--card-bg:${p.bg}"><span class="product-index">${p.id.slice(1)}</span><span class="view-icon">${eye}</span><button class="product-image-button" data-detail="${p.id}" aria-label="Lihat detail ${p.name}"><img src="assets/${p.image}.webp" alt="${p.name}, referensi produk Montessori TIGO LAB" width="1000" height="1000" loading="lazy"></button></div><div class="product-info"><div class="product-category">${p.label}</div><h3><button class="product-name" data-detail="${p.id}">${p.name}</button></h3><p class="product-description">${p.short}</p><button class="card-demo-button" data-play-demo="${p.id}" aria-label="Lihat cara bermain ${p.name}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Cara bermain</button><div class="product-bottom"><div class="product-price">${rupiah(p.price)}<span class="example-note">per set lengkap</span></div><button class="add-button" data-add="${p.id}" aria-label="Tambah ${p.name} ke keranjang">+</button></div></div></article>`).join('');
+  if(sort==='price-asc'||sort==='price-desc')visible.sort((a,b)=>{
+    if(!isOrderable(a))return isOrderable(b)?1:0;
+    if(!isOrderable(b))return -1;
+    return sort==='price-asc'?a.price-b.price:b.price-a.price;
+  });
+  $('#productGrid').innerHTML=visible.map(p=>{
+    const demo=productDemos[p.id]?`<button class="card-demo-button" data-play-demo="${p.id}" aria-label="Lihat cara bermain ${p.name}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Cara bermain</button>`:p.playSteps?`<button class="card-demo-button" data-detail="${p.id}" aria-label="Lihat cara bermain ${p.name}" aria-haspopup="dialog" aria-controls="productDialog">Cara bermain <span aria-hidden="true">↗</span></button>`:'';
+    const price=isOrderable(p)?`<div class="product-price">${rupiah(p.price)}<span class="example-note">per set lengkap</span></div><button class="add-button" data-add="${p.id}" aria-label="Tambah ${p.name} ke keranjang">+</button>`:'<div class="product-price price-pending">Harga akan diinformasikan.</div>';
+    return `<article class="product-card" data-id="${p.id}"><div class="product-photo" style="--card-bg:${p.bg}"><span class="product-index">${p.id.slice(1)}</span><span class="view-icon">${eye}</span><button class="product-image-button" data-detail="${p.id}" aria-label="Lihat detail ${p.name}"><img src="assets/${p.image}.webp" alt="${p.name}, referensi produk Montessori TIGO LAB" width="${p.width??1000}" height="${p.height??1000}" loading="lazy"></button></div><div class="product-info"><div class="product-category">${p.label}</div><h3><button class="product-name" data-detail="${p.id}">${p.name}</button></h3><p class="product-description">${p.short}</p>${demo}<div class="product-bottom">${price}</div></div></article>`;
+  }).join('');
+  $('[data-filter="all"] span').textContent=products.length;
   $('#resultCount').textContent=`Menampilkan ${visible.length} produk`;
   $('#emptySearch').hidden=visible.length>0;
 }
@@ -54,7 +62,11 @@ function showProduct(id,cartId=null){
   detailId=id;detailQty=previous?.qty??1;detailCartId=cartId;
   const contents=p.setContents?`<p class="complete-set-note">${p.setContents}</p>`:'';
   const review=cartId?'<p class="cart-set-notice">Periksa isi paket dan jumlah set sebelum menyimpan.</p>':'';
-  $('#productDetail').innerHTML=`<div class="detail-layout"><div class="detail-image" style="--detail-bg:${p.bg}"><img src="assets/${p.image}.webp" alt="${p.name}, gambar referensi dari katalog TIGO LAB" width="1000" height="1000"></div><div class="detail-copy"><div class="eyebrow">MONTESSORI / ${p.label}</div><h2 id="detailTitle">${p.name}</h2><p class="detail-description">${p.description}</p><button class="text-link detail-demo-button" data-play-demo="${p.id}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Lihat animasi cara bermain</button><div class="detail-price"><output id="detailPriceValue">${rupiah(p.price)}</output><span>Harga per set lengkap · termasuk kemasan</span></div>${contents}${review}<div class="detail-meta"><div><span>Kode produk</span><strong id="detailCode">${p.code}</strong></div><div><span>Bahan & kelengkapan</span><strong>Menunggu konfirmasi</strong></div><div><span>Pemesanan</span><strong>QRIS sandbox</strong></div></div><div class="detail-actions"><div class="qty-control" aria-label="Jumlah set"><button type="button" data-detail-qty="-1" aria-label="Kurangi jumlah">−</button><output id="detailQty" aria-live="polite">${detailQty}</output><button type="button" data-detail-qty="1" aria-label="Tambah jumlah">+</button></div><button class="button button-blue" id="detailAdd">${cartId?'Ganti dengan set lengkap':'Tambah ke keranjang'} <span aria-hidden="true">+</span></button></div></div></div>`;
+  const demo=productDemos[p.id]?`<button class="text-link detail-demo-button" data-play-demo="${p.id}" aria-haspopup="dialog" aria-controls="animationDialog"><span aria-hidden="true">▶</span> Lihat animasi cara bermain</button>`:'';
+  const steps=p.playSteps?`<div class="detail-play-steps"><h3>Cara bermain</h3><ol>${p.playSteps.map(step=>`<li>${safeText(step)}</li>`).join('')}</ol></div>`:'';
+  const price=isOrderable(p)?`<div class="detail-price"><output id="detailPriceValue">${rupiah(p.price)}</output><span>Harga per set lengkap · termasuk kemasan</span></div>`:'<div class="detail-price price-pending">Harga akan diinformasikan.</div>';
+  const actions=isOrderable(p)?`<div class="detail-actions"><div class="qty-control" aria-label="Jumlah set"><button type="button" data-detail-qty="-1" aria-label="Kurangi jumlah">−</button><output id="detailQty" aria-live="polite">${detailQty}</output><button type="button" data-detail-qty="1" aria-label="Tambah jumlah">+</button></div><button class="button button-blue" id="detailAdd">${cartId?'Ganti dengan set lengkap':'Tambah ke keranjang'} <span aria-hidden="true">+</span></button></div>`:'';
+  $('#productDetail').innerHTML=`<div class="detail-layout"><div class="detail-image" style="--detail-bg:${p.bg}"><img src="assets/${p.image}.webp" alt="${p.name}, gambar referensi dari katalog TIGO LAB" width="${p.width??1000}" height="${p.height??1000}"></div><div class="detail-copy"><div class="eyebrow">MONTESSORI / ${p.label}</div><h2 id="detailTitle">${p.name}</h2><p class="detail-description">${p.description}</p>${demo}${steps}${price}${contents}${review}<div class="detail-meta">${p.code?`<div><span>Kode produk</span><strong id="detailCode">${p.code}</strong></div>`:''}<div><span>Bahan & kelengkapan</span><strong>Menunggu konfirmasi</strong></div><div><span>Pemesanan</span><strong>${isOrderable(p)?'QRIS sandbox':'Menunggu informasi harga'}</strong></div></div>${actions}</div></div>`;
   openDialog('productDialog');
 }
 $('#productDetail').addEventListener('click',event=>{
@@ -88,7 +100,7 @@ $('#cartOpen').addEventListener('click',()=>{renderCart();openDialog('cartDialog
 $('#cartContents').addEventListener('click',e=>{const choice=e.target.closest('[data-cart-set]');if(choice){showProduct(legacyProductId(choice.dataset.cartSet),choice.dataset.cartSet);return;}const qty=e.target.closest('[data-cart-qty]'),remove=e.target.closest('[data-remove]');if(qty){const item=cart.find(i=>i.id===qty.dataset.cartQty);if(!item)return;item.qty=Math.max(1,Math.min(99,item.qty+Number(qty.dataset.delta)));persistCart();renderCart();const replacement=$(`#cartContents button[data-cart-qty="${item.id}"][data-delta="${qty.dataset.delta}"]`);replacement?.focus({preventScroll:true});}if(remove){cart=cart.filter(i=>i.id!==remove.dataset.remove);persistCart();renderCart();notify('Produk dihapus dari keranjang.');}});
 initializeCheckout({ getCart:()=>cart, products:offers, openDialog, closeDialog, notify, onPaid(order){ const same=JSON.stringify(cart.map(i=>[i.id,i.qty]).sort())===JSON.stringify(order.items.map(i=>[i.id,i.qty]).sort()); if(same){cart=[];persistCart();} } });
 const featured=['M09',...products.filter(p=>p.id!=='M09').map(p=>p.id)];let heroSlide=0;
-function setHero(delta){heroSlide=(heroSlide+delta+featured.length)%featured.length;const p=byId(featured[heroSlide]);const img=$('#heroImage');img.classList.remove('switching');img.src=`assets/${p.image}.webp`;img.alt=`${p.name}, gambar referensi produk Montessori TIGO LAB`;$('#heroProductName').textContent=p.name;$('#heroIndex').textContent=`PILIHAN ${p.id.slice(1)} / 10`;void img.offsetWidth;img.classList.add('switching');}
+function setHero(delta){heroSlide=(heroSlide+delta+featured.length)%featured.length;const p=byId(featured[heroSlide]);const img=$('#heroImage');img.classList.remove('switching');img.src=`assets/${p.image}.webp`;img.alt=`${p.name}, gambar referensi produk Montessori TIGO LAB`;$('#heroProductName').textContent=p.name;$('#heroIndex').textContent=`PILIHAN ${p.id.slice(1)} / ${products.length}`;$('#replayMotion').setAttribute('aria-controls',productDemos[p.id]?'animationDialog':'productDialog');void img.offsetWidth;img.classList.add('switching');}
 function openProductDemo(id){
   const product=byId(id),demo=productDemos[id];
   if(!product||!demo||$('#animationDialog').open)return;
@@ -116,7 +128,8 @@ $('#animationDialog').addEventListener('close',()=>{$('#demoVideo').pause();});
 $('#demoVideo').addEventListener('error',()=>{$('#animationError').hidden=false;});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)$('#demoVideo').pause();});
 $('#heroPrev').addEventListener('click',()=>setHero(-1));$('#heroNext').addEventListener('click',()=>setHero(1));
-$('#replayMotion').addEventListener('click',()=>openProductDemo(featured[heroSlide]));
+$('#replayMotion').addEventListener('click',()=>{const id=featured[heroSlide];if(productDemos[id])openProductDemo(id);else showProduct(id);});
+$('#activityCount').textContent=`${products.length} pilihan aktivitas.`;
 renderProducts();updateBadge();initializeStories({reduced});
 const benefitsSection=$('#kelebihan');
 if(benefitsSection&&'IntersectionObserver' in window){
