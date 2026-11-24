@@ -123,8 +123,8 @@ const teachingProducts = {
   },
   'confident-wheel': {
     name: 'Confident Wheel',
-    image: 'assets/english-confident-wheel.png',
-    width: 500, height: 500,
+    image: 'assets/english-confident-wheel-front.webp',
+    width: 1254, height: 1254,
     category: 'ENGLISH COURSE / SPEAKING',
     description: 'Roda visual untuk membuka percakapan dan kegiatan berbicara dalam bahasa Inggris. Gunakan petunjuk yang terlihat pada roda sebagai awal kegiatan bersama pengajar.',
     focus: 'Latihan berbicara & percakapan',
