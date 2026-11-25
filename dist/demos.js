@@ -29,8 +29,8 @@ export const productDemos = {
       "Tuang perlahan ke corong.",
       "Amati bahan terkumpul di wadah."
     ],
-    "video": "assets/videos/funnel-3d-play.mp4",
-    "poster": "assets/funnel-3d-play-poster.webp"
+    "video": "assets/videos/funnel-wood-leaf-3d-play.mp4",
+    "poster": "assets/funnel-wood-leaf-3d-play-poster.webp"
   },
   "M04": {
     "title": "Masukkan, luncurkan, tampung.",

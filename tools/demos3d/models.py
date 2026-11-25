@@ -66,12 +66,14 @@ def grain(loc,color='#e5c98c',size=.04):return sphere(loc,(size,size*.70,size*.6
 
 def funnel():
     stage_scene((0,0,1.20),8.2,24,32)
-    for x in (-2.12,2.12):box((x,0,1.45),(.22,1.18,2.9),CYAN,.10)
-    for z in (.30,2.25):box((0,0,z),(4.42,1.08,.21),CYAN,.085)
+    # Match the approved wood-coloured plastic rack and leaf-green accessories.
+    wood='#cfa979';leaf='#4e7d3a'
+    for x in (-2.12,2.12):box((x,0,1.45),(.22,1.18,2.9),wood,.10)
+    for z in (.30,2.25):box((0,0,z),(4.42,1.08,.21),wood,.085)
     for i,x in enumerate((-1.35,0,1.35)):
-        lathe((x,0,2.48),[(.46,.39),(.18,-.30),(.16,-.59),(.105,-.59),(.115,-.28),(.40,.37)],'#a1cf49',name='Open green funnel')
-        lathe((x,0,.80),[(.43,.46),(.43,-.45),(.32,-.49),(.30,-.35),(.35,.43)],'#9fc84c',name='Receiving bucket')
-        cyl((x,0,.37),.31,.06,'#91b343',bevel=.02)
+        lathe((x,0,2.48),[(.46,.39),(.18,-.30),(.16,-.59),(.105,-.59),(.115,-.28),(.40,.37)],leaf,name='Open green funnel')
+        lathe((x,0,.80),[(.43,.46),(.43,-.45),(.32,-.49),(.30,-.35),(.35,.43)],leaf,name='Receiving bucket')
+        cyl((x,0,.37),.31,.06,leaf,bevel=.02)
         rng=random.Random(60+i)
         for j in range(34):
             a=rng.random()*math.tau;r=math.sqrt(rng.random())*.30
@@ -83,13 +85,13 @@ def funnel():
             visible(g,start,start+.82)
             key(g,start,loc=(x+.04*math.sin(j),-.08,3.17));key(g,start+.33,loc=(x+.025*math.sin(j),0,2.25))
             key(g,start+.82,loc=(x+.15*math.sin(j),.12*math.cos(j),.64))
-    lathe((-2,-1.5,.22),[(.63,.15),(.57,-.14),(.20,-.18),(.16,-.10),(.52,.10)],CYAN,name='Material bowl')
+    lathe((-2,-1.5,.22),[(.63,.15),(.57,-.14),(.20,-.18),(.16,-.10),(.52,.10)],leaf,name='Material bowl')
     rng=random.Random(15)
     for j in range(65):
         a=rng.random()*math.tau;r=math.sqrt(rng.random())*.47;grain((-2+r*math.cos(a),-1.5+r*math.sin(a),.30),size=.043)
     spoon=empty('Pouring spoon')
-    lathe((0,0,0),[(.26,.05),(.21,-.09),(.02,-.10),(.02,-.04),(.23,.08)],CYAN,spoon,name='Spoon bowl')
-    box((.57,0,.02),(.85,.12,.10),CYAN,.05,spoon)
+    lathe((0,0,0),[(.26,.05),(.21,-.09),(.02,-.10),(.02,-.04),(.23,.08)],leaf,spoon,name='Spoon bowl')
+    box((.57,0,.02),(.85,.12,.10),leaf,.05,spoon)
     for i,x in enumerate((-1.35,0,1.35)):
         start=.5+i*2.15
         key(spoon,start,loc=(-1.75,-1.45,.36),rot=(0,0,-.5))
