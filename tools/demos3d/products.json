@@ -139,6 +139,7 @@
   },
   "M09": {
     "slug": "stacker",
+    "video_stem": "stacker-primary-wood-3d-play",
     "name": "Spinning Shapes Stacker",
     "title": "Putar, turun, susun.",
     "steps": [
@@ -150,6 +151,21 @@
       1.35,
       10.6
     ],
+    "duration": 12
+  },
+  "M11": {
+    "slug": "fraction",
+    "video_stem": "fraction-red-green-3d-play",
+    "name": "Fraction",
+    "title": "Angkat, bandingkan, susun.",
+    "description": "Angkat kepingan pecahan, bandingkan besar bagiannya, lalu susun kembali menjadi satu lingkaran utuh.",
+    "steps": [
+      "Pilih dan angkat kepingan pecahan.",
+      "Bandingkan besar bagian pecahan.",
+      "Susun kembali menjadi lingkaran utuh."
+    ],
+    "breaks": [2.8, 6.8],
+    "poster_time": 10.7,
     "duration": 12
   },
   "M10": {

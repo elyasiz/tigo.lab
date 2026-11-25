@@ -117,7 +117,18 @@ export const productDemos = {
       "Putar dan turunkan mengikuti ulir.",
       "Susun bentuk satu per satu."
     ],
-    "video": "assets/videos/stacker-3d-play.mp4",
-    "poster": "assets/stacker-3d-play-poster.webp"
+    "video": "assets/videos/stacker-primary-wood-3d-play.mp4",
+    "poster": "assets/stacker-primary-wood-3d-play-poster.webp"
+  },
+  "M11": {
+    "video": "assets/videos/fraction-red-green-3d-play.mp4",
+    "poster": "assets/fraction-red-green-3d-play-poster.webp",
+    "title": "Angkat, bandingkan, susun.",
+    "description": "Angkat kepingan pecahan, bandingkan besar bagiannya, lalu susun kembali menjadi satu lingkaran utuh.",
+    "steps": [
+      "Pilih dan angkat kepingan pecahan.",
+      "Bandingkan besar bagian pecahan.",
+      "Susun kembali menjadi lingkaran utuh."
+    ]
   }
 };

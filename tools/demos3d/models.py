@@ -3,6 +3,7 @@ import bpy,math,random
 from mathutils import Vector
 from engine import *
 from emotion_slider import emotion_slider
+from fraction import fraction
 
 def train():
     stage_scene((0,0,1),8.2,28,30);root=empty('Train assembly')
@@ -203,14 +204,15 @@ def dino():
 
 def stacker():
     stage_scene((0,0,1.65),8.0,-28,30)
-    box((0,0,.15),(5.8,1.70,.30),'#84cdd1',.20,name='Rounded turquoise stacker base')
-    columns=[(-1.85,'square',['#84cdd1','#ed9345','#f0cc40']),
-             (0,'hex',['#f0cc40','#ed9345','#dda3b6','#84cdd1','#a58ac4']),
-             (1.85,'circle',['#ed9345','#a58ac4','#84cdd1','#f0cc40','#dda3b6'])]
+    wood='#cfa979'
+    box((0,0,.15),(5.8,1.70,.30),wood,.20,name='Wood-coloured plastic stacker base')
+    columns=[(-1.85,'square',['#c9403d']*3),
+             (0,'hex',['#e9b938']*5),
+             (1.85,'circle',['#2f66b0']*5)]
     pitch=.48;bottom=.29;top=3.38;n=72;m=292
     for column,(x,kind,colors) in enumerate(columns):
         verts=[];faces=[]
-        # Broad, smooth helical ridges match the rounded yellow reference posts.
+        # Preserve the broad rounded helical ridges, in the approved wood colour.
         for iz in range(m+1):
             z=bottom+(top-bottom)*iz/m
             for j in range(n):
@@ -223,7 +225,7 @@ def stacker():
                 k=(j+1)%n
                 faces.append((iz*n+j,iz*n+k,(iz+1)*n+k,(iz+1)*n+j))
         faces.extend((tuple(range(n-1,-1,-1)),tuple(m*n+j for j in range(n))))
-        post=mesh('Chunky rounded yellow screw post',verts,faces,'#f1cb35')
+        post=mesh('Wood-coloured spiral screw post',verts,faces,wood)
         post.data.polygons[-1].use_smooth=False;post.data.polygons[-2].use_smooth=False
         for i,color in enumerate(colors):
             block=ring((0,0,0),.55 if kind=='square' else .53 if kind=='hex' else .59,.34,.48,color,kind=kind,n=72)

@@ -145,7 +145,7 @@ def update_manifest(keys):
     data=json.loads(source[source.index('{'):source.rindex('}')+1])
     for key in keys:
         video,poster=paths(key)
-        data[key].update(video=video.relative_to(ROOT/'dist').as_posix(),poster=poster.relative_to(ROOT/'dist').as_posix())
+        data.setdefault(key,{}).update(video=video.relative_to(ROOT/'dist').as_posix(),poster=poster.relative_to(ROOT/'dist').as_posix())
         for field in ('title','description','steps'):
             if field in DATA[key]:data[key][field]=DATA[key][field]
         data[key].pop('note',None)

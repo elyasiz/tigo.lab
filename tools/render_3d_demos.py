@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(Path(__file__).resolve().parent/'demos3d'))
 import models
 
-MODELS={'M01':'train','M02':'beads','M03':'funnel','M04':'dino','M05':'hair_cutting','M06':'donut','M07':'hair_beading','M08':'cash_register','M09':'stacker','M10':'shoe','E01':'emotion_slider'}
+MODELS={'M01':'train','M02':'beads','M03':'funnel','M04':'dino','M05':'hair_cutting','M06':'donut','M07':'hair_beading','M08':'cash_register','M09':'stacker','M10':'shoe','M11':'fraction','E01':'emotion_slider'}
 
 if __name__=='__main__':
     args=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else []
