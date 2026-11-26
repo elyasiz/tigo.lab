@@ -103,7 +103,7 @@
 .coding-animation-dialog>.eyebrow{font-size:13px;line-height:1.5}
 .coding-animation-dialog h2{font-size:31px;line-height:1.25}
 .coding-animation-dialog>p:not(.small-note){font-size:15px;line-height:1.8}
-.coding-animation-dialog .demo-video{max-height:60dvh;background:white;margin-top:16px}
+.coding-animation-dialog .demo-video{height:auto;max-height:60dvh;background:white;margin-top:16px}
 .coding-animation-dialog .animation-steps{font-size:15px;line-height:1.75;gap:22px}
 .coding-animation-dialog .animation-error{font-size:14px}
 @media(max-width:550px){.coding-guide-intro{margin-top:18px;max-width:none;font-size:15px}.coding-demo-button{font-size:14px}.coding-animation-dialog{padding:24px 18px 18px}.coding-animation-dialog h2{font-size:27px}.coding-animation-dialog>.eyebrow{font-size:12px}.coding-animation-dialog .animation-steps{grid-template-columns:1fr;gap:8px}.coding-animation-dialog .demo-video{max-height:65dvh}}
