@@ -46,12 +46,13 @@ def train():
 CORD=[(2.2,1.1,.50),(2.6,-.1,.45),(-1.8,.85,.42),(-2.1,-.9,.42)]
 def beads():
     stage_scene((0,0,.40),8.2,48,43)
+    red='#c9403d';yellow='#e9b938';blue='#2f66b0'
     curve([bezier(CORD,i/80) for i in range(81)],.055,'#eadbbc',name='Threading cord')
-    cyl(CORD[-1],.23,.12,'#398cbb',rot=(math.pi/2,0,0),bevel=.03)
-    needle=cyl((2.14,1.33,.51),.055,.55,'#3287bb',bevel=.025)
+    cyl(CORD[-1],.23,.12,blue,rot=(math.pi/2,0,0),bevel=.03)
+    needle=cyl((2.14,1.33,.51),.055,.55,blue,bevel=.025)
     orient(needle,(.1,.8,.1))
     kinds=['square','triangle','circle','square','circle']
-    colors=[YELLOW,GREEN,PINK,CYAN,ORANGE]
+    colors=[yellow,blue,red,blue,red]
     for i,(kind,color) in enumerate(zip(kinds,colors)):
         bead=ring((0,0,0),.28 if kind!='triangle' else .20,.11,.43,color,kind=kind)
         start=.55+i*1.3; initial=(-1.5+i*.76,-1.85,.35)
@@ -293,6 +294,7 @@ def hair_cutting():
 
 def hair_beading():
     stage_scene((0,.55,.25),8.6,18,59)
+    red='#c9403d';yellow='#e9b938';blue='#2f66b0'
     roots=wooden_face();cords=[]
     for i in range(6):
         root=roots[min(9,i*2)]
@@ -300,11 +302,11 @@ def hair_beading():
         pts=[root,(root[0]*1.25,root[1]*1.25,.46),(end[0]+.16*math.sin(i),end[1]-.30,.40),end]
         curve([bezier(pts,j/60) for j in range(61)],.035,'#eee7d6',name='White hair cord');cords.append(pts)
     box((-1.85,-1.55,.12),(1.55,1.1,.15),'#e2e5dc',.10)
-    for i,c in enumerate((PINK,YELLOW,CYAN,WHITE,PURPLE,GREEN)):
+    for i,c in enumerate((red,yellow,blue,red,yellow,blue)):
         x=-2.33+i%3*.48;y=-1.83+i//3*.5
         box((x,y,.23),(.42,.43,.10),WHITE,.035)
         for j in range(3):ring((x-.1+j%2*.18,y-.1+j//2*.16,.33),.075,.032,.10,c,n=24)
-    colors=[PINK,YELLOW,CYAN,GREEN,YELLOW,GREEN,PURPLE,PINK,PURPLE]
+    colors=[red,yellow,blue,yellow,blue,red,blue,red,yellow]
     for i,color in enumerate(colors):
         p=cords[(i%3)*2];level=i//3;start=.6+i*.72
         bead=ring((0,0,0),.13,.059,.18,color,n=36)

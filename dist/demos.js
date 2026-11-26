@@ -18,8 +18,8 @@ export const productDemos = {
       "Masukkan ujung tali ke lubang manik.",
       "Geser dan ulangi pola warna."
     ],
-    "video": "assets/videos/beads-3d-play.mp4",
-    "poster": "assets/beads-3d-play-poster.webp"
+    "video": "assets/videos/beads-primary-3d-play.mp4",
+    "poster": "assets/beads-primary-3d-play-poster.webp"
   },
   "M03": {
     "title": "Sendok, tuang, amati.",
@@ -73,8 +73,8 @@ export const productDemos = {
       "Masukkan manik ke ujung tali rambut.",
       "Geser dan rangkai pola warnanya."
     ],
-    "video": "assets/videos/hair-beading-3d-play.mp4",
-    "poster": "assets/hair-beading-3d-play-poster.webp"
+    "video": "assets/videos/hair-beading-primary-3d-play.mp4",
+    "poster": "assets/hair-beading-primary-3d-play-poster.webp"
   },
   "M08": {
     "title": "Belanja kecil, cerita besar.",

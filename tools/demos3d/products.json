@@ -31,6 +31,7 @@
   },
   "M02": {
     "slug": "beads",
+    "video_stem": "beads-primary-3d-play",
     "name": "Geometric Bead Threading",
     "title": "Masukkan, geser, rangkai.",
     "description": "Masukkan bentuk geometri ke ujung tali dan geser menjadi rangkaian warna.",
@@ -109,6 +110,7 @@
   },
   "M07": {
     "slug": "hair-beading",
+    "video_stem": "hair-beading-primary-3d-play",
     "name": "Hair Beading Activity",
     "title": "Ronce rambut warna-warni.",
     "description": "Masukkan manik ke ujung tali rambut dan geser untuk menyusun pola warna.",
