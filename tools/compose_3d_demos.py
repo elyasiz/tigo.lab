@@ -93,6 +93,13 @@ def compose(product_id,frame_path,t):
     image.alpha_composite(stage,(0,200))
     ImageDraw.Draw(image).rounded_rectangle((59,209,137,215),radius=3,fill=TOKENS['yellow'])
     if product_id=='E01':emotion_overlay(image,frame_path,t)
+    if product_id=='C01':
+        d=ImageDraw.Draw(image)
+        d.rounded_rectangle((168,230,792,269),radius=19,fill=TOKENS['soft-blue'])
+        d.text((480,249),'Penanda digerakkan oleh anak atau guru.',font=font(21,weight=750),anchor='mm',fill=TOKENS['blue-ink'])
+        cue='Susun instruksi' if t<5.5 else 'Coba urutannya' if t<11.2 else 'Satu langkah berlebih' if t<14.0 else 'Coba lagi' if t<18.7 else 'Tujuan tercapai!'
+        d.rounded_rectangle((330,780,630,820),radius=18,fill=TOKENS['cream'])
+        d.text((480,800),cue,font=font(21,weight=800),anchor='mm',fill=INK)
     return image.convert('RGB')
 
 

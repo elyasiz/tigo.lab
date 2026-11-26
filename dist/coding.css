@@ -95,6 +95,18 @@
 .coding-photo-dialog{width:800px;padding:24px}
 .coding-photo-dialog h2{font-size:28px;padding-right:40px;margin-bottom:12px}
 .coding-photo-dialog img{width:100%;height:auto;max-height:75dvh;object-fit:contain}
+.coding-demo-button{color:var(--blue-ink);gap:9px;font-size:15px;min-height:44px;margin-top:14px;text-align:left}
+.coding-demo-button>span{font-size:12px}
+.coding-guide-intro{max-width:350px;font-size:16px;line-height:1.8;color:var(--muted)}
+.coding-guide-intro .coding-demo-button{margin-top:10px}
+.coding-animation-dialog{width:900px;padding:28px}
+.coding-animation-dialog>.eyebrow{font-size:13px;line-height:1.5}
+.coding-animation-dialog h2{font-size:31px;line-height:1.25}
+.coding-animation-dialog>p:not(.small-note){font-size:15px;line-height:1.8}
+.coding-animation-dialog .demo-video{max-height:66dvh;background:white;margin-top:20px}
+.coding-animation-dialog .animation-steps{font-size:15px;line-height:1.75;gap:22px}
+.coding-animation-dialog .animation-error{font-size:14px}
+@media(max-width:550px){.coding-guide-intro{margin-top:18px;max-width:none;font-size:15px}.coding-demo-button{font-size:14px}.coding-animation-dialog{padding:24px 18px 18px}.coding-animation-dialog h2{font-size:27px}.coding-animation-dialog>.eyebrow{font-size:12px}.coding-animation-dialog .animation-steps{grid-template-columns:1fr;gap:8px}.coding-animation-dialog .demo-video{max-height:65dvh}}
 .coding-page section[id],.coding-page form[id]{scroll-margin-top:120px}
 @media(min-width:1051px){.coding-page .desktop-nav{gap:22px}.coding-page .nav-wrap{gap:18px}}
 @media(max-width:1100px){.coding-hero-grid{gap:30px}.coding-product-grid{gap:35px}.coding-actions{gap:18px}.coding-inquiry-panel{gap:35px;padding:32px}.coding-skills li{font-size:14px;padding-inline:10px}.coding-class-grid article{padding:24px}}

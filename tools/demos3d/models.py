@@ -4,6 +4,7 @@ from mathutils import Vector
 from engine import *
 from emotion_slider import emotion_slider
 from fraction import fraction
+from code_tiles import code_tiles
 
 def train():
     stage_scene((0,0,1),8.2,28,30);root=empty('Train assembly')

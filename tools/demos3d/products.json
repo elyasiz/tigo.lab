@@ -1,4 +1,14 @@
 {
+  "C01": {
+    "slug": "code-tiles",
+    "name": "Code Tiles",
+    "title": "Susun instruksi. Temukan jalannya.",
+    "description": "Susun keping instruksi, gerakkan penanda sesuai urutan, lalu perbaiki satu langkah maju yang berlebih. Penanda dimainkan secara manual oleh anak atau guru.",
+    "steps": ["Susun keping instruksi dari Mulai.", "Ikuti instruksi satu per satu.", "Perbaiki urutan, lalu coba lagi."],
+    "breaks": [5.5, 12.0],
+    "poster_time": 20.0,
+    "duration": 22
+  },
   "E01": {
     "slug": "emotion-slider",
     "video_stem": "emotion-slider-3d-brand",

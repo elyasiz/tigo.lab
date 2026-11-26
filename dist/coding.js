@@ -1,3 +1,5 @@
+import {productDemos} from './demos.js';
+
 const $ = selector => document.querySelector(selector);
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 let reducedMotion = false;
@@ -7,6 +9,7 @@ function updateMotion() {
   document.documentElement.classList.toggle('motion-off', reduced);
   $('#motionToggle').setAttribute('aria-pressed', String(reduced));
   $('#motionToggle').setAttribute('aria-label', reduced ? 'Animasi dikurangi, klik untuk mengubah preferensi' : 'Kurangi animasi');
+  if (reduced) $('#codeTilesDemoVideo')?.pause();
 }
 $('#motionToggle').addEventListener('click', () => {
   reducedMotion = !reducedMotion;
@@ -48,6 +51,43 @@ photoDialog.addEventListener('click', event => {
   const rect = photoDialog.getBoundingClientRect();
   if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) photoDialog.close();
 });
+
+const animationDialog = $('#codingAnimationDialog');
+const demoVideo = $('#codeTilesDemoVideo');
+const demo = productDemos.C01;
+let animationReturnFocus;
+$('#codingAnimationTitle').textContent = demo.title;
+$('#codingAnimationDescription').textContent = demo.description;
+demo.steps.forEach(step => {
+  const item = document.createElement('li');
+  item.textContent = step;
+  $('#codingAnimationSteps').append(item);
+});
+document.querySelectorAll('[data-play-code-tiles]').forEach(button => button.addEventListener('click', () => {
+  animationReturnFocus = button;
+  $('#codingAnimationError').hidden = true;
+  if (!demoVideo.getAttribute('src')) demoVideo.src = demo.video;
+  demoVideo.poster = demo.poster;
+  if (demoVideo.readyState > 0) demoVideo.currentTime = 0;
+  animationDialog.showModal();
+  document.body.style.overflow = 'hidden';
+  if (!reducedMotion && !motionPreference.matches) demoVideo.play().catch(() => {});
+}));
+$('#closeCodingAnimation').addEventListener('click', () => animationDialog.close());
+animationDialog.addEventListener('close', () => {
+  demoVideo.pause();
+  document.body.style.overflow = document.querySelector('dialog[open]') ? 'hidden' : '';
+  animationReturnFocus?.focus({preventScroll:true});
+});
+animationDialog.addEventListener('click', event => {
+  if (event.target !== animationDialog) return;
+  const rect = animationDialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) animationDialog.close();
+});
+demoVideo.addEventListener('error', () => { $('#codingAnimationError').hidden = false; });
+demoVideo.addEventListener('playing', () => { $('#codingAnimationError').hidden = true; });
+document.addEventListener('visibilitychange', () => { if (document.hidden) demoVideo.pause(); });
+window.addEventListener('pagehide', () => demoVideo.pause());
 
 // No network request or local storage: visitors explicitly copy their enquiry.
 const inquiryForm = $('#codingInquiryForm');

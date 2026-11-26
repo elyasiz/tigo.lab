@@ -130,5 +130,16 @@ export const productDemos = {
       "Bandingkan besar bagian pecahan.",
       "Susun kembali menjadi lingkaran utuh."
     ]
+  },
+  "C01": {
+    "video": "assets/videos/code-tiles-3d-play.mp4",
+    "poster": "assets/code-tiles-3d-play-poster.webp",
+    "title": "Susun instruksi. Temukan jalannya.",
+    "description": "Susun keping instruksi, gerakkan penanda sesuai urutan, lalu perbaiki satu langkah maju yang berlebih. Penanda dimainkan secara manual oleh anak atau guru.",
+    "steps": [
+      "Susun keping instruksi dari Mulai.",
+      "Ikuti instruksi satu per satu.",
+      "Perbaiki urutan, lalu coba lagi."
+    ]
   }
 };
