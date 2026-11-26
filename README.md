@@ -4,6 +4,7 @@ Website katalog Montessori TIGO LAB dengan animasi 3D dan checkout QRIS Midtrans
 
 ## Fitur
 
+- Menu Coding pada navigasi desktop dan HP di kedua koleksi, dengan halaman `coding.html` untuk Code Tiles, foto katalog kotak berlatar putih, empat panduan bermain SVG statis, ide kegiatan kelas, dan formulir pertanyaan sekolah/rumah. Formulir memvalidasi kebutuhan lalu membuat ringkasan yang disalin pengunjung; belum ada pengiriman, endpoint baru, penyimpanan data pribadi, harga, atau checkout Code Tiles. Nomor kontak bisnis belum ditentukan. Video ditambahkan saat tersedia. Formulir dan menu dilayani `coding.js`; gaya lokal memakai font dan palet merek yang sama. Ilustrasi dapat dibuat ulang dengan `node tools/create-coding-guide.mjs`.
 - Sebelas produk Montessori dengan gambar katalog TIGO LAB; sepuluh set memiliki harga terkonfirmasi.
 - Sebelas produk Montessori memiliki animasi cara bermain, tersedia dari kartu, detail, dan produk unggulan. Video dimuat ketika diminta pengguna; kontrol putar/jeda tersedia dan video berhenti saat jendela ditutup.
 - Pencarian, filter aktivitas, pengurutan harga, dan detail produk.
